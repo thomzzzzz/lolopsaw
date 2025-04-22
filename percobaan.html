@@ -3,43 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Online Anda - Mirip Shopee</title>
+    <title>Toko Online Anda - Gaya Merah Hitam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Gaya CSS dasar untuk struktur (akan dikembangkan lebih lanjut) */
+        /* Gaya CSS yang Lebih Menarik dengan Gradasi Merah Hitam */
         body {
-            font-family: sans-serif;
+            font-family: 'Roboto', sans-serif; /* Font yang mudah dibaca */
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background: linear-gradient(to bottom, #000000, #800000); /* Gradasi Hitam ke Merah */
+            color: #eee; /* Warna teks terang agar kontras */
         }
         header {
-            background-color: #ff6700; /* Warna oranye khas Shopee */
+            background: rgba(0, 0, 0, 0.8); /* Latar belakang semi-transparan hitam */
             color: white;
-            padding: 10px 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
         .logo {
-            font-size: 1.5em;
+            font-family: 'Bebas Neue', sans-serif; /* Font keren untuk logo */
+            font-size: 2em;
             font-weight: bold;
+            letter-spacing: 1px;
         }
         .search-bar {
             display: flex;
-            background-color: white;
+            background-color: #333;
             border-radius: 5px;
             overflow: hidden;
+            border: 1px solid #555;
         }
         .search-bar input[type="text"] {
-            padding: 8px;
+            padding: 10px;
             border: none;
             flex-grow: 1;
+            background-color: transparent;
+            color: #eee;
         }
         .search-bar button {
-            background-color: #ff8a00;
+            background-color: #800000; /* Merah */
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 10px 15px;
             cursor: pointer;
         }
         nav ul {
@@ -49,86 +59,114 @@
             display: flex;
         }
         nav ul li {
-            margin-left: 20px;
+            margin-left: 25px;
         }
         nav ul li a {
-            color: white;
+            color: #ddd;
             text-decoration: none;
-        }
-        .hero {
-            background-color: #f8f8f8;
-            padding: 20px;
-            text-align: center;
-        }
-        .product-list {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .product-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            text-align: center;
-        }
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .product-title {
             font-weight: bold;
-            margin-bottom: 5px;
+            transition: color 0.3s ease;
         }
-        .product-price {
-            color: #ff6700;
-            font-weight: bold;
+        nav ul li a:hover {
+            color: #fff;
         }
-        .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: sticky;
-            bottom: 0;
-            width: 100%;
-        }
-        /* Elemen mirip Shopee */
         .category-bar {
-            background-color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #555;
             overflow-x: auto;
             white-space: nowrap;
         }
         .category-bar a {
             display: inline-block;
-            color: #333;
+            color: #ccc;
             text-decoration: none;
-            margin-right: 15px;
-            padding: 8px 12px;
+            margin-right: 20px;
+            padding: 8px 15px;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #555;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .category-bar a:hover {
-            background-color: #f9f9f9;
+            background-color: #555;
+            color: #fff;
         }
         .promo-banner {
-            background-color: #ffe6d9;
-            padding: 15px 20px;
+            background-color: rgba(255, 0, 0, 0.1); /* Merah semi-transparan */
+            padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            border: 1px solid #aa0000;
         }
         .promo-banner h2 {
-            color: #ff6700;
+            color: #ffddcc;
             margin-top: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+        .promo-banner p {
+            color: #eee;
+        }
+        .promo-banner a {
+            color: #ffbb99;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .promo-banner a:hover {
+            color: #fff;
+        }
+        .product-list {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Lebar kartu produk sedikit lebih besar */
+            gap: 25px;
+        }
+        .product-card {
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+        }
+        .product-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #eee;
+        }
+        .product-price {
+            color: #ffaa80;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .product-card button {
+            background-color: #800000; /* Merah */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .product-card button:hover {
+            background-color: #aa0000;
         }
         .bottom-navigation {
-            background-color: #fff;
-            border-top: 1px solid #eee;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid #555;
             padding: 10px 0;
             display: flex;
             justify-content: space-around;
@@ -137,29 +175,46 @@
             width: 100%;
         }
         .bottom-navigation a {
-            color: #777;
+            color: #ccc;
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: color 0.3s ease;
+        }
+        .bottom-navigation a:hover {
+            color: #fff;
         }
         .bottom-navigation a i {
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-bottom: 5px;
         }
-        /* Anda perlu menambahkan library icon seperti Font Awesome untuk ikon */
+        .footer {
+            background-color: #333;
+            color: #ddd;
+            text-align: center;
+            padding: 15px;
+        }
+        .footer a {
+            color: #ffbb99;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">TokoAnda</div>
+        <div class="logo">InfernoShop</div>
         <div class="search-bar">
-            <input type="text" placeholder="Cari produk...">
+            <input type="text" placeholder="Jelajahi kegelapan produk...">
             <button>Cari</button>
         </div>
         <nav>
             <ul>
-                <li><a href="#">Login</a></li>
+                <li><a href="#">Masuk</a></li>
                 <li><a href="#">Daftar</a></li>
                 <li><a href="#">Keranjang (0)</a></li>
             </ul>
@@ -167,45 +222,45 @@
     </header>
 
     <div class="category-bar">
-        <a href="#">Elektronik</a>
-        <a href="#">Pakaian Pria</a>
-        <a href="#">Pakaian Wanita</a>
-        <a href="#">Sepatu</a>
-        <a href="#">Aksesoris</a>
-        <a href="#">Kecantikan</a>
-        <a href="#">Makanan & Minuman</a>
-        </div>
+        <a href="#">Api Abadi</a>
+        <a href="#">Bayangan Gelap</a>
+        <a href="#">Artefak Kuno</a>
+        <a href="#">Ramuan Misterius</a>
+        <a href="#">Perlengkapan Tempur</a>
+        <a href="#">Buku Terlarang</a>
+        <a href="#">Lain-lain</a>
+    </div>
 
     <div class="promo-banner">
-        <h2>Flash Sale Hari Ini! Diskon Hingga 70%</h2>
-        <p>Jangan lewatkan penawaran terbatas!</p>
-        <a href="#" style="color: #ff6700; text-decoration: none;">Lihat Semua</a>
+        <h2>🔥 SALE MEMBARA! Diskon Hingga 80% 🔥</h2>
+        <p>Jangan biarkan kesempatan ini hangus!</p>
+        <a href="#">Lihat Semua Penawaran</a>
     </div>
 
     <div class="product-list">
         <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Produk 1">
-            <h3 class="product-title">Nama Produk 1</h3>
-            <p class="product-price">Rp 100.000</p>
-            <button>Tambah ke Keranjang</button>
+            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+1" alt="Produk 1">
+            <h3 class="product-title">Pedang Bayangan</h3>
+            <p class="product-price">Rp 250.000</p>
+            <button>Tambahkan</button>
         </div>
         <div class="product-card">
-            <img src="https://via.placeholder.com/150/0000FF" alt="Produk 2">
-            <h3 class="product-title">Nama Produk 2</h3>
-            <p class="product-price">Rp 150.000</p>
-            <button>Tambah ke Keranjang</button>
+            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Produk 2">
+            <h3 class="product-title">Jubah Kegelapan</h3>
+            <p class="product-price">Rp 350.000</p>
+            <button>Tambahkan</button>
         </div>
         <div class="product-card">
-            <img src="https://via.placeholder.com/150/FF0000" alt="Produk 3">
-            <h3 class="product-title">Nama Produk 3</h3>
-            <p class="product-price">Rp 200.000</p>
-            <button>Tambah ke Keranjang</button>
+            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+3" alt="Produk 3">
+            <h3 class="product-title">Cincin Kekuatan</h3>
+            <p class="product-price">Rp 500.000</p>
+            <button>Tambahkan</button>
         </div>
         </div>
 
     <div class="bottom-navigation">
         <a href="#">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-fire"></i>
             Beranda
         </a>
         <a href="#">
@@ -223,8 +278,9 @@
     </div>
 
     <footer class="footer">
-        &copy; 2025 Toko Online Anda
+        &copy; 2025 InfernoShop - Kekuatan dalam Setiap Transaksi | <a href="#">Kebijakan Privasi</a>
     </footer>
 
-    </body>
+    <script src="https://kit.fontawesome.com/your_fontawesome_kit_id.js" crossorigin="anonymous"></script>
+</body>
 </html>
