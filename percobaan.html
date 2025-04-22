@@ -18,7 +18,7 @@
             color: #eee;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat tap di mobile */
-}
+        }
         header {
             background: rgba(0, 0, 0, 0.8);
             color: white;
@@ -107,6 +107,11 @@
             background-color: #555;
             color: #fff;
             transform: scale(1.05);
+        }
+        .category-bar a.active {
+            background-color: #aa0000;
+            color: #fff;
+            border-color: #aa0000;
         }
         .promo-banner {
             background-color: rgba(255, 0, 0, 0.1);
@@ -420,7 +425,7 @@
     </header>
 
     <div class="category-bar">
-        <a href="#" data-category="semua">Semua Barang</a>
+        <a href="#" data-category="semua" class="active">Semua Barang</a>
         <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
         <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
         <a href="#" data-category="Cincin Kekuatan">Cincin Kekuatan</a>
@@ -503,6 +508,11 @@
         </div>
     </div>
 
+    <div id="loading-indicator" style="display: none; text-align: center; margin-top: 20px;">
+        <i class="fas fa-spinner fa-spin fa-3x" style="color: #eee;"></i>
+        <p style="color: #eee;">Memuat...</p>
+    </div>
+
     <div class="bottom-navigation">
         <a href="#">
             <i class="fas fa-fire"></i>
@@ -537,6 +547,7 @@
             const productList = document.querySelector('.product-list');
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
+            const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
 
             // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
@@ -664,6 +675,9 @@
                     event.preventDefault();
                     const selectedCategory = this.dataset.category;
 
+                    categoryLinks.forEach(l => l.classList.remove('active')); // Hapus kelas aktif dari semua link
+                    this.classList.add('active'); // Tambahkan kelas aktif ke link yang diklik
+
                     productList.classList.add('filtering'); // Tambahkan kelas filtering
 
                     setTimeout(() => {
@@ -695,33 +709,44 @@
             function cariProduk() {
                 const searchTerm = searchInput.value.toLowerCase();
                 productList.innerHTML = ''; // Kosongkan daftar produk
+                loadingIndicator.style.display = 'block'; // Tampilkan loading
 
-                const hasilPencarian = allProducts.filter(productCard => {
-                    const namaProduk = productCard.dataset.name.toLowerCase();
-                    const deskripsiProduk = productCard.dataset.description.toLowerCase();
-                    return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
-                });
-
-                hasilPencarian.forEach((product, index) => {
-                    const clonedProduct = product.cloneNode(true);
-                    clonedProduct.style.animationDelay = `${index * 0.1}s`;
-                    productList.appendChild(clonedProduct);
-                    // Tambahkan kembali event listener untuk detail produk
-                    clonedProduct.addEventListener('click', function() {
-                        showProductDetails(this);
+                setTimeout(() => {
+                    const hasilPencarian = allProducts.filter(productCard => {
+                        const namaProduk = productCard.dataset.name.toLowerCase();
+                        const deskripsiProduk = productCard.dataset.description.toLowerCase();
+                        return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
                     });
-                });
 
-                // Jika tidak ada hasil pencarian, tampilkan pesan
-                if (hasilPencarian.length === 0) {
-                    productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
-                }
+                    hasilPencarian.forEach((product, index) => {
+                        const clonedProduct = product.cloneNode(true);
+                        clonedProduct.style.animationDelay = `${index * 0.1}s`;
+                        productList.appendChild(clonedProduct);
+                        // Tambahkan kembali event listener untuk detail produk
+                        clonedProduct.addEventListener('click', function() {
+                            showProductDetails(this);
+                        });
+                    });
+
+                    // Jika tidak ada hasil pencarian, tampilkan pesan
+                    if (hasilPencarian.length === 0) {
+                        productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
+                    }
+                    loadingIndicator.style.display = 'none'; // Sembunyikan loading
+                }, 500); // Simulasi waktu pencarian
             }
 
             // Tambahkan event listener untuk tombol Enter di input pencarian
             searchInput.addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     cariProduk();
+                }
+            });
+
+            // Set kategori "Semua Barang" sebagai aktif saat halaman dimuat
+            categoryLinks.forEach(link => {
+                if (link.dataset.category === 'semua') {
+                    link.classList.add('active');
                 }
             });
         });
