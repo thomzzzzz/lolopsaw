@@ -1,194 +1,222 @@
 <!DOCTYPE html>
- <html lang="id">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Keranjang Belanja Anda</title>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-     <style>
-         body {
-             font-family: 'Roboto', sans-serif;
-             margin: 0;
-             padding: 20px;
-             background-color: #f4f4f4;
-             color: #333;
-         }
-         h1 {
-             font-family: 'Bebas Neue', sans-serif;
-             color: #800000;
-             margin-bottom: 20px;
-             letter-spacing: 1px;
-         }
-         .cart-container {
-             background-color: #fff;
-             padding: 20px;
-             border-radius: 8px;
-             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-         }
-         .cart-item {
-             display: flex;
-             align-items: center;
-             border-bottom: 1px solid #eee;
-             padding: 15px 0;
-         }
-         .cart-item:last-child {
-             border-bottom: none;
-         }
-         .item-image {
-             width: 80px;
-             height: 80px;
-             margin-right: 15px;
-             border-radius: 5px;
-             overflow: hidden;
-         }
-         .item-image img {
-             width: 100%;
-             height: 100%;
-             object-fit: cover;
-         }
-         .item-details {
-             flex-grow: 1;
-         }
-         .item-name {
-             font-weight: bold;
-             margin-bottom: 5px;
-         }
-         .item-price {
-             color: #800000;
-             font-weight: bold;
-         }
-         .item-quantity {
-             display: flex;
-             align-items: center;
-             margin-top: 10px;
-         }
-         .quantity-label {
-             margin-right: 10px;
-         }
-         .quantity-input {
-             width: 50px;
-             padding: 5px;
-             border: 1px solid #ccc;
-             border-radius: 3px;
-             text-align: center;
-         }
-         .remove-button {
-             background-color: #f44336;
-             color: white;
-             border: none;
-             padding: 8px 12px;
-             border-radius: 5px;
-             cursor: pointer;
-             margin-left: 15px;
-         }
-         .remove-button:hover {
-             background-color: #d32f2f;
-         }
-         .cart-summary {
-             margin-top: 20px;
-             padding-top: 15px;
-             border-top: 1px solid #eee;
-             text-align: right;
-         }
-         .summary-item {
-             display: flex;
-             justify-content: space-between;
-             margin-bottom: 8px;
-         }
-         .total {
-             font-weight: bold;
-             font-size: 1.2em;
-             color: #800000;
-         }
-         .checkout-button {
-             background-color: #4CAF50;
-             color: white;
-             border: none;
-             padding: 12px 20px;
-             border-radius: 5px;
-             cursor: pointer;
-             font-size: 1em;
-             margin-top: 20px;
-             width: 100%;
-             text-align: center;
-         }
-         .checkout-button:hover {
-             background-color: #43a047;
-         }
- 
-         /* Responsif untuk Mobile */
-         @media (max-width: 600px) {
-             .cart-item {
-                 flex-direction: column;
-                 align-items: flex-start;
-             }
-             .item-image {
-                 margin-bottom: 10px;
-             }
-             .remove-button {
-                 margin-left: 0;
-                 margin-top: 10px;
-             }
-             .cart-summary {
-                 text-align: left;
-             }
-             .checkout-button {
-                 width: auto;
-             }
-         }
-     </style>
- </head>
- <body>
-     <div class="cart-container">
-         <h1>Keranjang Belanja Anda</h1>
- 
-         <div class="cart-item">
-             <div class="item-image">
-                 <img src="https://via.placeholder.com/80/330000/eee?Text=Produk+1" alt="Produk 1">
-             </div>
-             <div class="item-details">
-                 <div class="item-name">Pedang Bayangan</div>
-                 <div class="item-price">Rp 250.000</div>
-                 <div class="item-quantity">
-                     <span class="quantity-label">Jumlah:</span>
-                     <input type="number" class="quantity-input" value="1" min="1">
-                 </div>
-             </div>
-             <button class="remove-button">Hapus</button>
-         </div>
- 
-         <div class="cart-item">
-             <div class="item-image">
-                 <img src="https://via.placeholder.com/80/550000/eee?Text=Produk+2" alt="Produk 2">
-             </div>
-             <div class="item-details">
-                 <div class="item-name">Jubah Kegelapan</div>
-                 <div class="item-price">Rp 350.000</div>
-                 <div class="item-quantity">
-                     <span class="quantity-label">Jumlah:</span>
-                     <input type="number" class="quantity-input" value="1" min="1">
-                 </div>
-             </div>
-             <button class="remove-button">Hapus</button>
-         </div>
- 
-         <div class="cart-summary">
-             <div class="summary-item">
-                 <span>Subtotal:</span>
-                 <span>Rp 600.000</span>
-             </div>
-             <div class="summary-item">
-                 <span>Pengiriman:</span>
-                 <span>Rp 20.000</span>
-             </div>
-             <div class="summary-item total">
-                 <span>Total:</span>
-                 <span>Rp 620.000</span>
-             </div>
-             <button class="checkout-button">Lanjutkan ke Pembayaran</button>
-         </div>
-     </div>
- </body>
- </html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja Anda</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            background-color: #111;
+            color: #eee;
+        }
+        h1 {
+            color: #ff4d4d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            background-color: #222;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .cart-item img {
+            max-width: 80px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+        .item-details {
+            flex-grow: 1;
+        }
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .item-price {
+            color: #ffaa80;
+            margin-bottom: 5px;
+        }
+        .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        .item-quantity label {
+            margin-right: 10px;
+        }
+        .item-quantity input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #eee;
+        }
+        .remove-button {
+            background-color: #800000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        .remove-button:hover {
+            background-color: #aa0000;
+        }
+        .total-section {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.2em;
+        }
+        .total-price {
+            font-weight: bold;
+            color: #ff4d4d;
+        }
+        .checkout-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-align: center;
+            text-decoration: none;
+        }
+        .checkout-button:hover {
+            background-color: #4cae4c;
+        }
+        .empty-cart {
+            text-align: center;
+            color: #777;
+            font-size: 1.1em;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Keranjang Belanja Anda</h1>
+    <div id="cart-items-container">
+        </div>
+    <div id="total-section" class="total-section" style="display: none;">
+        Total: <span id="total-price" class="total-price">Rp 0</span>
+    </div>
+    <a href="#" id="checkout-button" class="checkout-button" style="display: none;">Checkout</a>
+
+    <p id="empty-cart-message" class="empty-cart" style="display: none;">Keranjang Anda kosong.</p>
+
+    <script>
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const totalSection = document.getElementById('total-section');
+        const totalPriceElement = document.getElementById('total-price');
+        const checkoutButton = document.getElementById('checkout-button');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
+        }
+
+        function displayCartItems() {
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                totalSection.style.display = 'none';
+                checkoutButton.style.display = 'none';
+            } else {
+                emptyCartMessage.style.display = 'none';
+                totalSection.style.display = 'block';
+                checkoutButton.style.display = 'block';
+
+                let total = 0;
+                cart.forEach(item => {
+                    const cartItemDiv = document.createElement('div');
+                    cartItemDiv.classList.add('cart-item');
+                    cartItemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-details">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">${formatPrice(item.price)}</div>
+                            <div class="item-quantity">
+                                <label for="quantity-${item.id}">Jumlah:</label>
+                                <input type="number" id="quantity-${item.id}" value="${item.quantity}" min="1">
+                            </div>
+                        </div>
+                        <button class="remove-button" data-id="${item.id}">Hapus</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItemDiv);
+                    total += item.price * item.quantity;
+                });
+                totalPriceElement.textContent = formatPrice(total);
+            }
+
+            // Tambahkan event listener untuk tombol Hapus dan input jumlah setelah item ditampilkan
+            attachCartItemListeners();
+        }
+
+        function attachCartItemListeners() {
+            const removeButtons = document.querySelectorAll('.remove-button');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = this.dataset.id;
+                    removeFromCart(itemId);
+                });
+            });
+
+            const quantityInputs = document.querySelectorAll('.cart-item input[type="number"]');
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const itemId = this.id.split('-')[1];
+                    const newQuantity = parseInt(this.value);
+                    updateQuantity(itemId, newQuantity);
+                });
+            });
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCartItems();
+            updateCartCountOnMainPage(); // Jika Anda ingin update tampilan di halaman utama
+        }
+
+        function updateQuantity(id, quantity) {
+            const itemIndex = cart.findIndex(item => item.id === id);
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity = quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCartItems();
+                updateCartCountOnMainPage(); // Jika Anda ingin update tampilan di halaman utama
+            }
+        }
+
+        function updateCartCountOnMainPage() {
+            // Fungsi ini akan mencari elemen dengan ID 'cart-count' atau 'bottom-cart-count'
+            // di halaman utama (jika halaman keranjang dan utama berada di domain yang sama)
+            // dan memperbarui nilainya. Implementasi ini mungkin berbeda tergantung struktur HTML utama Anda.
+            const mainPageCartCount = document.getElementById('cart-count');
+            const mainPageBottomCartCount = document.getElementById('bottom-cart-count');
+            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (mainPageCartCount) {
+                mainPageCartCount.textContent = totalQuantity;
+            }
+            if (mainPageBottomCartCount) {
+                mainPageBottomCartCount.textContent = totalQuantity;
+            }
+        }
+
+        // Panggil fungsi untuk menampilkan item keranjang saat halaman dimuat
+        displayCartItems();
+    </script>
+</body>
+</html>
