@@ -438,7 +438,7 @@
         <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
         <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
         <a href="#" data-category="Cincin Kekuatan">Cincin Kekuatan</a>
-        <a href="#" data--category="Jimat Pelindung">Jimat Pelindung</a>
+        <a href="#" data-category="Jimat Pelindung">Jimat Pelindung</a>
         <a href="#" data-category="Obor Kehidupan">Obor Kehidupan</a>
         <a href="#" data-category="Tombak Naga">Tombak Naga</a>
     </div>
@@ -645,12 +645,8 @@
                 if (productCard.dataset.promo === 'true') {
                     const badge = document.createElement('span');
                     badge.classList.add('badge', 'promo');
-                    const discount = productCard.dataset.discount; // Ambil nilai diskon
-                    if (discount) {
-                        badge.textContent = `Promo (-${discount})`; // Tampilkan potongan harga
-                    } else {
-                        badge.textContent = 'Promo'; // Tampilkan "Promo" jika tidak ada diskon
-                    }
+                    const discount = productCard.dataset.discount ? ` (-${productCard.dataset.discount})` : '';
+                    badge.textContent = 'Promo' + discount;
                     productCard.appendChild(badge);
                 }
             }
@@ -706,16 +702,39 @@
 
                     // Tambahkan event listener untuk tombol tambah ke keranjang (penting untuk elemen baru)
                     const addToCartButton = productCard.querySelector('.add-to-cart-btn');
-                    if (addToCartButton) {
-                        addToCartButton.addEventListener('click', function(event) {
-                            event.stopPropagation();
-                            const productId = this.dataset.id;
-                            const name = this.dataset.name;
-                            const price = this.dataset.price;
-                            const image = this.dataset.image;
-                            tambahKeKeranjang(productId, name, price, image);
-                        });
-                    }
+                    addToCartButton.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        const productId = this.dataset.id;
+                        const name = this.dataset.name;
+                        const price = this.dataset.price;
+                        const image = this.dataset.image;
+                        tambahKeKeranjang(productId, name, price, image);
+                    });
+                });
+                productList.classList.remove('filtering');
+            }
+
+            // Tambahkan badge saat halaman pertama kali dimuat
+            const initialProductCards = document.querySelectorAll('.product-card');
+            initialProductCards.forEach(addBadges);
+
+            productCards.forEach(card => {
+                card.addEventListener('click', function(event) {
+                    showProductDetails(this); // Panggil fungsi untuk menampilkan detail
+
+                    const rect = this.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600); // Durasi animasi ripple
                 });
 
                 const addToCartButton = card.querySelector('.add-to-cart-btn');
@@ -759,7 +778,7 @@
                         if (selectedCategory === 'semua') {
                             productsToShow = allProducts;
                         } else {
-                            productsToShow = allProducts.filter(product => product.dataset.name.toLowerCase().includes(selectedCategory.toLowerCase()));
+                            productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
                         }
                         updateProductList(productsToShow); // Gunakan fungsi updateProductList
                     }, 300);
@@ -825,9 +844,6 @@
                     touchStartX = null;
                 });
             }
-
-            // Inisialisasi badge promo saat halaman dimuat
-            initialProductCards.forEach(addBadges);
         });
     </script>
 </body>
