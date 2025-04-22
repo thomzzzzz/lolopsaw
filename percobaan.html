@@ -661,13 +661,13 @@
                 });
             }
 
-            productCard.innerHTML = `
-                <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
-                <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
-<p class\="product\-price"\></span>{priceDisplay}</p>
-                <button class="detail-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}"\>Detail</button\>
-<button class\="add\-to\-cart\-btn" data\-id\="</span>{productData.dataset.id}" data-name="<span class="math-inline">\{productData\.dataset\.name\}" data\-price\="</span>{productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
-            `;
+            const imageElement = `<img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">`;
+            const titleElement = `<h3 class="product-title">${productData.dataset.name}</h3>`;
+            const priceElement = `<p class="product-price">${priceDisplay}</p>`;
+            const detailButtonElement = `<button class="detail-btn" data-id="${productData.dataset.id}">Detail</button>`;
+            const addToCartButtonElement = `<button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>`;
+
+            productCard.innerHTML = imageElement + titleElement + priceElement + detailButtonElement + addToCartButtonElement;
             productList.appendChild(productCard);
         });
 
@@ -815,6 +815,7 @@
             event.preventDefault();
             const selectedCategory = this.dataset.category;
             categoryLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
             this.classList.add('active');
             productList.classList.add('filtering');
             setTimeout(() => {
