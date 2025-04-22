@@ -229,6 +229,16 @@
         .footer a:hover {
             color: #fff;
         }
+        .cart-notification {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff4d4d;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 8px;
+            font-size: 0.7em;
+        }
 
         /* Media Queries untuk Responsif */
         @media (min-width: 600px) {
@@ -309,7 +319,13 @@
         </div>
         <nav>
             <ul>
-                <li><a href="store/keranjang.html">Keranjang (0)</a></li>
+                <li>
+                    <a href="store/keranjang.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Keranjang</span>
+                        <span id="cart-count" class="cart-notification">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -332,40 +348,40 @@
 
     <div class="product-list">
         <div class="product-card" style="animation-delay: 0.1s;">
-            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+1" alt="Produk 1">
+            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+1" alt="Pedang Bayangan">
             <h3 class="product-title">Pedang Bayangan</h3>
             <p class="product-price">Rp 250.000</p>
-            <button>Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+1">Tambahkan</button>
         </div>
         <div class="product-card" style="animation-delay: 0.2s;">
-            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Produk 2">
+            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Jubah Kegelapan">
             <h3 class="product-title">Jubah Kegelapan</h3>
             <p class="product-price">Rp 350.000</p>
-            <button>Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="350000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2">Tambahkan</button>
         </div>
         <div class="product-card" style="animation-delay: 0.3s;">
-            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+3" alt="Produk 3">
+            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+3" alt="Cincin Kekuatan">
             <h3 class="product-title">Cincin Kekuatan</h3>
             <p class="product-price">Rp 500.000</p>
-            <button>Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="3" data-name="Cincin Kekuatan" data-price="500000" data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+3">Tambahkan</button>
         </div>
         <div class="product-card" style="animation-delay: 0.4s;">
-            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+4" alt="Produk 4">
+            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+4" alt="Jimat Pelindung">
             <h3 class="product-title">Jimat Pelindung</h3>
             <p class="product-price">Rp 180.000</p>
-            <button>Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="4" data-name="Jimat Pelindung" data-price="180000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+4">Tambahkan</button>
         </div>
         <div class="product-card" style="animation-delay: 0.5s;">
-            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+5" alt="Produk 5">
+            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+5" alt="Obor Kehidupan">
             <h3 class="product-title">Obor Kehidupan</h3>
             <p class="product-price">Rp 420.000</p>
-            <button>Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="5" data-name="Obor Kehidupan" data-price="420000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+5">Tambahkan</button>
         </div>
         <div class="product-card" style="animation-delay: 0.6s;">
-            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+6" alt="Produk 6">
+            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+6" alt="Tombak Naga">
             <h3 class="product-title">Tombak Naga</h3>
             <p class="product-price">Rp 600.000</p>
-            <button>Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="6" data-name="Tombak Naga" data-price="600000" data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+6">Tambahkan</button>
         </div>
     </div>
 
@@ -377,6 +393,7 @@
         <a href="store/keranjang.html">
             <i class="fas fa-shopping-cart"></i>
             <span>Keranjang</span>
+            <span id="bottom-cart-count" class="cart-notification">0</span>
         </a>
     </div>
 
@@ -385,5 +402,61 @@
     </footer>
 
     <script src="https://kit.fontawesome.com/your_fontawesome_kit_id.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const cartCountElement = document.getElementById('cart-count');
+            const bottomCartCountElement = document.getElementById('bottom-cart-count');
+
+            // Fungsi untuk mendapatkan keranjang dari localStorage
+            function getCart() {
+                return JSON.parse(localStorage.getItem('keranjang') || '[]');
+            }
+
+            // Fungsi untuk menyimpan keranjang ke localStorage
+            function saveCart(cart) {
+                localStorage.setItem('keranjang', JSON.stringify(cart));
+                updateCartCount();
+            }
+
+            // Fungsi untuk memperbarui tampilan jumlah item di keranjang
+            function updateCartCount() {
+                const cart = getCart();
+                const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
+                cartCountElement.textContent = totalItems;
+                bottomCartCountElement.textContent = totalItems > 0 ? totalItems : 0;
+                bottomCartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+                cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+            }
+
+            // Inisialisasi jumlah item keranjang saat halaman dimuat
+            updateCartCount();
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = parseInt(this.dataset.price);
+                    const image = this.dataset.image;
+
+                    tambahKeKeranjang(productId, name, price, image);
+                });
+            });
+
+            function tambahKeKeranjang(productId, nama, harga, gambar) {
+                let keranjang = getCart();
+                let itemDiKeranjang = keranjang.find(item => item.id === productId);
+
+                if (itemDiKeranjang) {
+                    itemDiKeranjang.jumlah++;
+                } else {
+                    keranjang.push({ id: productId, nama: nama, harga: harga, gambar: gambar, jumlah: 1 });
+                }
+
+                saveCart(keranjang);
+                alert(`"${nama}" berhasil ditambahkan ke keranjang!`);
+            }
+        });
+    </script>
 </body>
 </html>
