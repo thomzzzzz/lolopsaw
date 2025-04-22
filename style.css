@@ -1,376 +1,156 @@
-/* Reset atau Normalisasi (jika belum ada) */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0; /* Latar belakang abu-abu muda khas toko online */
+    background-color: #f4f4f4;
     color: #333;
-    overflow-x: hidden;
 }
 
 .container {
-    max-width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 20px;
 }
 
-/* Header Mobile */
 header {
-    background-color: #fff;
-    padding: 10px 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: #ff6f61; /* Warna oranye mirip Shopee */
+    color: white;
+    padding: 10px 0;
+}
+
+header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header .logo a {
-    font-size: 20px;
+.logo {
+    font-size: 24px;
     font-weight: bold;
-    color: #ff4d4d; /* Warna merah Shopee */
-    text-decoration: none;
 }
 
-header .menu-icon {
-    font-size: 24px;
-    color: #333;
+.search-bar {
+    display: flex;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 300px;
+}
+
+.search-bar button {
+    background-color: #e05546;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
 
-header nav {
-    position: fixed;
-    top: 56px; /* Tinggi header */
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 99;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+.cart a {
+    color: white;
+    text-decoration: none;
 }
 
-header nav.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+nav {
+    background-color: #333;
+    color: white;
 }
 
-header nav ul {
+nav .container ul {
     list-style: none;
-    padding: 10px 15px;
-}
-
-header nav ul li {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-header nav ul li:last-child {
-    border-bottom: none;
-}
-
-header nav ul li a {
-    display: block;
-    padding: 10px 0;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-header .actions {
+    padding: 0;
+    margin: 0;
     display: flex;
-    align-items: center;
 }
 
-header .actions input[type="text"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-right: 10px;
-    flex-grow: 1;
-    font-size: 14px;
-}
-
-header .actions a {
-    color: #666;
-    font-size: 18px;
-    margin-left: 10px;
+nav .container ul li a {
+    display: block;
+    padding: 15px 20px;
     text-decoration: none;
+    color: white;
 }
 
-header .actions .cart {
-    position: relative;
+nav .container ul li a:hover {
+    background-color: #555;
 }
 
-header .actions .cart span.badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #ff4d4d;
-    color: #fff;
-    font-size: 10px;
-    padding: 2px 5px;
-    border-radius: 50%;
-}
-
-/* Hero Section Mobile */
-.hero {
-    padding: 60px 0;
-    background: linear-gradient(135deg, #ffe6e6, #fff);
-    text-align: center;
-}
-
-.hero .hero-content h1 {
-    font-size: 28px;
-    margin-bottom: 15px;
-}
-
-.hero .hero-content p {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.hero .hero-content .button {
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-/* Produk Unggulan Mobile */
-.featured-products {
+main {
     padding: 20px 0;
-    background-color: #fff;
 }
 
-.featured-products h2 {
-    font-size: 20px;
+.product-list h2, .categories h2 {
     margin-bottom: 15px;
-    text-align: left; /* Seperti tampilan toko online */
-    padding-left: 15px;
 }
 
-.featured-products .product-grid {
+.products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 0 15px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
 
-.featured-products .product-item {
-    background-color: #fff;
+.product-card {
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 15px;
     text-align: center;
+    background-color: white;
 }
 
-.featured-products .product-item img {
+.product-card img {
     max-width: 100%;
     height: auto;
-    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.product-card h3 {
+    margin-top: 0;
     margin-bottom: 5px;
+    font-size: 18px;
 }
 
-.featured-products .product-item h3 {
-    font-size: 14px;
-    margin-bottom: 3px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis; /* Judul produk yang panjang dipotong */
-}
-
-.featured-products .product-item .price {
-    color: #ff4d4d;
+.product-card .price {
+    color: #ff6f61;
     font-weight: bold;
-    font-size: 14px;
+    margin-bottom: 10px;
 }
 
-/* Kategori Produk Mobile */
-.categories {
-    padding: 20px 0;
-    background-color: #f7f7f7;
-}
-
-.categories h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-align: left;
-    padding-left: 15px;
+.product-card .add-to-cart {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .categories .category-list {
     display: flex;
-    overflow-x: auto; /* Scroll horizontal untuk kategori */
-    padding: 0 15px;
     gap: 10px;
-    margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
-.categories .category-item {
-    background-color: #fff;
+.categories .category-list a {
+    display: inline-block;
+    background-color: #eee;
     color: #333;
     padding: 8px 15px;
-    border-radius: 20px;
     text-decoration: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-/* Testimoni Mobile */
-.testimonials {
-    padding: 20px 0;
-    background-color: #fff;
-}
-
-.testimonials h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-align: left;
-    padding-left: 15px;
-}
-
-.testimonials .testimonial-slider {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 15px;
-}
-
-.testimonials .testimonial {
-    flex: 0 0 80%;
-    margin: 0 10%;
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    text-align: center;
-    scroll-snap-align: center;
-    font-size: 12px;
-}
-
-.testimonials .testimonial p {
-    font-size: 12px;
-    margin-bottom: 10px;
-}
-
-.testimonials .testimonial span {
-    font-size: 10px;
-}
-
-/* Footer Mobile */
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    font-size: 12px;
-}
-
-footer .container {
-    flex-direction: column;
-    align-items: center;
-}
-
-footer .footer-info,
-footer .footer-links,
-footer .footer-social {
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-footer h3 {
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-footer p,
-footer a,
-footer ul li a {
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
-footer .copyright {
-    margin-top: 15px;
-    font-size: 10px;
-}
-
-/* Pop-up Produk Mobile */
-.product-popup .popup-content {
-    padding: 15px;
     border-radius: 5px;
 }
 
-.product-popup .close-button {
-    top: 5px;
-    right: 5px;
-    font-size: 18px;
+.categories .category-list a:hover {
+    background-color: #ddd;
 }
 
-.product-popup .popup-details img.popup-image {
-    max-width: 150px;
-    margin-bottom: 10px;
-}
-
-.product-popup .popup-details h3.popup-title {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.product-popup .popup-details p.popup-price {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.product-popup .popup-details p.popup-description {
-    font-size: 12px;
-    line-height: 1.4;
-    margin-bottom: 15px;
-}
-
-.product-popup .popup-details .add-to-cart-button {
-    font-size: 14px;
-    padding: 8px 15px;
-    border-radius: 3px;
-}
-
-/* Tampilan Desktop (jika diperlukan penyesuaian lebih lanjut) */
-@media (min-width: 769px) {
-    /* Anda bisa menambahkan penyesuaian khusus untuk desktop di sini jika perlu */
-    header nav {
-        display: flex;
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        background-color: transparent;
-        box-shadow: none;
-    }
-
-    header nav ul {
-        flex-direction: row;
-    }
-
-    header nav ul li {
-        margin-left: 20px;
-        margin-bottom: 0;
-        border-bottom: none;
-    }
-
-    header .menu-icon {
-        display: none;
-    }
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
 }
