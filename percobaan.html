@@ -434,14 +434,23 @@
     </header>
 
     <div class="category-bar">
-        <a href="#" data-category="semua" class="active">Semua Barang</a>
-        <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
-        <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
-        <a href="#" data-category="Cincin Kekuatan">Cincin Kekuatan</a>
-        <a href="#" data-category="Jimat Pelindung">Jimat Pelindung</a>
-        <a href="#" data-category="Obor Kehidupan">Obor Kehidupan</a>
-        <a href="#" data-category="Tombak Naga">Tombak Naga</a>
-    </div>
+    <a href="#" data-category="semua" class="active">Semua Barang</a>
+    <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
+    <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
+    <a href="#" data-category="Cincin Kekuatan">Cincin Kekuatan</a>
+    <a href="#" data-category="Jimat Pelindung">Jimat Pelindung</a>
+    <a href="#" data-category="Obor Kehidupan">Obor Kehidupan</a>
+    <a href="#" data-category="Tombak Naga">Tombak Naga</a>
+    <span style="color: #ccc; margin-left: 20px;">|</span>
+    <label for="sortOptions" style="color: #eee; margin-right: 5px;">Urutkan:</label>
+    <select id="sortOptions">
+        <option value="">-- Pilih --</option>
+        <option value="termurah">Harga Termurah</option>
+        <option value="termahal">Harga Termahal</option>
+    </select>
+    <a href="#" data-filter="promo" style="margin-left: 15px;">Promo</a>
+    <a href="#" data-filter="best-seller" style="margin-left: 10px;">Best Seller</a>
+</div>
 
     <div class="promo-carousel-container">
         <div class="promo-carousel">
@@ -550,312 +559,320 @@
     <script src="https://kit.fontawesome.com/your_fontawesome_kit_id.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const productCards = document.querySelectorAll('.product-card');
-            const productModal = document.getElementById('productModal');
-            const closeButton = productModal.querySelector('.close-button');
-            const modalImage = document.getElementById('modal-image');
-            const modalTitle = document.getElementById('modal-title');
-            const modalPrice = document.getElementById('modal-price');
-            const modalDescription = document.getElementById('modal-description');
-            const modalAddToCartButton = document.getElementById('modal-add-to-cart');
-            const cartCountElement = document.getElementById('cart-count');
-            const bottomCartCountElement = document.getElementById('bottom-cart-count');
-            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-            const categoryLinks = document.querySelectorAll('.category-bar a');
-            const productList = document.querySelector('.product-list');
-            const allProducts = Array.from(productList.children); // Simpan semua produk awal
-            const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
-            const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
-            const carousel = document.querySelector('.promo-carousel');
-            const carouselImages = carousel ? carousel.querySelectorAll('img') : [];
-            let carouselCounter = 0;
-            const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
-            const carouselContainer = document.querySelector('.promo-carousel-container');
-            let touchStartX = null;
+    const productCards = document.querySelectorAll('.product-card');
+    const productModal = document.getElementById('productModal');
+    const closeButton = productModal.querySelector('.close-button');
+    const modalImage = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalPrice = document.getElementById('modal-price');
+    const modalDescription = document.getElementById('modal-description');
+    const modalAddToCartButton = document.getElementById('modal-add-to-cart');
+    const cartCountElement = document.getElementById('cart-count');
+    const bottomCartCountElement = document.getElementById('bottom-cart-count');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    const categoryLinks = document.querySelectorAll('.category-bar a[data-category]'); // Hanya link kategori
+    const filterLinks = document.querySelectorAll('.category-bar a[data-filter]'); // Link filter promo & best seller
+    const sortOptions = document.getElementById('sortOptions');
+    const productList = document.querySelector('.product-list');
+    const allProducts = Array.from(productList.children); // Simpan semua produk awal
+    const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
+    const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
+    const carousel = document.querySelector('.promo-carousel');
+    const carouselImages = carousel ? carousel.querySelectorAll('img') : [];
+    let carouselCounter = 0;
+    const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
+    const carouselContainer = document.querySelector('.promo-carousel-container');
+    let touchStartX = null;
 
-            // Fungsi untuk mendapatkan keranjang dari localStorage
-            function getCart() {
-                return JSON.parse(localStorage.getItem('keranjang') || '[]');
-            }
+    // Fungsi untuk mendapatkan keranjang dari localStorage
+    function getCart() {
+        return JSON.parse(localStorage.getItem('keranjang') || '[]');
+    }
 
-            // Fungsi untuk menyimpan keranjang ke localStorage
-            function saveCart(cart) {
-                localStorage.setItem('keranjang', JSON.stringify(cart));
-                updateCartCount();
-            }
+    // Fungsi untuk menyimpan keranjang ke localStorage
+    function saveCart(cart) {
+        localStorage.setItem('keranjang', JSON.stringify(cart));
+        updateCartCount();
+    }
 
-            // Fungsi untuk memperbarui tampilan jumlah item di keranjang
-            function updateCartCount() {
-                const cart = getCart();
-                const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
-                cartCountElement.textContent = totalItems;
-                bottomCartCountElement.textContent = totalItems > 0 ? totalItems : 0;
-                bottomCartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
-                cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
-            }
+    // Fungsi untuk memperbarui tampilan jumlah item di keranjang
+    function updateCartCount() {
+        const cart = getCart();
+        const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
+        cartCountElement.textContent = totalItems;
+        bottomCartCountElement.textContent = totalItems > 0 ? totalItems : 0;
+        bottomCartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+    }
 
-            // Inisialisasi jumlah item keranjang saat halaman dimuat
-            updateCartCount();
+    // Inisialisasi jumlah item keranjang saat halaman dimuat
+    updateCartCount();
 
-            function showProductDetails(product) {
-                modalImage.src = product.dataset.image;
-                modalImage.alt = product.dataset.name;
-                modalTitle.textContent = product.dataset.name;
-                modalPrice.textContent = `Rp ${parseInt(product.dataset.price).toLocaleString('id-ID')}`;
-                modalDescription.textContent = product.dataset.description;
-                modalAddToCartButton.dataset.id = product.dataset.id;
-                modalAddToCartButton.dataset.name = product.dataset.name;
-                modalAddToCartButton.dataset.price = product.dataset.price;
-                modalAddToCartButton.dataset.image = product.dataset.image;
-                productModal.style.display = "block";
-            }
+    function showProductDetails(product) {
+        modalImage.src = product.dataset.image;
+        modalImage.alt = product.dataset.name;
+        modalTitle.textContent = product.dataset.name;
+        modalPrice.innerHTML = product.dataset.promo === 'true' && product.dataset.originalPrice
+            ? `<span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp ${parseInt(product.dataset.originalPrice).toLocaleString('id-ID')}</span> Rp ${parseInt(product.dataset.price).toLocaleString('id-ID')}`
+            : `Rp ${parseInt(product.dataset.price).toLocaleString('id-ID')}`;
+        modalDescription.textContent = product.dataset.description;
+        modalAddToCartButton.dataset.id = product.dataset.id;
+        modalAddToCartButton.dataset.name = product.dataset.name;
+        modalAddToCartButton.dataset.price = product.dataset.price;
+        modalAddToCartButton.dataset.image = product.dataset.image;
+        productModal.style.display = "block";
+    }
 
-            function hideProductDetails() {
-                productModal.style.display = "none";
-            }
+    function hideProductDetails() {
+        productModal.style.display = "none";
+    }
 
-            function tambahKeKeranjang(productId, namaProduk, hargaProduk, gambarProduk) {
-                let cart = getCart();
-                const existingItem = cart.find(item => item.id === productId);
+    function tambahKeKeranjang(productId, namaProduk, hargaProduk, gambarProduk) {
+        let cart = getCart();
+        const existingItem = cart.find(item => item.id === productId);
 
-                if (existingItem) {
-                    existingItem.jumlah++;
-                } else {
-                    cart.push({
-                        id: productId,
-                        nama: namaProduk,
-                        harga: hargaProduk,
-                        gambar: gambarProduk,
-                        jumlah: 1
-                    });
-                }
-
-                saveCart(cart);
-                const cartIcon = document.querySelector('.animate-cart');
-                cartIcon.classList.add('animate-cart');
-                setTimeout(() => {
-                    cartIcon.classList.remove('animate-cart');
-                }, 300);
-            }
-
-            function addBadges(productCard) {
-                if (productCard.dataset.bestSeller === 'true') {
-                    const badge = document.createElement('span');
-                    badge.classList.add('badge');
-                    badge.textContent = 'Best Seller';
-                    productCard.appendChild(badge);
-                }
-                if (productCard.dataset.promo === 'true') {
-                    const badge = document.createElement('span');
-                    badge.classList.add('badge', 'promo');
-                    const discount = productCard.dataset.discount ? ` (-${productCard.dataset.discount})` : '';
-                    badge.textContent = 'Promo' + discount;
-                    productCard.appendChild(badge);
-                }
-            }
-
-            function updateProductList(products) {
-    productList.innerHTML = '';
-    products.forEach((productData, index) => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-        productCard.style.animationDelay = `${index * 0.1}s`;
-        productCard.dataset.id = productData.dataset.id;
-        productCard.dataset.name = productData.dataset.name;
-        productCard.dataset.price = productData.dataset.price;
-        productCard.dataset.image = productData.dataset.image;
-        productCard.dataset.description = productData.dataset.description;
-        if (productData.dataset.bestSeller) {
-            productCard.dataset.bestSeller = productData.dataset.bestSeller;
-        }
-        if (productData.dataset.promo) {
-            productCard.dataset.promo = productData.dataset.promo;
-            if (productData.dataset.discount) {
-                productCard.dataset.discount = productData.dataset.discount;
-            }
-            if (productData.dataset.originalPrice) {
-                productCard.dataset.originalPrice = productData.dataset.originalPrice;
-            }
+        if (existingItem) {
+            existingItem.jumlah++;
+        } else {
+            cart.push({
+                id: productId,
+                nama: namaProduk,
+                harga: hargaProduk,
+                gambar: gambarProduk,
+                jumlah: 1
+            });
         }
 
-        let priceDisplay = `Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}`;
-        if (productData.dataset.originalPrice && productData.dataset.promo === 'true') {
-            priceDisplay = `<span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp ${parseInt(productData.dataset.originalPrice).toLocaleString('id-ID')}</span> Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}`;
+        saveCart(cart);
+        const cartIcon = document.querySelector('.cart-icon');
+        cartIcon.classList.add('animate-cart');
+        setTimeout(() => {
+            cartIcon.classList.remove('animate-cart');
+        }, 300);
+    }
+
+    function addBadges(productCard) {
+        const badgesContainer = productCard.querySelector('.badges') || document.createElement('div');
+        badgesContainer.classList.add('badges');
+        productCard.appendChild(badgesContainer);
+        badgesContainer.innerHTML = ''; // Clear previous badges
+
+        if (productCard.dataset.bestSeller === 'true') {
+            const badge = document.createElement('span');
+            badge.classList.add('badge', 'best-seller-badge');
+            badge.textContent = 'Best Seller';
+            badgesContainer.appendChild(badge);
         }
+        if (productCard.dataset.promo === 'true') {
+            const badge = document.createElement('span');
+            badge.classList.add('badge', 'promo-badge');
+            const discountText = productCard.dataset.discount ? ` (-${productCard.dataset.discount})` : '';
+            badge.textContent = 'Promo' + discountText;
+            badgesContainer.appendChild(badge);
+        }
+    }
 
-                    productCard.innerHTML = `
-                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
-                        <h3 class="product-title">${productData.dataset.name}</h3>
-                        <p class="product-price">Rp <span class="math-inline">\{parseInt\(productData\.dataset\.price\)\.toLocaleString\('id\-ID'\)\}</p\>
-<button class\="add\-to\-cart\-btn" data\-id\="</span>{productData.dataset.id}" data-name="<span class="math-inline">\{productData\.dataset\.name\}" data\-price\="</span>{productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
-                    `;
+    function updateProductList(products) {
+        productList.innerHTML = '';
+        if (products.length === 0) {
+            productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai.</p>';
+        } else {
+            products.forEach((productData, index) => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.style.animationDelay = `${index * 0.1}s`;
+                productCard.dataset.id = productData.dataset.id;
+                productCard.dataset.name = productData.dataset.name;
+                productCard.dataset.price = productData.dataset.price;
+                productCard.dataset.image = productData.dataset.image;
+                productCard.dataset.description = productData.dataset.description;
+                if (productData.dataset.bestSeller) {
+                    productCard.dataset.bestSeller = productData.dataset.bestSeller;
+                }
+                if (productData.dataset.promo) {
+                    productCard.dataset.promo = productData.dataset.promo;
+                    if (productData.dataset.discount) {
+                        productCard.dataset.discount = productData.dataset.discount;
+                    }
+                    if (productData.dataset.originalPrice) {
+                        productCard.dataset.originalPrice = productData.dataset.originalPrice;
+                    }
+                }
 
-                    addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
-                    productList.appendChild(productCard);
+                const priceDisplay = productData.dataset.promo === 'true' && productData.dataset.originalPrice
+                    ? `<p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp ${parseInt(productData.dataset.originalPrice).toLocaleString('id-ID')}</span> Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}</p>`
+                    : `<p class="product-price">Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}</p>`;
 
-                    // Tambahkan event listener untuk detail produk (penting untuk elemen baru)
-                    productCard.addEventListener('click', function(event) {
-                        showProductDetails(this);
-                        const rect = this.getBoundingClientRect();
-                        const x = event.clientX - rect.left;
-                        const y = event.clientY - rect.top;
+                productCard.innerHTML = `
+                    <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
+                    <h3 class="product-title">${productData.dataset.name}</h3>
+                    ${priceDisplay}
+                    <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+                `;
 
-                        const ripple = document.createElement('span');
-                        ripple.classList.add('ripple');
-                        ripple.style.left = `${x}px`;
-                        ripple.style.top = `${y}px`;
-                        this.appendChild(ripple);
+                addBadges(productCard);
+                productList.appendChild(productCard);
 
-                        setTimeout(() => {
-                            ripple.remove();
-                        }, 600); // Durasi animasi ripple
-                    });
-
-                    // Tambahkan event listener untuk tombol tambah ke keranjang (penting untuk elemen baru)
-                    const addToCartButton = productCard.querySelector('.add-to-cart-btn');
-                    addToCartButton.addEventListener('click', function(event) {
-                        event.stopPropagation();
-                        const productId = this.dataset.id;
-                        const name = this.dataset.name;
-                        const price = this.dataset.price;
-                        const image = this.dataset.image;
-                        tambahKeKeranjang(productId, name, price, image);
-                    });
-                });
-                productList.classList.remove('filtering');
-            }
-
-            // Tambahkan badge saat halaman pertama kali dimuat
-            const initialProductCards = document.querySelectorAll('.product-card');
-            initialProductCards.forEach(addBadges);
-
-            productCards.forEach(card => {
-                card.addEventListener('click', function(event) {
-                    showProductDetails(this); // Panggil fungsi untuk menampilkan detail
-
+                productCard.addEventListener('click', function(event) {
+                    showProductDetails(this);
                     const rect = this.getBoundingClientRect();
                     const x = event.clientX - rect.left;
                     const y = event.clientY - rect.top;
-
                     const ripple = document.createElement('span');
                     ripple.classList.add('ripple');
                     ripple.style.left = `${x}px`;
                     ripple.style.top = `${y}px`;
                     this.appendChild(ripple);
-
                     setTimeout(() => {
                         ripple.remove();
-                    }, 600); // Durasi animasi ripple
+                    }, 600);
                 });
 
-                const addToCartButton = card.querySelector('.add-to-cart-btn');
-                if (addToCartButton) {
-                    addToCartButton.addEventListener('click', function(event) {
-                        event.stopPropagation();
-                        const productId = this.dataset.id;
-                        const name = this.dataset.name;
-                        const price = this.dataset.price;
-                        const image = this.dataset.image;
-                        tambahKeKeranjang(productId, name, price, image);
-                    });
-                }
+                const addToCartButton = productCard.querySelector('.add-to-cart-btn');
+                addToCartButton.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const productId = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = this.dataset.price;
+                    const image = this.dataset.image;
+                    tambahKeKeranjang(productId, name, price, image);
+                });
             });
+        }
+        productList.classList.remove('filtering');
+    }
 
-            closeButton.addEventListener('click', hideProductDetails);
-            window.addEventListener('click', function(event) {
-                if (event.target === productModal) {
-                    hideProductDetails();
-                }
-            });
+    // Tambahkan badge saat halaman pertama kali dimuat
+    const initialProductCards = document.querySelectorAll('.product-card');
+    initialProductCards.forEach(addBadges);
 
-            modalAddToCartButton.addEventListener('click', function() {
+    productCards.forEach(card => {
+        card.addEventListener('click', function(event) {
+            showProductDetails(this);
+            const rect = this.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            this.appendChild(ripple);
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        const addToCartButton = card.querySelector('.add-to-cart-btn');
+        if (addToCartButton) {
+            addToCartButton.addEventListener('click', function(event) {
+                event.stopPropagation();
                 const productId = this.dataset.id;
                 const name = this.dataset.name;
                 const price = this.dataset.price;
                 const image = this.dataset.image;
                 tambahKeKeranjang(productId, name, price, image);
-                hideProductDetails();
             });
+        }
+    });
 
-            categoryLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const selectedCategory = this.dataset.category;
-                    categoryLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    productList.classList.add('filtering');
-                    setTimeout(() => {
-                        let productsToShow = [];
-                        if (selectedCategory === 'semua') {
-                            productsToShow = allProducts;
-                        } else {
-                            productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
-                        }
-                        updateProductList(productsToShow); // Gunakan fungsi updateProductList
-                    }, 300);
-                });
-            });
+    closeButton.addEventListener('click', hideProductDetails);
+    window.addEventListener('click', function(event) {
+        if (event.target === productModal) {
+            hideProductDetails();
+        }
+    });
 
-            function cariProduk() {
-                const searchTerm = searchInput.value.toLowerCase();
-                productList.innerHTML = '';
-                loadingIndicator.style.display = 'block';
+    modalAddToCartButton.addEventListener('click', function() {
+        const productId = this.dataset.id;
+        const name = this.dataset.name;
+        const price = this.dataset.price;
+        const image = this.dataset.image;
+        tambahKeKeranjang(productId, name, price, image);
+        hideProductDetails();
+    });
+
+    const categoryBar = document.querySelector('.category-bar');
+    if (categoryBar) {
+        categoryBar.addEventListener('click', function(event) {
+            if (event.target.matches('a[data-category]')) {
+                event.preventDefault();
+                const selectedCategory = event.target.dataset.category;
+                categoryLinks.forEach(l => l.classList.remove('active'));
+                event.target.classList.add('active');
+                productList.classList.add('filtering');
                 setTimeout(() => {
-                    const hasilPencarian = allProducts.filter(productCard => {
-                        const namaProduk = productCard.dataset.name.toLowerCase();
-                        const deskripsiProduk = productCard.dataset.description.toLowerCase();
-                        return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
-                    });
-                    if (hasilPencarian.length === 0) {
-                        productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
+                    let productsToShow = [];
+                    if (selectedCategory === 'semua') {
+                        productsToShow = allProducts;
                     } else {
-                        updateProductList(hasilPencarian); // Gunakan fungsi updateProductList
+                        productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
                     }
-                    loadingIndicator.style.display = 'none';
-                }, 500);
-            }
-
-            searchInput.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    cariProduk();
-                }
-            });
-
-            function nextCarouselSlide() {
-                carouselCounter++;
-                if (carouselCounter >= carouselImages.length) {
-                    carouselCounter = 0;
-                }
-                carousel.style.transform = `translateX(-${carouselCounter * 100}%)`;
-            }
-
-            if (carousel && carouselImages.length > 0) {
-                setInterval(nextCarouselSlide, carouselInterval);
-
-                carouselContainer.addEventListener('touchstart', (e) => {
-                    touchStartX = e.touches[0].clientX;
-                });
-
-                carouselContainer.addEventListener('touchend', (e) => {
-                    if (touchStartX === null) {
-                        return;
-                    }
-                    const touchEndX = e.changedTouches[0].clientX;
-                    const diffX = touchStartX - touchEndX;
-
-                    if (diffX > 50) {
-                        nextCarouselSlide(); // Swipe ke kiri
-                    } else if (diffX < -50) {
-                        carouselCounter--;
-                        if (carouselCounter < 0) {
-                            carouselCounter = carouselImages.length - 1;
-                        }
-                        carousel.style.transform = `translateX(-${carouselCounter * 100}%)`; // Swipe ke kanan
-                    }
-                    touchStartX = null;
-                });
+                    updateProductList(productsToShow);
+                }, 300);
             }
         });
+    }
+
+    function cariProduk() {
+        const searchTerm = searchInput.value.toLowerCase();
+        productList.innerHTML = '';
+        loadingIndicator.style.display = 'block';
+        setTimeout(() => {
+            const hasilPencarian = allProducts.filter(productCard => {
+                const namaProduk = productCard.dataset.name.toLowerCase();
+                const deskripsiProduk = productCard.dataset.description.toLowerCase();
+                return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
+            });
+            if (hasilPencarian.length === 0) {
+                productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
+            } else {
+                updateProductList(hasilPencarian);
+            }
+            loadingIndicator.style.display = 'none';
+        }, 500);
+    }
+
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            cariProduk();
+        }
+    });
+
+    function nextCarouselSlide() {
+        carouselCounter++;
+        if (carouselCounter >= carouselImages.length) {
+            carouselCounter = 0;
+        }
+        carousel.style.transform = `translateX(-${carouselCounter * 100}%)`;
+    }
+
+    if (carousel && carouselImages.length > 0) {
+        setInterval(nextCarouselSlide, carouselInterval);
+
+        carouselContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        carouselContainer.addEventListener('touchend', (e) => {
+            if (touchStartX === null) {
+                return;
+            }
+            const touchEndX = e.changedTouches[0].clientX;
+            const diffX = touchStartX - touchEndX;
+
+            if (diffX > 50) {
+                nextCarouselSlide(); // Swipe ke kiri
+            } else if (diffX < -50) {
+                carouselCounter--;
+                if (carouselCounter < 0) {
+                    carouselCounter = carouselImages.length - 1;
+                }
+                carousel.style.transform = `translateX(-${carouselCounter * 100}%)`; // Swipe ke kanan
+            }
+            touchStartX = null;
+        });
+    }
+});
     </script>
 </body>
 </html>
