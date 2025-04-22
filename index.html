@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment-Thomz</title>
+    <link rel="icon" type="image/png" href="https://telegra.ph/file/5418e8dfe89ded1d7953d.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 0;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(to bottom right, #800000, #000000);
+            background-size: 200% 200%;
+            animation: moveGradient 4s infinite alternate;
+            font-size: 1.1rem;
+            overflow: hidden;
+        }
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        #stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0; /* Ditambahkan opacity awal 0 */
+            transition: opacity 1s ease-in-out 5s; /* Muncul setelah animasi welcome selesai (5 detik) */
+        }
+        #stars.visible {
+            opacity: 1;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            will-change: transform;
+            transform: translateZ(0);
+            animation: twinkle 2s infinite alternate, moveStars linear infinite, dynamicSize 2s infinite alternate, dynamicSpeed 3s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        @keyframes moveStars {
+            0% { transform: translateX(0vw); }
+            100% { transform: translateX(-100vw); }
+        }
+        @keyframes dynamicSize {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        @keyframes dynamicSpeed {
+            0% { animation-delay: 0s; }
+            50% { animation-delay: 0.5s; }
+            100% { animation-delay: 1s; }
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.7);
+            width: 90%;
+            max-width: 35rem;
+            overflow-y: auto;
+            max-height: 80vh;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out 5.5s, transform 0.5s ease-out 5.5s; /* Muncul setelah bintang */
+        }
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a7b5ff;
+            margin-bottom: 0.8rem;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.9);
+            font-size: 1.8rem;
+            letter-spacing: 0.08rem;
+            transform-origin: top center;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typeWelcome 2.5s steps(28, end) forwards 0s, slideInDown 0.8s ease-out 5.5s; /* Animasi mengetik */
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease-out 6s, transform 0.5s ease-out 6s; /* Muncul setelah container */
+        }
+        h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes typeWelcome {
+            from {
+                width: 0;
+            }
+            to {
+                width: 28ch;
+            }
+        }
+        p {
+            color: #eee;
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+            text-shadow: 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out 6.5s, transform 0.5s ease-out 6.5s; /* Muncul setelah h1 */
+        }
+        p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .button {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.04rem;
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: #64b5f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.5s ease-out 7s, transform 0.5s ease-out 7s; /* Muncul setelah p */
+            cursor: pointer;
+            border: none;
+            box-shadow: 0.08rem 0.08rem 0.2rem rgba(0, 0, 0, 0.6);
+            width: 85%;
+            max-width: 16rem;
+            margin-top: 0.8rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .button.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease-in-out;
+        }
+        .button:hover::before {
+            left: 100%;
+        }
+        .button:hover {
+            background-color: #42a5f5;
+            transform: scale(1.05);
+            box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.7);
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: #eee;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex-direction: column; /* Pastikan ini ada */
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .store-button {
+            margin-top: 1.5rem;
+            background-color: #2ecc71;
+        }
+        .store-button:hover {
+            background-color: #27ae60;
+        }
+        #welcome-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 2em;
+            font-family: 'Bebas Neue', sans-serif;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink-cursor .75s step-end infinite, typeWelcome 5s steps(28, end) forwards 0s, slideOutLeft 1s ease-in-out forwards 5s; /* Ketik 5 detik, geser setelah 5 detik */
+            z-index: 2;
+            opacity: 1;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+        @keyframes slideOutLeft {
+            0% {
+                transform: translate(-50%, -50%) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) translateX(-100%);
+                opacity: 0;
+            }
+        }
+        @keyframes typeWelcome {
+            from {
+                width: 0;
+            }
+            to {
+                width: 28ch;
+            }
+        }
+        @keyframes blink-cursor {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="welcome-text">Welcome to Payment Thomz</h1>
+    <div id="stars"></div>
+    <div class="container">
+        <h1>Hai Bagaimana Kabarmu</h1>
+        <p>Silahkan klik button di bawah untuk melanjutkan ke payment thomz.</p>
+        <a href="rafi.html" class="button" id="paymentLink">Mulai Pembayaran</a>
+        <a href="comingsoon.html" class="button store-button">Go to Store</a>
+    </div>
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+        Sedang Memuat...
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const starsContainer = document.getElementById('stars');
+            const container = document.querySelector('.container');
+            const welcomeTextElement = document.getElementById('welcome-text');
+            const mainTitleElement = container.querySelector('h1');
+            const mainParagraphElement = container.querySelector('p');
+            const buttons = document.querySelectorAll('.button');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const paymentLink = document.getElementById('paymentLink');
+
+            // Pastikan kelas visible tidak ada di awal
+            starsContainer.classList.remove('visible');
+            container.classList.remove('visible');
+            mainTitleElement.classList.remove('visible');
+            mainParagraphElement.classList.remove('visible');
+            buttons.forEach(button => button.classList.remove('visible'));
+
+            // Urutan animasi
+            setTimeout(() => {
+                // welcomeTextElement dibiarkan dengan opacity 1 dan animasi slideOutLeft berjalan setelah 5 detik
+                setTimeout(() => {
+                    starsContainer.classList.add('visible');
+                    setTimeout(() => {
+                        container.classList.add('visible');
+                        setTimeout(() => {
+                            mainTitleElement.classList.add('visible');
+                            setTimeout(() => {
+                                mainParagraphElement.classList.add('visible');
+                                setTimeout(() => {
+                                    buttons.forEach(button => button.classList.add('visible'));
+                                }, 1000);
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 2000); // Waktu setelah DOMContentLoaded untuk memulai animasi bintang
+            }, 0); // Mulai segera setelah DOMContentLoaded
+
+            // Efek Bintang-Bintang Bergerak (tetap ada)
+            const numStars = 100;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 3 + 1;
+                const speed = Math.random() * 0.5 + 0.1;
+                const delay = Math.random() * 5;
+                const startTop = Math.random() * 100;
+                star.style.width = `${size / 16}rem`;
+                star.style.height = `${size / 16}rem`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${startTop}vh`;
+                star.style.animationDelay = `${delay}s`;
+                star.style.animationDuration = `${10 / speed}s`;
+                starsContainer.appendChild(star);
+            }
+
+            // Efek Loading saat Tombol Diklik
+            paymentLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                loadingOverlay.style.display = 'flex';
+                setTimeout(function() {
+                    window.location.href = 'rafi.html';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

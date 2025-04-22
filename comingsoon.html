@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMING SOON</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 0;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(to bottom right, #800000, #000000);
+            background-size: 200% 200%;
+            animation: moveGradient 4s infinite alternate;
+            font-size: 1.1rem;
+            overflow: hidden;
+        }
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        #stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s ease-in-out 0.5s; /* Muncul setelah sedikit jeda */
+        }
+        #stars.visible {
+            opacity: 1;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            will-change: transform;
+            transform: translateZ(0);
+            animation: twinkle 2s infinite alternate, moveStars linear infinite, dynamicSize 2s infinite alternate, dynamicSpeed 3s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        @keyframes moveStars {
+            0% { transform: translateX(0vw); }
+            100% { transform: translateX(-100vw); }
+        }
+        @keyframes dynamicSize {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        @keyframes dynamicSpeed {
+            0% { animation-delay: 0s; }
+            50% { animation-delay: 0.5s; }
+            100% { animation-delay: 1s; }
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.7);
+            width: 90%;
+            max-width: 30rem;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease-out 2.5s, transform 1s ease-out 2.5s; /* Muncul setelah bintang */
+        }
+        .container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a7b5ff;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.9);
+            font-size: 3rem;
+            letter-spacing: 0.1rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1s ease-out 3.5s, transform 1s ease-out 3.5s; /* Muncul setelah container */
+        }
+        h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div class="container">
+        <h1>COMING SOON</h1>
+    </div>
+    <audio autoplay>
+    <source src="audio/comingsoon.mp3" type="audio/mp3"/>
+    Your browser does not support the audio element.
+</audio>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const starsContainer = document.getElementById('stars');
+    const container = document.querySelector('.container');
+    const comingSoonText = container.querySelector('h1');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
+    // Pastikan tidak terlihat di awal
+    starsContainer.classList.remove('visible');
+    container.classList.remove('visible');
+    comingSoonText.classList.remove('visible');
+
+    setTimeout(() => {
+        starsContainer.classList.add('visible');
+        setTimeout(() => {
+            container.classList.add('visible');
+            setTimeout(() => {
+                comingSoonText.classList.add('visible');
+                // Coba putar musik setelah teks muncul
+                backgroundMusic.play().catch(error => console.error("Autoplay was prevented:", error));
+            }, 1000); // Jeda sebelum teks muncul
+        }, 1500); // Jeda setelah container muncul
+    }, 500); // Jeda setelah DOMContentLoaded
+
+    // Efek Bintang-Bintang Bergerak
+    const numStars = 100;
+    for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        const size = Math.random() * 3 + 1;
+        const speed = Math.random() * 0.5 + 0.1;
+        const delay = Math.random() * 5;
+        const startTop = Math.random() * 100;
+        star.style.width = `${size / 16}rem`;
+        star.style.height = `${size / 16}rem`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${startTop}vh`;
+        star.style.animationDelay = `${delay}s`;
+        star.style.animationDuration = `${10 / speed}s`;
+        starsContainer.appendChild(star);
+    }
+});
+    </script>
+</body>
+</html>

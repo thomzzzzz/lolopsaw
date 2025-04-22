@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Thomvelz</title>
+    <link rel="icon" type="image/png" href="https://telegra.ph/file/5418e8dfe89ded1d7953d.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 0;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(to bottom right, #800000, #000000);
+            background-size: 200% 200%;
+            animation: moveGradient 4s infinite alternate;
+            font-size: 1.1rem;
+            overflow: hidden;
+        }
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        #stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            will-change: transform;
+            animation: twinkle 2s infinite alternate, moveStars linear infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        @keyframes moveStars {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100vw); }
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 3.125rem;
+            border-radius: 0.9375rem;
+            box-shadow: 0 0.375rem 0.9375rem rgba(0, 0, 0, 0.7);
+            width: 90%;
+            max-width: 50rem;
+            overflow-y: auto;
+            max-height: 90vh;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0.1875rem 0.1875rem 0.375rem rgba(0, 0, 0, 0.9);
+            font-size: 2.5rem;
+            letter-spacing: 0.1rem;
+            animation: blink 2s infinite alternate;
+        }
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.8; }
+        }
+        .payment-info {
+            background-color: rgba(30, 30, 50, 0.9);
+            padding: 1.5625rem;
+            border-radius: 0.625rem;
+            margin-bottom: 1.875rem;
+            color: #d0d0d0;
+            border: 0.0625rem solid #777;
+        }
+        .payment-method {
+            margin-bottom: 2rem;
+            border: 0.0625rem solid #777;
+            padding: 1rem;
+            border-radius: 0.625rem;
+            background-color: rgba(128, 0, 0, 0.8);
+            text-align: center;
+            max-width: 45rem;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInScale 0.5s ease-out forwards;
+            transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+            box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.5); /* Shadow awal */
+            -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru */
+        }
+        .payment-method:active { /* Efek menekan ke dalam */
+            box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.7); /* Shadow saat ditekan - lebih tipis */
+            transform: translateY(0.0625rem); /* Sedikit bergerak ke bawah - lebih kecil */
+        }
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .payment-method:hover {
+            transform: translateY(-0.3125rem) scale(1.02);
+            box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        @media (max-width: 600px) {
+            .logo-container {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+        }
+        .payment-logo {
+            max-width: 60px;
+            height: auto;
+            border: 0.125rem solid black;
+            border-radius: 0.3125rem;
+            margin-right: 0.75rem;
+            box-sizing: border-box;
+            box-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease-in-out;
+        }
+        .payment-logo:hover {
+            transform: scale(0.95);
+        }
+        @media (max-width: 600px) {
+            .payment-logo {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+                border-width: 0.0625rem;
+            }
+        }
+        .qris-logo {
+            max-width: 40px;
+        }
+        .payment-method h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a7b5ff;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.9);
+            font-size: 1.2rem;
+            width: auto;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .payment-method h3 {
+                width: 100%;
+                margin-bottom: 0.25rem;
+                text-align: center;
+            }
+        }
+        .payment-method p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .payment-method p strong {
+            font-size: 1.2rem;
+            display: block;
+        }
+        .qr-code-container {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        .qr-code {
+            max-width: 60%;
+            height: auto;
+            border: 0.125rem solid #eee;
+            padding: 0.625rem;
+            border-radius: 0.375rem;
+            background-color: white;
+            box-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+            display: block;
+            margin: 0.375rem auto;
+        }
+        .payment-link {
+            color: #ff8a65;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .payment-link:hover {
+            text-decoration: underline;
+        }
+        /* Tombol Salin */
+        .copy-button {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.05rem;
+            display: block;
+            margin-top: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+        .copy-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease-in-out;
+        }
+        .copy-button:hover::before {
+            left: 100%;
+        }
+        .copy-button:hover {
+            background-color: #43a047;
+            transform: scale(1.02);
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.4);
+        }
+        /* Tombol Konfirmasi */
+        .button {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.05rem;
+            display: inline-block;
+            padding: 0.9375rem 1.875rem;
+            background-color: #64b5f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.625rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.6);
+            width: 80%;
+            max-width: 20rem;
+            margin-top: 1.25rem;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease-in-out;
+        }
+        .button:hover::before {
+            left: 100%;
+        }
+        .button:hover {
+            background-color: #42a5f5;
+            transform: scale(1.05);
+            box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.7);
+        }
+        /* Modal Pop-up untuk QRIS */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            font-family: 'Bebas Neue', sans-serif;
+            background-color: #263238;
+            margin: 15% auto;
+            padding: 1.875rem;
+            border: 0.0625rem
+            solid #555;
+            width: 85%;
+            max-width: 30rem;
+            border-radius: 0.75rem;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+        .close-button {
+            color: #ccc;
+            position: absolute;
+            top: 0.9375rem;
+            right: 1.25rem;
+            font-size: 1.875rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: white;
+            text-decoration: none;
+        }
+        .modal-image {
+            max-width: 95%;
+            height: auto;
+            display: block;
+            margin: 0 auto 1.25rem;
+            border-radius: 0.5rem;
+            border: 0.125rem solid #eee;
+            box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.6);
+        }
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a7b5ff;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.9);
+        }
+        .payment-link {
+            color: #ff8a65;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .payment-link:hover {
+            text-decoration: underline;
+        }
+        footer {
+            font-family: 'Bebas Neue', sans-serif;
+            margin-top: 2.5rem;
+            color: #888;
+            font-size: 0.9rem;
+            text-align: center;
+            text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.8);
+        }
+
+        /* Modal Pop-up Konfirmasi */
+        #konfirmasiModal {
+            display: none;
+            position: fixed;
+            z-index: 1001; /* Lebih tinggi dari modal QRIS jika ada */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        #konfirmasiModal .modal-content {
+            background-color: #263238;
+            margin: 15% auto;
+            padding: 1.875rem;
+            border: 0.0625rem solid #555;
+            width: 85%;
+            max-width: 30rem;
+            border-radius: 0.75rem;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+        #konfirmasiModal .close-button {
+            color: #ccc;
+            position: absolute;
+            top: 0.9375rem;
+            right: 1.25rem;
+            font-size: 1.875rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        #konfirmasiModal .close-button:hover,
+        #konfirmasiModal .close-button:focus {
+            color: white;
+            text-decoration: none;
+        }
+        #konfirmasiModal .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a7b5ff;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.9);
+        }
+        #konfirmasiModal label {
+            text-align: left;
+        }
+        #konfirmasiModal textarea {
+            margin-bottom: 1rem;
+            rows: 2; /* Diperkecil menjadi 2 baris */
+        }
+        #konfirmasiModal input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 0.0625rem solid #777;
+            border-radius: 0.3125rem;
+            background-color: #333;
+            color: #eee;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        #konfirmasiModal .button {
+            max-width: none; /* Override max-width */
+        }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div class="container">
+        <h1>WELCOME TO PAYMENT THOMZ</h1>
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+            <img src="https://telegra.ph/file/5418e8dfe89ded1d7953d.jpg" alt="Logo Utama Galaksi" style="max-width: 150px; height: auto; border: 0.125rem solid #080808; border-radius: 0.3125rem; box-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.3);">
+        </div>
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+        <p style="color: #eee; font-size: 1rem; margin-bottom: 0.5rem;">Sosial media Thomz:</p>
+        <a href="https://www.youtube.com/@thomvelz1720" target="_blank" rel="noopener noreferrer" style="margin-right: 1rem;">
+            <img src="image/logo-youtube.png" alt="YouTube" style="width: 40px; height: auto; vertical-align: middle;">
+        </a>
+        <a href="https://www.instagram.com/thomvelz_real" target="_blank" rel="noopener noreferrer" style="margin-right: 1rem;">
+            <img src="image/logo-instagram.png" alt="Instagram" style="width: 40px; height: auto; vertical-align: middle;">
+        </a>
+        <a href="https://www.tiktok.com/@thomzstore" target="_blank" rel="noopener noreferrer">
+            <img src="image/logo-tiktok.png" alt="WhatsApp" style="width: 40px; height: auto; vertical-align: middle;">
+        </a>
+        <a href="https://whatsapp.com/channel/0029ValyUHbLY6d0eixvIL3P" target="_blank" rel="noopener noreferrer">
+            <img src="image/logo-whatsapp.png" alt="WhatsApp" style="width: 40px; height: auto; vertical-align: middle;">
+        </a>
+    </div>
+    <div class="payment-info">
+            <p style="font-size: 1.125rem;">Pilih metode pembayaran di bawah:</p>
+        </div>
+        <div class="payment-method">
+            <div class="logo-container">
+                <img src="image/logo-dana.png" alt="Logo DANA" class="payment-logo">
+                <h3>DANA</h3>
+            </div>
+            <p id="dana-number">Nomor : <strong style="display: block;">083834510927</strong></p>
+            <button class="copy-button" data-target="dana-number">Salin</button>
+        </div>
+        <div class="payment-method">
+            <div class="logo-container">
+                <img src="image/logo-gopay.png" alt="Logo GoPay" class="payment-logo">
+                <h3>GoPay</h3>
+            </div>
+            <p id="dana-number">Nomor : <strong style="display: block;">083169231840</strong></p>
+            <button class="copy-button" data-target="dana-number">Salin</button>
+        </div>
+        <div class="payment-method">
+            <div class="logo-container">
+                <img src="image/logo-ovo.png" alt="Logo OVO" class="payment-logo">
+                <h3>OVO</h3>
+            </div>
+            <p id="dana-number">Nomor : <strong style="display: block;">083169231840</strong></p>
+            <button class="copy-button" data-target="dana-number">Salin</button>
+        </div>
+        <div id="qris-payment" class="payment-method">
+            <div class="logo-container">
+                <img src="image/logo-qris.png" alt="Logo QRIS" class="payment-logo qris-logo">
+                <h3>QRIS</h3>
+            </div>
+            <p>Pindai QR kode di bawah ini dengan perangkat pembayaran Anda:</p>
+            <div class="qr-code-container">
+                <img src="image/qris.jpg" alt="QR Code All Payment" class="qr-code" id="qris-image">
+                <p style="font-size: 0.9rem; margin-top: 0.3125rem;">(Klik gambar untuk menampilkan kode lebih besar)</p>
+            </div>
+            <p style="font-size: 0.9rem; margin-top: 0.625rem;"><a href="." target="_blank" class="payment-link">Pelajari lebih lanjut cara pembayaran QRIS</a></p>
+        </div>
+        <p style="color: #ccc; font-size: 0.9rem; margin-top: 1.875rem;">Setelah pembayaran silahkan klik button di bawah dan sertakan bukti transfer anda</p>
+        <a href="#" id="whatsapp-konfirmasi" class="button" target="_blank" rel="noopener noreferrer">Konfirmasi Pembayaran via WhatsApp</a>
+        <footer>
+            <p>&copy; 2025 Web pembayaran Thomz </p>
+        </footer>
+    </div>
+    <audio autoplay>
+    <source src="audio/rafi.mp3" type="audio/mp3"/>
+    Your browser does not support the audio element.
+</audio>
+    <div id="qrisModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Aktivasi Kode QRIS</h2>
+            <img src="image/qris.jpg" alt="QR Code All Payment Large" class="modal-image" id="qrisImageDownload">
+            <p style="color: #eee; font-size: 1rem; margin-bottom: 1rem;">Arahkan pemindai Anda ke QR kode ini untuk pembayaran.</p>
+            <button id="downloadQrCodeBtn" class="button">Unduh Gambar QRIS</button>
+        </div>
+    </div>
+    <div id="konfirmasiModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeKonfirmasiModal">&times;</span>
+            <h2 class="modal-title">Konfirmasi Pembayaran</h2>
+            <label for="modal-nominal" style="color: #eee; display: block; margin-bottom: 0.5rem; text-align: left;">Nominal Pembayaran:</label>
+            <input type="number" id="modal-nominal" name="modal-nominal" style="width: 100%; padding: 0.5rem; border: 0.0625rem solid #777; border-radius: 0.3125rem; background-color: #333; color: #eee; box-sizing: border-box; font-family: sans-serif; font-size: 1rem; margin-bottom: 1rem;">
+
+            <label for="modal-bukti-transfer-text" style="color: #eee; display: block; margin-bottom: 0.5rem; text-align: left;">Barang yang di beli:</label>
+            <textarea id="modal-bukti-transfer-text" name="modal-bukti-transfer-text" rows="2" style="width: 100%; padding: 0.5rem; border: 0.0625rem solid #777; border-radius: 0.3125rem; background-color: #333; color: #eee; box-sizing: border-box; font-family: sans-serif; font-size: 1rem; margin-bottom: 1rem;"></textarea>
+
+            <button id="kirim-whatsapp" class="button" style="width: 80%; max-width: none;">Kirim via WhatsApp</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efek Bintang-Bintang Bergerak
+            const starsContainer = document.getElementById('stars');
+            const numStars = 100;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 3 + 1;
+                const speed = Math.random() * 0.5 + 0.1;
+                const delay = Math.random() * 5;
+                const startTop = Math.random() * 100;
+                star.style.width = `${size / 16}rem`;
+                star.style.height = `${size / 16}rem`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${startTop}vh`;
+                star.style.animationDelay = `${delay}s`;
+                star.style.animationDuration = `${10 / speed}s`;
+                starsContainer.appendChild(star);
+            }
+            // Modal Pop-up QRIS (Sederhana)
+            var modal = document.getElementById("qrisModal");
+            var qrisImage = document.getElementById("qris-image");
+            var closeButton = document.querySelector(".modal .close-button");
+            if (qrisImage) {
+                qrisImage.addEventListener('click', function() {
+                    console.log('Gambar QRIS diklik');
+                    if (modal) {
+                        modal.style.display = "block"; // Tampilkan modal
+                    } else {
+                        console.error('Elemen modal QRIS tidak ditemukan');
+                    }
+                });
+            } else {
+                console.error('Elemen gambar QRIS tidak ditemukan');
+            }
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    console.log('Tombol close modal diklik');
+                    if (modal) {
+                        modal.style.display = "none"; // Sembunyikan modal
+                    } else {
+                        console.error('Elemen modal QRIS tidak ditemukan');
+                    }
+                });
+            } else {
+                console.error('Tombol close modal tidak ditemukan');
+            }
+            window.addEventListener('click', function(event) {
+                if (event.target == modal) {
+                    if (modal) {
+                        modal.style.display = "none"; // Sembunyikan modal jika klik di luar
+                    } else {
+                        console.error('Elemen modal QRIS tidak ditemukan');
+                    }
+                }
+            });
+            // Fitur Download Gambar QRIS
+            const downloadQrCodeBtn = document.getElementById('downloadQrCodeBtn');
+            const qrisImageDownload = document.getElementById('qrisImageDownload');
+            if (downloadQrCodeBtn && qrisImageDownload) {
+                downloadQrCodeBtn.addEventListener('click', function() {
+                    const imageUrl = qrisImageDownload.src;
+                    const link = document.createElement('a');
+                    link.href = imageUrl;
+                    link.download = 'qrcode_pembayaran.jpg';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+            } else {
+                console.error('Tombol download atau gambar QRIS untuk download tidak ditemukan');
+            }
+            // Efek "Menekan ke Dalam" dan Getar pada Kotak Payment
+            const paymentMethods = document.querySelectorAll('.payment-method');
+
+            paymentMethods.forEach(method => {
+                method.addEventListener('touchstart', function() {
+                    this.classList.add('active'); // Tambahkan kelas 'active' untuk efek menekan
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50); // Getar selama 50 milidetik
+                    }
+                });
+
+                method.addEventListener('touchend', function() {
+                    this.classList.remove('active'); // Hapus kelas 'active' setelah sentuhan berakhir
+                });
+
+                // Tambahkan juga untuk pengguna desktop (opsional)
+                method.addEventListener('mousedown', function() {
+                    this.classList.add('active'); // Tambahkan kelas 'active' untuk efek menekan
+                    if (navigator.vibrate) { navigator.vibrate(30); // Getar lebih singkat untuk klik mouse
+                    }
+                });
+
+                method.addEventListener('mouseup', function() {
+                    this.classList.remove('active'); // Hapus kelas 'active' setelah klik berakhir
+                });
+            });
+
+            // Fitur Salin ke Clipboard
+            const copyButtons = document.querySelectorAll('.copy-button');
+
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    let textToCopy = '';
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        textToCopy = targetElement.textContent;
+                    } else if (targetId === 'bank-number') {
+                        const rek = document.getElementById('bank-number-rek').textContent.split(': ')[1];
+                        const nama = document.getElementById('bank-name').textContent.split(': ')[1];
+                        textToCopy = `${rek} ${nama}`;
+                    }
+                    if (textToCopy) {
+                        navigator.clipboard.writeText(textToCopy)
+                            .then(() => {
+                                alert(`"${textToCopy}" berhasil disalin!`);
+                            })
+                            .catch(err => {
+                                console.error('Gagal menyalin teks: ', err);
+                                alert('Gagal menyalin teks. Harap coba lagi.');
+                            });
+                    } else {
+                        alert('Teks yang ingin disalin tidak ditemukan.');
+                    }
+                });
+            });
+
+            // Fitur WhatsApp dengan Input Pembeli (Muncul sebagai modal)
+            const tombolWhatsAppKonfirmasi = document.getElementById('whatsapp-konfirmasi');
+            const konfirmasiModal = document.getElementById('konfirmasiModal');
+            const closeKonfirmasiModal = document.getElementById('closeKonfirmasiModal');
+            const kirimWhatsappButton = document.getElementById('kirim-whatsapp');
+            const nominalPembayaranInput = document.getElementById('modal-nominal');
+            const buktiTransferTextInput = document.getElementById('modal-bukti-transfer-text');
+            const nomorWhatsApp = "6281234567890"; // Ganti dengan nomor WhatsApp Anda
+
+            if (tombolWhatsAppKonfirmasi && konfirmasiModal && closeKonfirmasiModal && kirimWhatsappButton && nominalPembayaranInput && buktiTransferTextInput) {
+                tombolWhatsAppKonfirmasi.addEventListener('click', function(event) {
+                    event.preventDefault(); // Mencegah tautan '#' melakukan apa pun
+                    konfirmasiModal.style.display = "block"; // Tampilkan modal konfirmasi
+                });
+
+                closeKonfirmasiModal.addEventListener('click', function() {
+                    konfirmasiModal.style.display = "none"; // Sembunyikan modal konfirmasi
+                });
+
+                window.addEventListener('click', function(event) {
+                    if (event.target == konfirmasiModal) {
+                        konfirmasiModal.style.display = "none"; // Sembunyikan modal jika klik di luar
+                    }
+                });
+
+                kirimWhatsappButton.addEventListener('click', function() {
+                    const nominalPembayaran = nominalPembayaranInput.value;
+                    const pesanPembeliText = buktiTransferTextInput.value;
+                    const pesanWhatsApp = `Konfirmasi Pembayaran\nNominal: ${nominalPembayaran}\nBukti Transfer/Detail: ${pesanPembeliText}`;
+
+                    const pesanTerencode = encodeURIComponent(pesanWhatsApp);
+                    const tautanWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesanTerencode}`;
+
+                    window.open(tautanWhatsApp, '_blank'); // Buka WhatsApp
+                    konfirmasiModal.style.display = "none"; // Sembunyikan modal setelah mengirim
+                });
+            } else {
+                console.error('Salah satu elemen modal konfirmasi tidak ditemukan.');
+            }
+        });
+    </script>
+</body>
+</html>
