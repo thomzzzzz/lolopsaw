@@ -6,9 +6,9 @@
     <title>InfernoShop - Gaya Merah Hitam</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
+    <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -34,8 +34,8 @@
             z-index: 100;
         }
         .logo {
-            font-family: 'Bebas+Neue', sans-serif;
-            font-size: 1.5em; /* Lebih kecil untuk HP */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5em;
             font-weight: bold;
             letter-spacing: 1px;
         }
@@ -46,13 +46,13 @@
             display: flex;
             align-items: center;
             flex-grow: 1;
-            margin: 0 10px; /* Margin lebih kecil untuk HP */
+            margin: 0 10px;
         }
         .search-bar input[type="text"] {
             background: transparent;
             border: none;
             color: #ddd;
-            font-size: 0.9em; /* Lebih kecil untuk HP */
+            font-size: 0.9em;
             flex-grow: 1;
             margin-right: 8px;
         }
@@ -61,12 +61,12 @@
             border: none;
             color: #ddd;
             cursor: pointer;
-            font-size: 1em; /* Lebih kecil untuk HP */
+            font-size: 1em;
         }
         .cart-icon {
             position: relative;
             color: #ddd;
-            font-size: 1.3em; /* Lebih kecil untuk HP */
+            font-size: 1.3em;
             transition: color 0.3s ease, transform 0.2s ease-in-out;
             margin-left: 10px;
         }
@@ -94,7 +94,7 @@
             overflow-x: auto;
             white-space: nowrap;
             border-bottom: 1px solid #333;
-            font-size: 0.8em; /* Lebih kecil untuk HP */
+            font-size: 0.8em;
         }
         .category-bar a {
             color: #ccc;
@@ -123,14 +123,14 @@
         .product-list {
             padding: 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Kolom lebih sempit untuk HP */
-            gap: 10px; /* Gap lebih kecil untuk HP */
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
             flex-grow: 1;
         }
         .product-card {
             background-color: #222;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Shadow lebih halus untuk HP */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             padding: 10px;
             text-align: center;
             transition: transform 0.2s ease-in-out;
@@ -139,7 +139,7 @@
             overflow: hidden;
         }
         .product-card:hover {
-            transform: scale(1.01); /* Skala hover lebih kecil untuk HP */
+            transform: scale(1.01);
         }
         .product-card img {
             max-width: 100%;
@@ -149,31 +149,33 @@
             border: 1px solid #444;
         }
         .product-title {
+            font-family: 'Montserrat', sans-serif;
             font-weight: bold;
             margin-bottom: 5px;
             color: #eee;
-            font-size: 0.9em; /* Lebih kecil untuk HP */
+            font-size: 0.9em;
         }
         .product-price {
             color: #ffaa80;
             font-weight: bold;
-            font-size: 1em; /* Lebih kecil untuk HP */
+            font-size: 1em;
         }
         .add-to-cart-btn {
+            font-family: 'Montserrat', sans-serif;
             background-color: #800000;
             color: white;
             border: none;
             padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 8px;
-            font-size: 0.8em; /* Lebih kecil untuk HP */
+            margin-top: 5px;
+            font-size: 0.8em;
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
             width: 100%;
         }
         .add-to-cart-btn:hover {
             background-color: #aa0000;
-            transform: scale(1.01); /* Skala hover lebih kecil untuk HP */
+            transform: scale(1.01);
         }
         .badge {
             position: absolute;
@@ -183,7 +185,7 @@
             color: #222;
             padding: 3px 6px;
             border-radius: 4px;
-            font-size: 0.7em; /* Lebih kecil untuk HP */
+            font-size: 0.7em;
             font-weight: bold;
             z-index: 1;
         }
@@ -204,17 +206,17 @@
         }
         .modal-content {
             background-color: #333;
-            margin: 30px auto; /* Margin lebih besar di atas dan bawah untuk HP */
+            margin: 30px auto;
             padding: 15px;
             border-radius: 8px;
-            width: 90%; /* Lebar modal lebih besar untuk HP */
-            max-width: 400px; /* Max width lebih kecil untuk HP */
+            width: 90%;
+            max-width: 400px;
             position: relative;
         }
         .close-button {
             color: #aaa;
             float: right;
-            font-size: 24px; /* Lebih kecil untuk HP */
+            font-size: 24px;
             font-weight: bold;
         }
         #modal-image {
@@ -225,36 +227,38 @@
             border: 1px solid #555;
         }
         #modal-title {
+            font-family: 'Montserrat', sans-serif;
             color: #eee;
-            font-size: 1.2em; /* Lebih kecil untuk HP */
-            margin-bottom: 8px;
+            font-size: 1.1em;
+            margin-bottom: 5px;
         }
         #modal-price {
             color: #ffaa80;
             font-weight: bold;
-            font-size: 1.1em; /* Lebih kecil untuk HP */
+            font-size: 1em;
             margin-bottom: 10px;
         }
         #modal-description {
             color: #ccc;
-            line-height: 1.4; /* Line height lebih rapat untuk HP */
-            margin-bottom: 15px;
-            font-size: 0.9em; /* Lebih kecil untuk HP */
+            line-height: 1.4;
+            margin-bottom: 12px;
+            font-size: 0.8em;
         }
         .modal-add-to-cart {
+            font-family: 'Montserrat', sans-serif;
             background-color: #aa0000;
             color: white;
             border: none;
             padding: 10px 15px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9em; /* Lebih kecil untuk HP */
+            font-size: 0.8em;
             width: 100%;
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
         }
         .modal-add-to-cart:hover {
             background-color: #cc0000;
-            transform: scale(1.01); /* Skala hover lebih kecil untuk HP */
+            transform: scale(1.01);
         }
         #loading-indicator {
             display: none;
@@ -263,19 +267,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #eee;
-            font-size: 1em; /* Lebih kecil untuk HP */
+            font-size: 1em;
         }
         .bottom-navigation {
             background-color: rgba(0, 0, 0, 0.8);
             border-top: 1px solid #555;
-            padding: 8px 0;
+            padding: 12px 0;
             display: flex;
             justify-content: space-around;
             position: fixed;
             bottom: 0;
             width: 100%;
             z-index: 100;
-            font-size: 0.7em; /* Lebih kecil untuk HP */
+            font-size: 0.8em;
         }
         .bottom-navigation a {
             color: #ccc;
@@ -286,25 +290,25 @@
             transition: color 0.3s ease, transform 0.2s ease-in-out;
             flex-grow: 1;
             justify-content: center;
-            padding: 5px 0; /* Padding lebih kecil untuk HP */
+            padding: 8px 0;
         }
         .bottom-navigation a:hover {
             color: #fff;
-            transform: translateY(-1px); /* Efek hover lebih halus untuk HP */
+            transform: translateY(-1px);
         }
         .bottom-navigation a i {
-            font-size: 1.2em; /* Lebih kecil untuk HP */
-            margin-bottom: 3px;
+            font-size: 1.6em;
+            margin-bottom: 5px;
         }
         .bottom-navigation a span {
-            font-size: 0.8em; /* Sudah sesuai */
+            font-size: 0.9em;
         }
         .footer {
             background-color: #333;
             color: #ddd;
             text-align: center;
             padding: 10px;
-            font-size: 0.8em; /* Lebih kecil untuk HP */
+            font-size: 0.8em;
             margin-top: auto;
         }
         .footer a {
@@ -386,8 +390,8 @@
                 font-size: 0.9em;
             }
             .add-to-cart-btn {
-                padding: 6px 10px;
                 font-size: 0.7em;
+                padding: 6px 10px;
                 margin-top: 5px;
             }
             .badge {
@@ -416,16 +420,22 @@
                 margin-bottom: 12px;
             }
             .modal-add-to-cart {
-                padding: 8px 12px;
                 font-size: 0.8em;
+                padding: 8px 12px;
             }
             .bottom-navigation {
-                font-size: 0.6em;
-                padding: 5px 0;
+                font-size: 0.9em;
+                padding: 15px 0;
+            }
+            .bottom-navigation a {
+                padding: 10px 0;
             }
             .bottom-navigation a i {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+            .bottom-navigation a span {
                 font-size: 1em;
-                margin-bottom: 2px;
             }
             .footer {
                 padding: 8px;
@@ -479,7 +489,7 @@
             <img src="images/topeng1.jpg" alt="Topeng Tengkorak">
             <h3 class="product-title">Topeng Tengkorak</h3>
             <p class="product-price">Rp 90.000</p>
-            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambambahkan</button>
+            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambahkan</button>
         </div>
         <div class="product-card" data-id="4" data-name="Obor Abadi" data-price="125000" data-image="images/obor1.jpg" data-description="Obor yang apinya tak pernah padam, menerangi jalan dalam kegelapan.">
             <img src="images/obor1.jpg" alt="Obor Abadi">
@@ -679,10 +689,10 @@
                     }
 
                     productCard.innerHTML = `
-                        <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
-                        <h3 class="product-title">${productData.dataset.name}</h3>
-                        <p class="product-price">${priceDisplay}</p>
-                        <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
+                        <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
+<p class\="product\-price"\></span>{priceDisplay}</p>
+                        <button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>
                     `;
 
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
