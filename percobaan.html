@@ -487,7 +487,7 @@
             <p class="product-price">Rp 95.000</p>
             <button class="add-to-cart-btn" data-id="6" data-name="Topeng Tengkorak" data-price="95000" data-image="images/topeng2.jpg">Tambahkan</button>
         </div>
-        </div>
+    </div>
 
     <div id="loading-indicator" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #eee; font-size: 1.2em;">
         <i class="fas fa-spinner fa-spin"></i> Mencari Produk...
@@ -722,10 +722,10 @@
                 const productId = this.dataset.id;
                 const name = this.dataset.name;
                 const price = this.dataset.price;
-                    const image = this.dataset.image;
-                    tambahKeKeranjang(productId, name, price, image);
-                    hideProductDetails();
-                });
+                const image = this.dataset.image;
+                tambahKeKeranjang(productId, name, price, image);
+                hideProductDetails();
+            });
 
             filterLinks.forEach(link => {
                 link.addEventListener('click', function(event) {
@@ -741,8 +741,10 @@
                         let productsToShow = [];
                         if (selectedFilter === 'promo') {
                             productsToShow = allProducts.filter(product => product.dataset.promo === 'true');
-                        } else if (selectedFilter === 'best-seller') {
+                        } else if (selectedFilter === 'best-seller')  {
                             productsToShow = allProducts.filter(product => product.dataset.bestSeller === 'true');
+                        } else {
+                            productsToShow = allProducts; // Jika filter tidak dikenali, tampilkan semua
                         }
                         updateProductList(productsToShow);
                     }, 300);
@@ -753,16 +755,18 @@
                 link.addEventListener('click', function(event) {
                     event.preventDefault();
                     const selectedCategory = this.dataset.category;
+
                     categoryLinks.forEach(l => l.classList.remove('active'));
                     filterLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
+
                     productList.classList.add('filtering');
                     setTimeout(() => {
                         let productsToShow = [];
                         if (selectedCategory === 'semua') {
                             productsToShow = allProducts;
                         } else {
-                            productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
+                            productsToShow = allProducts.filter(product => product.dataset.name.toLowerCase().includes(selectedCategory.toLowerCase()));
                         }
                         updateProductList(productsToShow);
                     }, 300);
@@ -782,7 +786,7 @@
                     if (hasilPencarian.length === 0) {
                         productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
                     } else {
-                        updateProductList(hasilPencarian); // Gunakan fungsi updateProductList
+                        updateProductList(hasilPencarian); // Gunakan fungsi updateProductList yang sudah diperbaiki
                     }
                     loadingIndicator.style.display = 'none';
                 }, 500);
