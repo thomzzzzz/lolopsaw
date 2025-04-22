@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>p</title>
+    <title>Toko Online Anda - Gaya Merah Hitam (Mobile)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Gaya CSS yang Lebih Baik untuk Mobile dengan Animasi */
+        /* Gaya CSS (sama seperti sebelumnya) */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -531,7 +531,6 @@
     </footer>
 
     <script>
-       <script>
         document.addEventListener('DOMContentLoaded', function() {
             const productModal = document.getElementById('productModal');
             const closeButton = productModal.querySelector('.close-button');
@@ -555,18 +554,18 @@
             const carouselContainer = document.querySelector('.promo-carousel-container');
             let touchStartX = null;
 
-            // Fungsi untuk mendapatkan keranjang dari localStorage (tetap ada)
+            // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
                 return JSON.parse(localStorage.getItem('keranjang') || '[]');
             }
 
-            // Fungsi untuk menyimpan keranjang ke localStorage (tetap ada)
+            // Fungsi untuk menyimpan keranjang ke localStorage
             function saveCart(cart) {
                 localStorage.setItem('keranjang', JSON.stringify(cart));
                 updateCartCount();
             }
 
-            // Fungsi untuk memperbarui tampilan jumlah item di keranjang (tetap ada)
+            // Fungsi untuk memperbarui tampilan jumlah item di keranjang
             function updateCartCount() {
                 const cart = getCart();
                 const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
@@ -576,10 +575,9 @@
                 cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
             }
 
-            // Inisialisasi jumlah item keranjang saat halaman dimuat (tetap ada)
+            // Inisialisasi jumlah item keranjang saat halaman dimuat
             updateCartCount();
 
-            // Fungsi untuk menampilkan detail produk (tetap ada)
             function showProductDetails(product) {
                 modalImage.src = product.dataset.image;
                 modalImage.alt = product.dataset.name;
@@ -593,12 +591,10 @@
                 productModal.style.display = "block";
             }
 
-            // Fungsi untuk menyembunyikan detail produk (tetap ada)
             function hideProductDetails() {
                 productModal.style.display = "none";
             }
 
-            // Fungsi untuk menambahkan ke keranjang (tetap ada)
             function tambahKeKeranjang(productId, namaProduk, hargaProduk, gambarProduk) {
                 let cart = getCart();
                 const existingItem = cart.find(item => item.id === productId);
@@ -623,7 +619,6 @@
                 }, 300);
             }
 
-            // Fungsi untuk menambahkan badge (tetap ada)
             function addBadges(productCard) {
                 if (productCard.dataset.bestSeller === 'true') {
                     const badge = document.createElement('span');
@@ -640,7 +635,6 @@
                 }
             }
 
-            // Fungsi untuk memperbarui tampilan daftar produk (PERUBAHAN DI SINI)
             function updateProductList(products) {
                 productList.innerHTML = '';
                 products.forEach((productData, index) => {
@@ -658,7 +652,7 @@
                     if (productData.dataset.promo) {
                         productCard.dataset.promo = productData.dataset.promo;
                         if (productData.dataset.discount) {
-                            productCard.dataset.discount = productData.dataset.discount;
+                            productData.dataset.discount = productData.dataset.discount;
                         }
                         if (productData.dataset.originalPrice) {
                             productData.dataset.originalPrice = productData.dataset.originalPrice;
@@ -671,10 +665,10 @@
                     }
 
                     productCard.innerHTML = `
-                        <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
-                        <h3 class="product-title">${productData.dataset.name}</h3>
-                        <p class="product-price">${priceDisplay}</p>
-                        <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
+                        <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
+<p class\="product\-price"\></span>{priceDisplay}</p>
+                        <button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>
                     `;
 
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
@@ -686,7 +680,7 @@
             // Panggil updateProductList di awal untuk menampilkan produk
             updateProductList(allProducts);
 
-            // Delegasi event listener untuk menampilkan detail produk (tetap ada)
+            // Delegasi event listener untuk menampilkan detail produk
             productList.addEventListener('click', function(event) {
                 const target = event.target.closest('.product-card');
                 if (target) {
@@ -707,7 +701,7 @@
                 }
             });
 
-            // Delegasi event listener untuk tombol tambah ke keranjang (tetap ada)
+            // Delegasi event listener untuk tombol tambah ke keranjang
             productList.addEventListener('click', function(event) {
                 if (event.target.classList.contains('add-to-cart-btn')) {
                     const button = event.target;
