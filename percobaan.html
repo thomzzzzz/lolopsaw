@@ -433,11 +433,6 @@
         </nav>
     </header>
 
-    <div class="category-bar">
-        <a href="#" data-filter="promo">Promo</a>
-        <a href="#" data-filter="best-seller">Best Seller</a>
-    </div>
-
     <div class="promo-carousel-container">
         <div class="promo-carousel">
             <img src="images/banner1.jpg" alt="Promo Banner 1">
@@ -536,6 +531,7 @@
             const modalAddToCartButton = document.getElementById('modal-add-to-cart');
             const cartCountElement = document.getElementById('cart-count');
             const bottomCartCountElement = document.getElementById('bottom-cart-count');
+            const categoryLinks = document.querySelectorAll('.category-bar a[data-category]');
             const filterLinks = document.querySelectorAll('.category-bar a[data-filter]');
             const productList = document.querySelector('.product-list');
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
@@ -548,18 +544,18 @@
             const carouselContainer = document.querySelector('.promo-carousel-container');
             let touchStartX = null;
 
-            // Fungsi untuk mendapatkan keranjang dari localStorage
+            // Fungsi untuk mendapatkan keranjang dari localStorage (tetap ada)
             function getCart() {
                 return JSON.parse(localStorage.getItem('keranjang') || '[]');
             }
 
-            // Fungsi untuk menyimpan keranjang ke localStorage
+            // Fungsi untuk menyimpan keranjang ke localStorage (tetap ada)
             function saveCart(cart) {
                 localStorage.setItem('keranjang', JSON.stringify(cart));
                 updateCartCount();
             }
 
-            // Fungsi untuk memperbarui tampilan jumlah item di keranjang
+            // Fungsi untuk memperbarui tampilan jumlah item di keranjang (tetap ada)
             function updateCartCount() {
                 const cart = getCart();
                 const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
@@ -569,9 +565,10 @@
                 cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
             }
 
-            // Inisialisasi jumlah item keranjang saat halaman dimuat
+            // Inisialisasi jumlah item keranjang saat halaman dimuat (tetap ada)
             updateCartCount();
 
+            // Fungsi untuk menampilkan detail produk (tetap ada)
             function showProductDetails(product) {
                 modalImage.src = product.dataset.image;
                 modalImage.alt = product.dataset.name;
@@ -585,10 +582,12 @@
                 productModal.style.display = "block";
             }
 
+            // Fungsi untuk menyembunyikan detail produk (tetap ada)
             function hideProductDetails() {
                 productModal.style.display = "none";
             }
 
+            // Fungsi untuk menambahkan ke keranjang (tetap ada)
             function tambahKeKeranjang(productId, namaProduk, hargaProduk, gambarProduk) {
                 let cart = getCart();
                 const existingItem = cart.find(item => item.id === productId);
@@ -613,6 +612,7 @@
                 }, 300);
             }
 
+            // Fungsi untuk menambahkan badge (tetap ada)
             function addBadges(productCard) {
                 if (productCard.dataset.bestSeller === 'true') {
                     const badge = document.createElement('span');
@@ -629,6 +629,7 @@
                 }
             }
 
+            // Fungsi untuk memperbarui tampilan daftar produk (PERUBAHAN DI SINI)
             function updateProductList(products) {
                 productList.innerHTML = '';
                 products.forEach((productData, index) => {
@@ -646,7 +647,7 @@
                     if (productData.dataset.promo) {
                         productCard.dataset.promo = productData.dataset.promo;
                         if (productData.dataset.discount) {
-                            productData.dataset.discount = productData.dataset.discount;
+                            productCard.dataset.discount = productData.dataset.discount;
                         }
                         if (productData.dataset.originalPrice) {
                             productData.dataset.originalPrice = productData.dataset.originalPrice;
@@ -659,10 +660,10 @@
                     }
 
                     productCard.innerHTML = `
-                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
-                        <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
-<p class\="product\-price"\></span>{priceDisplay}</p>
-                        <button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>
+                        <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
+                        <h3 class="product-title">${productData.dataset.name}</h3>
+                        <p class="product-price">${priceDisplay}</p>
+                        <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
                     `;
 
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
@@ -674,7 +675,7 @@
             // Panggil updateProductList di awal untuk menampilkan produk
             updateProductList(allProducts);
 
-            // Delegasi event listener untuk menampilkan detail produk
+            // Delegasi event listener untuk menampilkan detail produk (tetap ada)
             productList.addEventListener('click', function(event) {
                 const target = event.target.closest('.product-card');
                 if (target) {
@@ -695,7 +696,7 @@
                 }
             });
 
-            // Delegasi event listener untuk tombol tambah ke keranjang
+            // Delegasi event listener untuk tombol tambah ke keranjang (tetap ada)
             productList.addEventListener('click', function(event) {
                 if (event.target.classList.contains('add-to-cart-btn')) {
                     const button = event.target;
@@ -728,6 +729,7 @@
                     event.preventDefault();
                     const selectedFilter = this.dataset.filter;
 
+                    categoryLinks.forEach(l => l.classList.remove('active'));
                     filterLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
 
@@ -740,6 +742,28 @@
                             productsToShow = allProducts.filter(product => product.dataset.bestSeller === 'true');
                         } else {
                             productsToShow = allProducts; // Jika filter tidak dikenali, tampilkan semua
+                        }
+                        updateProductList(productsToShow);
+                    }, 300);
+                });
+            });
+
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const selectedCategory = this.dataset.category;
+
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    filterLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    productList.classList.add('filtering');
+                    setTimeout(() => {
+                        let productsToShow = [];
+                        if (selectedCategory === 'semua') {
+                            productsToShow = allProducts;
+                        } else {
+                            productsToShow = allProducts.filter(product => product.dataset.name.toLowerCase().includes(selectedCategory.toLowerCase()));
                         }
                         updateProductList(productsToShow);
                     }, 300);
