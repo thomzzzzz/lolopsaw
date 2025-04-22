@@ -186,7 +186,8 @@
             cursor: pointer;
             margin-top: 8px;
             font-size: 0.8em;
-            transition: background-color 0.3s ease, transform 0.1s ease-in-out; /* Tambahkan transisi untuk scale */
+            transition: background-color 0.3s ease;
+            display: none; /* Sembunyikan tombol tambah di card */
         }
         .product-card button:hover {
             background-color: #aa0000;
@@ -410,16 +411,6 @@
         div:focus {
             outline: none;
         }
-
-        /* CSS untuk Efek Pantulan Tombol */
-        .button-elastic {
-            transition: transform 0.2s cubic-bezier(0.3, 0.7, 0.4, 1); /* Efek elastis */
-        }
-
-        .button-elastic.touched {
-            transform: scale(0.9); /* Sedikit mengecil saat disentuh */
-            transition-duration: 0.1s;
-        }
     </style>
 </head>
 <body>
@@ -435,7 +426,7 @@
                     <a href="store/keranjang.html">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Keranjang</span>
-                        <span id="cart-count" class="cart-notification" style="display: none;">0</span>
+                        <span id="cart-count" class="cart-notification">0</span>
                     </a>
                 </li>
             </ul>
@@ -443,97 +434,119 @@
     </header>
 
     <div class="category-bar">
-        <a href="#" data-category="semua" class="active">Semua</a>
-        <a href="#" data-category="T-Shirt">T-Shirt</a>
-        <a href="#" data-category="Hoodie">Hoodie</a>
-        <a href="#" data-category="Sweater">Sweater</a>
-        <a href="#" data-category="Jacket">Jacket</a>
-        <a href="#" data-category="Aksesoris">Aksesoris</a>
-    </div>
-
+    <a href="#" data-category="semua" class="active">Semua Barang</a>
+    <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
+    <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
+    <a href="#" data-category="Cincin Kekuatan">Cincin Kekuatan</a>
+    <a href="#" data-category="Jimat Pelindung">Jimat Pelindung</a>
+    <a href="#" data-category="Obor Kehidupan">Obor Kehidupan</a>
+    <a href="#" data-category="Tombak Naga">Tombak Naga</a>
+</div>
     <div class="promo-carousel-container">
         <div class="promo-carousel">
-            <img src="https://via.placeholder.com/600/FF0000/FFFFFF?Text=Promo%201" alt="Promo 1">
-            <img src="https://via.placeholder.com/600/800000/FFFFFF?Text=Promo%202" alt="Promo 2">
-            <img src="https://via.placeholder.com/600/AA0000/FFFFFF?Text=Promo%203" alt="Promo 3">
+            <img src="https://via.placeholder.com/600/ff6666/eee?Text=Promo+1" alt="Promo 1">
+            <img src="https://via.placeholder.com/600/66ff66/eee?Text=Promo+2" alt="Promo 2">
+            <img src="https://via.placeholder.com/600/6666ff/eee?Text=Promo+3" alt="Promo 3">
         </div>
     </div>
 
     <div class="product-list">
-        <div class="product-card" data-id="1" data-name="T-Shirt Merah Menyala" data-price="150000" data-image="https://via.placeholder.com/300/FF0000/FFFFFF?Text=T-Shirt%20Merah" data-description="T-shirt katun combed 24s, desain keren untuk gaya kasualmu." data-best-seller="true">
-            <img src="https://via.placeholder.com/300/FF0000/FFFFFF?Text=T-Shirt%20Merah" alt="T-Shirt Merah Menyala">
-            <h3 class="product-title">T-Shirt Merah Menyala</h3>
-            <p class="product-price">Rp 150.000</p>
-            <button class="add-to-cart-btn button-elastic" data-id="1" data-name="T-Shirt Merah Menyala" data-price="150000" data-image="https://via.placeholder.com/300/FF0000/FFFFFF?Text=T-Shirt%20Merah">Tambahkan</button>
-        </div>
-        <div class="product-card" data-id="2" data-name="Hoodie Hitam Gelap" data-price="250000" data-image="https://via.placeholder.com/300/000000/FFFFFF?Text=Hoodie%20Hitam" data-description="Hoodie fleece tebal, cocok untuk cuaca dingin dan gaya urban." data-promo="true" data-discount="10%">
-            <img src="https://via.placeholder.com/300/000000/FFFFFF?Text=Hoodie%20Hitam" alt="Hoodie Hitam Gelap">
-            <h3 class="product-title">Hoodie Hitam Gelap</h3>
+        <div class="product-card" style="animation-delay: 0.1s;"
+             data-id="1" data-name="Pedang Bayangan" data-price="250000"
+             data-image="https://via.placeholder.com/280/330000/eee?Text=Pedang+1"
+             data-description="Pedang legendaris yang ditempa dari bayangan murni. Sangat tajam dan mematikan."
+             data-best-seller="true">
+            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+1" alt="Pedang Bayangan">
+            <h3 class="product-title">Pedang Bayangan</h3>
             <p class="product-price">Rp 250.000</p>
-            <button class="add-to-cart-btn button-elastic" data-id="2" data-name="Hoodie Hitam Gelap" data-price="250000" data-image="https://via.placeholder.com/300/000000/FFFFFF?Text=Hoodie%20Hitam">Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+1">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="3" data-name="Sweater Rajut Maroon" data-price="200000" data-image="https://via.placeholder.com/300/800000/FFFFFF?Text=Sweater%20Maroon" data-description="Sweater rajut halus, memberikan kesan hangat dan stylish." data-best-seller="true">
-            <img src="https://via.placeholder.com/300/800000/FFFFFF?Text=Sweater%20Maroon" alt="Sweater Rajut Maroon">
-            <h3 class="product-title">Sweater Rajut Maroon</h3>
-            <p class="product-price">Rp 200.000</p>
-            <button class="add-to-cart-btn button-elastic" data-id="3" data-name="Sweater Rajut Maroon" data-price="200000" data-image="https://via.placeholder.com/300/800000/FFFFFF?Text=Sweater%20Maroon">Tambahkan</button>
+        <div class="product-card" style="animation-delay: 0.2s;"
+     data-id="2" data-name="Jubah Kegelapan" data-price="350000"
+     data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2"
+     data-description="Jubah yang menyelimuti pemakainya dalam kegelapan. Memungkinkan untuk bergerak tanpa terdeteksi."
+     data-promo="true" data-discount="10%" data-original-price="388888">
+    <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Jubah Kegelapan">
+    <h3 class="product-title">Jubah Kegelapan</h3>
+    <p class="product-price">
+        <span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 388.888</span>
+          Rp 350.000
+    </p>
+    <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="350000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2">Tambahkan</button>
+</div>
+        <div class="product-card" style="animation-delay: 0.3s;"
+             data-id="3" data-name="Cincin Kekuatan" data-price="500000"
+             data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+3"
+             data-description="Cincin kuno yang memberikan kekuatan magis yang besar kepada penggunanya.">
+            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+3" alt="Cincin Kekuatan">
+            <h3 class="product-title">Cincin Kekuatan</h3>
+            <p class="product-price">Rp 500.000</p>
+            <button class="add-to-cart-btn" data-id="3" data-name="Cincin Kekuatan" data-price="500000" data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+3">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="4" data-name="Jacket Bomber Hitam" data-price="350000" data-image="https://via.placeholder.com/300/1A1A1A/FFFFFF?Text=Jacket%20Hitam" data-description="Jacket bomber dengan desain modern dan bahan berkualitas tinggi." data-promo="true" data-discount="15%">
-            <img src="https://via.placeholder.com/300/1A1A1A/FFFFFF?Text=Jacket%20Hitam" alt="Jacket Bomber Hitam">
-            <h3 class="product-title">Jacket Bomber Hitam</h3>
-            <p class="product-price">Rp 350.000</p>
-            <button class="add-to-cart-btn button-elastic" data-id="4" data-name="Jacket Bomber Hitam" data-price="350000" data-image="https://via.placeholder.com/300/1A1A1A/FFFFFF?Text=Jacket%20Hitam">Tambahkan</button>
+        <div class="product-card" style="animation-delay: 0.4s;"
+             data-id="4" data-name="Jimat Pelindung" data-price="180000"
+             data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+4"
+             data-description="Jimat yang melindungi pemakainya dari serangan fisik dan sihir tingkat rendah."
+             data-best-seller="true">
+            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+4" alt="Jimat Pelindung">
+            <h3 class="product-title">Jimat Pelindung</h3>
+            <p class="product-price">Rp 180.000</p>
+            <button class="add-to-cart-btn" data-id="4" data-name="Jimat Pelindung" data-price="180000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+4">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="5" data-name="Aksesoris Topi Merah" data-price="50000" data-image="https://via.placeholder.com/300/CC0000/FFFFFF?Text=Topi%20Merah" data-description="Topi baseball keren untuk melengkapi gayamu." data-best-seller="true">
-            <img src="https://via.placeholder.com/300/CC0000/FFFFFF?Text=Topi%20Merah" alt="Aksesoris Topi Merah">
-            <h3 class="product-title">Aksesoris Topi Merah</h3>
-            <p class="product-price">Rp 50.000</p>
-            <button class="add-to-cart-btn button-elastic" data-id="5" data-name="Aksesoris Topi Merah" data-price="50000" data-image="https://via.placeholder.com/300/CC0000/FFFFFF?Text=Topi%20Merah">Tambahkan</button>
+        <div class="product-card" style="animation-delay: 0.5s;"
+             data-id="5" data-name="Obor Kehidupan" data-price="420000"
+             data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+5"
+             data-description="Obor yang memancarkan cahaya hangat dan memiliki kekuatan untuk menyembuhkan luka ringan."
+             data-promo="true" data-discount="15%">
+            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+5" alt="Obor Kehidupan">
+            <h3 class="product-title">Obor Kehidupan</h3>
+            <p class="product-price">Rp 420.000</p>
+            <button class="add-to-cart-btn" data-id="5" data-name="Obor Kehidupan" data-price="420000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+5">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="6" data-name="T-Shirt Hitam Polos" data-price="120000" data-image="https://via.placeholder.com/300/333333/FFFFFF?Text=T-Shirt%20Hitam" data-description="T-shirt basic warna hitam, nyaman untuk dipakai sehari-hari." data-promo="true" data-discount="5%">
-            <img src="https://via.placeholder.com/300/333333/FFFFFF?Text=T-Shirt%20Hitam" alt="T-Shirt Hitam Polos">
-            <h3 class="product-title">T-Shirt Hitam Polos</h3>
-            <p class="product-price">Rp 120.000</p>
-            <button class="add-to-cart-btn button-elastic" data-id="6" data-name="T-Shirt Hitam Polos" data-price="120000" data-image="https://via.placeholder.com/300/333333/FFFFFF?Text=T-Shirt%20Hitam">Tambahkan</button>
+        <div class="product-card" style="animation-delay: 0.6s;"
+             data-id="6" data-name="Tombak Naga" data-price="600000"
+             data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+6"
+             data-description="Tombak yang terbuat dari tulang naga purba. Memiliki kekuatan untuk menembus pertahanan магис.">
+            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+6" alt="Tombak Naga">
+            <h3 class="product-title">Tombak Naga</h3>
+            <p class="product-price">Rp 600.000</p>
+            <button class="add-to-cart-btn" data-id="6" data-name="Tombak Naga" data-price="600000" data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+6">Tambahkan</button>
         </div>
-        <div class="loading-indicator" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white;">Memuat produk...</div>
     </div>
 
     <div id="productModal" class="product-modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <img id="modal-image" src="" alt="">
-            <h2 id="modal-title"></h2>
-            <p id="modal-price"></p>
-            <p id="modal-description"></p>
-            <button id="modal-add-to-cart" class="modal-add-to-cart button-elastic" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
+            <h2 id="modal-title" class="modal-title"></h2>
+            <p id="modal-price" class="modal-price"></p>
+            <p id="modal-description" class="modal-description"></p>
+            <button id="modal-add-to-cart" class="modal-add-to-cart" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
         </div>
+    </div>
+
+    <div id="loading-indicator" style="display: none; text-align: center; margin-top: 20px;">
+        <i class="fas fa-spinner fa-spin fa-3x" style="color: #eee;"></i>
+        <p style="color: #eee;">Memuat...</p>
     </div>
 
     <div class="bottom-navigation">
         <a href="#">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-fire"></i>
             <span>Beranda</span>
         </a>
-        <a href="#">
-            <i class="fas fa-list"></i>
-            <span>Kategori</span>
-        </a>
-        <a href="store/keranjang.html" class="animate-cart">
-            <i class="fas fa-shopping-cart"></i>
+        <a href="store/keranjang.html">
+            <i class="fas fa-shopping-cart animate-cart"></i>
             <span>Keranjang</span>
-            <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
-        </a>
-        <a href="#">
-            <i class="fas fa-user"></i>
-            <span>Akun</span>
+            <span id="bottom-cart-count" class="cart-notification">0</span>
         </a>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2025 InfernoShop. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a></p>
+        &copy; 2025 InfernoShop - Kekuatan dalam Setiap Transaksi | <a href="#">Kebijakan Privasi</a>
     </footer>
 
+    <script src="https://kit.fontawesome.com/your_fontawesome_kit_id.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const productCards = document.querySelectorAll('.product-card');
@@ -641,34 +654,72 @@
             }
 
             function updateProductList(products) {
-                productList.innerHTML = '';
-                products.forEach(productData => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    productCard.dataset.id = productData.dataset.id;
-                    productCard.dataset.name = productData.dataset.name;
-                    productCard.dataset.price = productData.dataset.price;
-                    productCard.dataset.image = productData.dataset.image;
-                    productCard.dataset.description = productData.dataset.description;
-                    if (productData.dataset.bestSeller) {
-                        productCard.dataset.bestSeller = productData.dataset.bestSeller;
-                    }
-                    if (productData.dataset.promo) {
-                        productCard.dataset.promo = productData.dataset.promo;
-                        if (productData.dataset.discount) {
-                            productCard.dataset.discount = productData.dataset.discount;
-                        }
-                    }
+    productList.innerHTML = '';
+    products.forEach((productData, index) => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+        productCard.style.animationDelay = `${index * 0.1}s`;
+        productCard.dataset.id = productData.dataset.id;
+        productCard.dataset.name = productData.dataset.name;
+        productCard.dataset.price = productData.dataset.price;
+        productCard.dataset.image = productData.dataset.image;
+        productCard.dataset.description = productData.dataset.description;
+        if (productData.dataset.bestSeller) {
+            productCard.dataset.bestSeller = productData.dataset.bestSeller;
+        }
+        if (productData.dataset.promo) {
+            productCard.dataset.promo = productData.dataset.promo;
+            if (productData.dataset.discount) {
+                productCard.dataset.discount = productData.dataset.discount;
+            }
+            if (productData.dataset.originalPrice) {
+                productCard.dataset.originalPrice = productData.dataset.originalPrice;
+            }
+        }
+
+        let priceDisplay = `Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}`;
+        if (productData.dataset.originalPrice && productData.dataset.promo === 'true') {
+            priceDisplay = `<span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp ${parseInt(productData.dataset.originalPrice).toLocaleString('id-ID')}</span> Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}`;
+        }
 
                     productCard.innerHTML = `
                         <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
                         <h3 class="product-title">${productData.dataset.name}</h3>
                         <p class="product-price">Rp <span class="math-inline">\{parseInt\(productData\.dataset\.price\)\.toLocaleString\('id\-ID'\)\}</p\>
-<button class\="add\-to\-cart\-btn button\-elastic" data\-id\="</span>{productData.dataset.id}" data-name="<span class="math-inline">\{productData\.dataset\.name\}" data\-price\="</span>{productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+<button class\="add\-to\-cart\-btn" data\-id\="</span>{productData.dataset.id}" data-name="<span class="math-inline">\{productData\.dataset\.name\}" data\-price\="</span>{productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
                     `;
 
-                    addBadges(productCard);
+                    addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
                     productList.appendChild(productCard);
+
+                    // Tambahkan event listener untuk detail produk (penting untuk elemen baru)
+                    productCard.addEventListener('click', function(event) {
+                        showProductDetails(this);
+                        const rect = this.getBoundingClientRect();
+                        const x = event.clientX - rect.left;
+                        const y = event.clientY - rect.top;
+
+                        const ripple = document.createElement('span');
+                        ripple.classList.add('ripple');
+                        ripple.style.left = `${x}px`;
+                        ripple.style.top = `${y}px`;
+                        this.appendChild(ripple);
+
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600); // Durasi animasi ripple
+                    });
+
+                    // Tambahkan event listener untuk tombol tambah ke keranjang (penting untuk elemen baru)
+                    const addToCartButton = productCard.querySelector('.add-to-cart-btn');
+                    addToCartButton.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        const productId = this.dataset.id;
+                        const name = this.dataset.name;
+                        const price = this.dataset.price;
+                        const image = this.dataset.image;
+                        tambahKeKeranjang(productId, name, price, image);
+                    });
                 });
                 productList.classList.remove('filtering');
             }
@@ -691,25 +742,13 @@
                     ripple.style.top = `${y}px`;
                     this.appendChild(ripple);
 
-                setTimeout(() => {
+                    setTimeout(() => {
                         ripple.remove();
                     }, 600); // Durasi animasi ripple
                 });
 
                 const addToCartButton = card.querySelector('.add-to-cart-btn');
                 if (addToCartButton) {
-                    addToCartButton.addEventListener('touchstart', function() {
-                        this.classList.add('touched');
-                    });
-
-                    addToCartButton.addEventListener('touchend', function() {
-                        this.classList.remove('touched');
-                    });
-
-                    addToCartButton.addEventListener('touchcancel', function() {
-                        this.classList.remove('touched');
-                    });
-
                     addToCartButton.addEventListener('click', function(event) {
                         event.stopPropagation();
                         const productId = this.dataset.id;
@@ -728,18 +767,6 @@
                 }
             });
 
-            modalAddToCartButton.addEventListener('touchstart', function() {
-                this.classList.add('touched');
-            });
-
-            modalAddToCartButton.addEventListener('touchend', function() {
-                this.classList.remove('touched');
-            });
-
-            modalAddToCartButton.addEventListener('touchcancel', function() {
-                this.classList.remove('touched');
-            });
-
             modalAddToCartButton.addEventListener('click', function() {
                 const productId = this.dataset.id;
                 const name = this.dataset.name;
@@ -749,27 +776,24 @@
                 hideProductDetails();
             });
 
-            const categoryBar = document.querySelector('.category-bar');
-            if (categoryBar) {
-                categoryBar.addEventListener('click', function(event) {
-                    if (event.target.matches('a[data-category]')) {
-                        event.preventDefault();
-                        const selectedCategory = event.target.dataset.category;
-                        categoryLinks.forEach(l => l.classList.remove('active'));
-                        event.target.classList.add('active');
-                        productList.classList.add('filtering');
-                        setTimeout(() => {
-                            let productsToShow = [];
-                            if (selectedCategory === 'semua') {
-                                productsToShow = allProducts;
-                            } else {
-                                productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
-                            }
-                            updateProductList(productsToShow);
-                        }, 300);
-                    }
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const selectedCategory = this.dataset.category;
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    productList.classList.add('filtering');
+                    setTimeout(() => {
+                        let productsToShow = [];
+                        if (selectedCategory === 'semua') {
+                            productsToShow = allProducts;
+                        } else {
+                            productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
+                        }
+                        updateProductList(productsToShow); // Gunakan fungsi updateProductList
+                    }, 300);
                 });
-            }
+            });
 
             function cariProduk() {
                 const searchTerm = searchInput.value.toLowerCase();
@@ -784,7 +808,7 @@
                     if (hasilPencarian.length === 0) {
                         productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
                     } else {
-                        updateProductList(hasilPencarian);
+                        updateProductList(hasilPencarian); // Gunakan fungsi updateProductList
                     }
                     loadingIndicator.style.display = 'none';
                 }, 500);
@@ -830,22 +854,6 @@
                     touchStartX = null;
                 });
             }
-
-            const elasticButtons = document.querySelectorAll('.button-elastic');
-
-            elasticButtons.forEach(button => {
-                button.addEventListener('touchstart', function() {
-                    this.classList.add('touched');
-                });
-
-                button.addEventListener('touchend', function() {
-                    this.classList.remove('touched');
-                });
-
-                button.addEventListener('touchcancel', function() {
-                    this.classList.remove('touched');
-                });
-            });
         });
     </script>
 </body>
