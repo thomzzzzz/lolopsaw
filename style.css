@@ -2,21 +2,27 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    /* Gradasi latar belakang body */
+    background: linear-gradient(to bottom, #f4f4f4, #ddd);
     color: #333;
-    line-height: 1.6; /* Meningkatkan keterbacaan teks */
+    line-height: 1.6;
 }
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto; /* Tambah margin atas bawah */
     padding: 20px;
+    background-color: white; /* Kontainer tetap putih untuk menonjol */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan lebih kuat */
 }
 
 header {
-    background-color: #ff6f61;
+    /* Gradasi header merah ke hitam */
+    background: linear-gradient(to right, #ff4d4d, #333);
     color: white;
-    padding: 15px 0; /* Sedikit penyesuaian padding */
+    padding: 15px 0;
+    border-radius: 8px 8px 0 0; /* Sudut melengkung di atas */
 }
 
 header .container {
@@ -26,43 +32,57 @@ header .container {
 }
 
 .logo {
-    font-size: 26px; /* Ukuran logo lebih besar */
+    font-size: 26px;
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Efek bayangan teks */
 }
 
 .search-bar {
     display: flex;
-    flex-grow: 1; /* Membuat search bar mengisi ruang yang tersedia */
-    margin-left: 20px; /* Memberikan jarak dari logo */
+    flex-grow: 1;
+    margin-left: 20px;
 }
 
 .search-bar input[type="text"] {
-    padding: 10px; /* Padding lebih besar */
-    border: none;
+    padding: 10px;
+    border: 1px solid #555; /* Border lebih gelap */
     border-radius: 5px 0 0 5px;
-    width: 100%; /* Mengisi lebar search bar */
+    width: 100%;
 }
 
 .search-bar button {
-    background-color: #e05546;
+    background-color: #333;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Animasi hover */
+}
+
+.search-bar button:hover {
+    background-color: #555;
 }
 
 .cart a {
     color: white;
     text-decoration: none;
-    padding: 10px; /* Area sentuh lebih besar */
+    padding: 10px 15px;
     border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.2); /* Latar belakang semi-transparan */
+    transition: background-color 0.3s ease;
+}
+
+.cart a:hover {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 nav {
-    background-color: #333;
+    background-color: #222; /* Navigasi lebih gelap */
     color: white;
-    margin-top: 10px; /* Memberikan jarak dari header */
+    margin-top: 10px;
+    border-radius: 0 0 8px 8px; /* Sudut melengkung di bawah */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 nav .container ul {
@@ -70,7 +90,8 @@ nav .container ul {
     padding: 0;
     margin: 0;
     display: flex;
-    overflow-x: auto; /* Membuat navigasi bisa di-scroll horizontal jika terlalu banyak item */
+    overflow-x: auto;
+    justify-content: flex-start; /* Navigasi rata kiri */
 }
 
 nav .container ul li a {
@@ -78,7 +99,8 @@ nav .container ul li a {
     padding: 15px 20px;
     text-decoration: none;
     color: white;
-    white-space: nowrap; /* Mencegah teks navigasi turun baris */
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
 }
 
 nav .container ul li a:hover {
@@ -91,100 +113,118 @@ main {
 
 .product-list h2, .categories h2 {
     margin-bottom: 15px;
-    text-align: center; /* Judul lebih baik di tengah */
+    text-align: center;
+    color: #333; /* Warna judul lebih gelap */
 }
 
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ukuran minimum produk lebih kecil */
-    gap: 15px; /* Jarak antar produk lebih kecil */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
 }
 
 .product-card {
-    border: 1px solid #ddd;
+    border: 1px solid #555; /* Border produk lebih gelap */
     border-radius: 8px;
     padding: 15px;
     text-align: center;
     background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Efek bayangan tipis */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out; /* Animasi hover pada produk */
+}
+
+.product-card:hover {
+    transform: scale(1.05); /* Efek zoom saat hover */
 }
 
 .product-card img {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
-    border-radius: 5px; /* Gambar sedikit melengkung */
+    border-radius: 5px;
 }
 
 .product-card h3 {
     margin-top: 0;
     margin-bottom: 5px;
-    font-size: 16px; /* Ukuran font produk lebih kecil */
+    font-size: 16px;
     font-weight: bold;
+    color: #222; /* Warna nama produk lebih gelap */
 }
 
 .product-card .price {
-    color: #ff6f61;
+    color: #ff4d4d; /* Warna harga merah */
     font-weight: bold;
     margin-bottom: 10px;
     font-size: 18px;
 }
 
 .product-card .add-to-cart {
-    background-color: #ff6f61;
+    background-color: #333;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px; /* Ukuran font tombol lebih kecil */
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.product-card .add-to-cart:hover {
+    background-color: #555;
 }
 
 .categories {
-    margin-top: 30px; /* Jarak dari daftar produk */
+    margin-top: 30px;
 }
 
 .categories .category-list {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    justify-content: center; /* Kategori di tengah */
+    justify-content: center;
 }
 
 .categories .category-list a {
     display: inline-block;
     background-color: #eee;
     color: #333;
-    padding: 10px 15px; /* Padding lebih besar */
+    padding: 10px 15px;
     text-decoration: none;
     border-radius: 5px;
     font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .categories .category-list a:hover {
     background-color: #ddd;
+    transform: translateY(-2px); /* Efek sedikit naik saat hover */
 }
 
 footer {
-    background-color: #333;
+    /* Gradasi footer hitam ke merah */
+    background: linear-gradient(to left, #333, #ff4d4d);
     color: white;
     text-align: center;
     padding: 15px 0;
     width: 100%;
-    box-sizing: border-box; /* Memastikan padding tidak menambah lebar */
-    margin-top: 30px; /* Memberikan jarak dari konten utama */
+    box-sizing: border-box;
+    margin-top: 30px;
+    border-radius: 0 0 8px 8px; /* Sudut melengkung di bawah */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Bayangan di atas */
 }
 
-/* === Media Queries untuk Responsiveness === */
+/* === Media Queries untuk Responsiveness (tidak banyak berubah dari sebelumnya) === */
 
 /* Untuk layar dengan lebar maksimum 768px (ukuran tablet) */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
+        margin: 15px auto;
     }
 
     header .container {
-        flex-direction: column; /* Elemen header menjadi satu kolom */
+        flex-direction: column;
         align-items: center;
         text-align: center;
     }
@@ -194,22 +234,22 @@ footer {
     }
 
     .search-bar {
-        width: 100%; /* Search bar mengisi lebar */
+        width: 100%;
         margin-left: 0;
         margin-bottom: 10px;
     }
 
     nav .container ul {
-        justify-content: space-around; /* Navigasi rata tengah dengan jarak */
+        justify-content: space-around;
     }
 
     nav .container ul li a {
-        padding: 10px 15px; /* Padding navigasi lebih kecil */
+        padding: 10px 15px;
         font-size: 14px;
     }
 
     .products {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Produk lebih kecil di layar kecil */
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 }
 
@@ -224,14 +264,14 @@ footer {
     }
 
     nav .container ul {
-        flex-direction: column; /* Navigasi menjadi satu kolom */
-        align-items: stretch; /* Navigasi mengisi lebar */
+        flex-direction: column;
+        align-items: stretch;
     }
 
     nav .container ul li a {
         padding: 12px;
         text-align: center;
-        border-bottom: 1px solid #555; /* Garis pemisah antar item navigasi */
+        border-bottom: 1px solid #555;
     }
 
     nav .container ul li:last-child a {
@@ -239,7 +279,7 @@ footer {
     }
 
     .products {
-        grid-template-columns: 1fr; /* Satu produk per baris di ponsel */
+        grid-template-columns: 1fr;
     }
 
     .product-card {
