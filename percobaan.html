@@ -674,6 +674,7 @@
             const promoSliderContainer = document.querySelector('.promo-slider-container');
             const promoSlider = document.querySelector('.promo-slider');
             const slides = document.querySelectorAll('.slide');
+            console.log('Jumlah slides:', slides.length);
             const prevBtn = document.querySelector('.prev-btn');
             const nextBtn = document.querySelector('.next-btn');
             const sliderDotsContainer = document.querySelector('.slider-dots');
@@ -681,9 +682,10 @@
             let currentIndex = 0;
 
             function updateSlider() {
-                promoSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
-                updateDots();
-            }
+    console.log('updateSlider dipanggil, currentIndex:', currentIndex);
+    promoSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+}
 
             function nextSlide() {
                 console.log('nextSlide dipanggil, currentIndex sebelum:', currentIndex);
@@ -758,9 +760,241 @@
             function showProductDetails(product) {
                 modalImage.src = product.dataset.image;
                 modalImage.alt = product.dataset.name;
-                modalTitle = product.dataset.name;
+                modalTitle.textContent = product.dataset.name;
                 modalPrice = `Rp ${parseInt(product.dataset.price).toLocaleString('id-ID')}`;
                 modalDescription = product.dataset.description;
                 modalAddToCartButton.dataset.id = product.dataset.id;
                 modalAddToCartButton.dataset.name = product.dataset.name;
-                modalAddToCartButton.dataset.price = product.dataset.price
+                modalAddToCartButton.dataset.price = product.dataset.price;
+                modalAddToCartButton.dataset.image = product.dataset.image;
+                productModal.style.display = "block";
+            }
+
+            function hideProductDetails() {
+                productModal.style.display = "none";
+            }
+
+            productCards.forEach(card => {
+                card.addEventListener('click', function(event) {
+                    showProductDetails(this); // Panggil fungsi untuk menampilkan detail
+
+                    const rect = this.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600); // Durasi animasi ripple
+                });
+            });
+
+            closeButton.addEventListener('click', hideProductDetails);
+
+            window.addEventListener('click', function(event) {
+                if (event.target == productModal) {
+                    hideProductDetails();
+                }
+            });
+
+            function tambahKeKeranjang(productId, nama, harga, gambar) {
+                let keranjang = getCart();
+                let itemDiKeranjang = keranjang.find(item => item.id === productId);
+
+                if (itemDiKeranjang) {
+                    itemDiKeranjang.jumlah++;
+                } else {
+                    keranjang.push({ id: productId, nama: nama, harga: parseInt(harga), gambar: gambar, jumlah: 1 });
+                }
+
+                saveCart(keranjang);
+                alert(`"${nama}" berhasil ditambahkan ke keranjang!`);
+
+                // Tambahkan animasi pada ikon keranjang di header
+                const cartIconHeader = document.querySelector('header nav ul li a i.fa-shopping-cart');
+                if (cartIconHeader) {
+                    cartIconHeader.classList.add('animate-cart');
+                    setTimeout(() => {
+                        cartIconHeader.classList.remove('animate-cart');
+                    }, 500); // Hapus kelas animasi setelah 0.5 detik
+                }
+
+                // Tambahkan animasi pada ikon keranjang di bottom navigation
+                const cartIconBottom = document.querySelector('.bottom-navigation a i.fa-shopping-cart');
+                if (cartIconBottom) {
+                    cartIconBottom.classList.add('animate-cart');
+                    setTimeout(() => {
+                        cartIconBottom.classList.remove('animate-cart');
+                    }, 500);
+                }
+            }
+
+            modalAddToCartButton.addEventListener('click', function() {
+                const productId = this.dataset.id;
+                const name = this.dataset.name;
+                const price = this.dataset.price;
+                const image = this.dataset.image;
+                tambahKeKeranjang(productId, name, price, image);
+                hideProductDetails();
+            });
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Mencegah pop-up muncul saat klik tombol di card
+                    const productId = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = this.dataset.price;
+                    const image = this.dataset.image;
+                    tambahKeKeranjang(productId, name, price, image);
+                });
+            });
+
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const selectedCategory = this.dataset.category;
+
+                    categoryLinks.forEach(l => l.classList.remove('active')); // Hapus kelas aktif dari semua link
+                    this.classList.add('active'); // Tambahkan kelas aktif ke link yang diklik
+
+                    productList.classList.add('filtering'); // Tambahkan kelas filtering
+
+                    setTimeout(() => {
+                        productList.innerHTML = ''; // Hapus setelah sedikit jeda
+
+                        let productsToShow = [];
+                        if (selectedCategory === 'semua') {
+                            productsToShow = allProducts;
+                        } else {
+                            productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
+                        }
+
+                        productsToShow.forEach((product, index) => {
+                            const clonedProduct = product.cloneNode(true);
+                            clonedProduct.style.animationDelay = `${index * 0.1}s`; // Penundaan bertahap
+                            productList.appendChild(clonedProduct);
+                            // Tambahkan kembali event listener untuk detail produk
+                            clonedProduct.addEventListener('click', function() {
+                                showProductDetails(this);
+                            });
+                        });
+
+                        productList.classList.remove('filtering'); // Hapus kelas filtering
+                    }, 300); // Jeda sebentar sebelum menampilkan hasil filter
+                });
+            });
+
+            // Fungsi untuk melakukan pencarian produk
+            function cariProduk() {
+                const searchTerm = searchInput.value.toLowerCase();
+                productList.innerHTML = ''; // Kosongkan daftar produk
+                loadingIndicator.style.display = 'block'; // Tampilkan loading
+
+                setTimeout(() => {
+                    const hasilPencarian = allProducts.filter(productCard => {
+                        const namaProduk = productCard.dataset.name.toLowerCase();
+                        const deskripsiProduk = productCard.dataset.description.toLowerCase();
+                        return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
+                    });
+
+                    hasilPencarian.forEach((product, index) => {
+                        const clonedProduct = product.cloneNode(true);
+                        clonedProduct.style.animationDelay = `${index * 0.1}s`;
+                        productList.appendChild(clonedProduct);
+                        // Tambahkan kembali event listener untuk detail produk
+                        clonedProduct.addEventListener('click', function() {
+                            showProductDetails(this);
+                        });
+                    });
+
+                    // Jika tidak ada hasil pencarian, tampilkan pesan
+                    if (hasilPencarian.length === 0) {
+                        productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
+                    }
+                    loadingIndicator.style.display = 'none'; // Sembunyikan loading
+                }, 500); // Simulasi waktu pencarian
+            }
+
+            // Tambahkan event listener untuk tombol Enter di input pencarian
+            searchInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    cariProduk();
+                }
+            });
+
+            // Set kategori "Semua Barang" sebagai aktif saat halaman dimuat
+            categoryLinks.forEach(link => {
+                if (link.dataset.category === 'semua') {
+                    link.classList.add('active');
+                }
+            });
+
+            // JavaScript untuk Slider Promo
+            const promoSliderContainer = document.querySelector('.promo-slider-container');
+            const promoSlider = document.querySelector('.promo-slider');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const sliderDotsContainer = document.querySelector('.slider-dots');
+
+            let currentIndex = 0;
+
+            function updateSlider() {
+                promoSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateDots();
+            }
+
+            function nextSlide() {
+                console.log('nextSlide dipanggil, currentIndex sebelum:', currentIndex);
+                currentIndex = (currentIndex + 1) % slides.length;
+                console.log('currentIndex sesudah:', currentIndex);
+                updateSlider();
+            }
+
+            function prevSlide() {
+                console.log('prevSlide dipanggil, currentIndex sebelum:', currentIndex);
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                console.log('currentIndex sesudah:', currentIndex);
+                updateSlider();
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateSlider();
+            }
+
+            function updateDots() {
+                sliderDotsContainer.innerHTML = ''; // Bersihkan dots sebelumnya
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.addEventListener('click', () => goToSlide(index));
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    }
+                    sliderDotsContainer.appendChild(dot);
+                });
+            }
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+            }
+
+            // Inisialisasi dots
+            updateDots();
+
+            // Optional: Auto slide
+            console.log('setInterval akan dijalankan');
+            setInterval(function() {
+                console.log('setInterval berjalan');
+                nextSlide();
+            }, 3000); // Ganti angka untuk interval (ms)
+        });
+    </script>
+</body>
+</html>
