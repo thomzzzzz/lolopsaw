@@ -787,6 +787,21 @@
                 });
             });
 
+            // Pop-up Selamat Datang
+            const welcomePopup = document.getElementById('welcomePopup');
+            const closeWelcomePopup = document.getElementById('closeWelcomePopup');
+            const hasShownPopup = localStorage.getItem('hasShownWelcomePopup');
+
+            if (!hasShownPopup) {
+                welcomePopup.style.display = 'flex';
+                localStorage.setItem('hasShownWelcomePopup', 'true');
+            }
+
+            closeWelcomePopup.addEventListener('click', function() {
+                welcomePopup.style.display = 'none';
+            });
+        });
+        
             function cariProduk() {
                 const searchTerm = searchInput.value.toLowerCase();
                 productList.innerHTML = '';
