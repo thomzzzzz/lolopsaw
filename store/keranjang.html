@@ -3,45 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang Belanja Anda</title>
+    <title>Keranjang Belanja Anda - InfernoShop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            background: linear-gradient(to bottom, #000000, #800000);
+            color: #eee;
+        }
+        .cart-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            max-width: 900px;
         }
         h1 {
             font-family: 'Bebas Neue', sans-serif;
-            color: #800000;
-            margin-bottom: 20px;
+            color: #ff6666; /* Merah yang lebih menyala */
+            margin-bottom: 30px;
             letter-spacing: 1px;
-        }
-        .cart-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 2.5em;
         }
         .cart-item {
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
+            border-bottom: 1px solid #555;
+            padding: 20px 0;
         }
         .cart-item:last-child {
             border-bottom: none;
         }
         .item-image {
-            width: 80px;
-            height: 80px;
-            margin-right: 15px;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
             border-radius: 5px;
             overflow: hidden;
+            border: 1px solid #333;
         }
         .item-image img {
             width: 100%;
@@ -53,11 +59,15 @@
         }
         .item-name {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+            color: #ddd;
         }
         .item-price {
-            color: #800000;
+            color: #ffaa80;
             font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
         }
         .item-quantity {
             display: flex;
@@ -65,94 +75,132 @@
             margin-top: 10px;
         }
         .quantity-label {
-            margin-right: 10px;
+            margin-right: 15px;
+            color: #ccc;
         }
         .quantity-input {
-            width: 50px;
-            padding: 5px;
-            border: 1px solid #ccc;
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #555;
             border-radius: 3px;
             text-align: center;
+            background-color: #333;
+            color: #eee;
         }
         .remove-button {
-            background-color: #f44336;
+            background-color: #d9534f; /* Merah yang lebih gelap untuk tombol hapus */
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 15px;
+            margin-left: 20px;
+            transition: background-color 0.3s ease;
         }
         .remove-button:hover {
-            background-color: #d32f2f;
+            background-color: #c9302c;
         }
         .cart-summary {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
             text-align: right;
         }
         .summary-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #ccc;
         }
         .total {
             font-weight: bold;
-            font-size: 1.2em;
-            color: #800000;
+            font-size: 1.5em;
+            color: #ff6666;
         }
         .checkout-button {
-            background-color: #4CAF50;
+            background-color: #5cb85c; /* Hijau untuk tombol checkout */
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 15px 25px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
-            margin-top: 20px;
+            font-size: 1.2em;
+            margin-top: 30px;
             width: 100%;
             text-align: center;
+            transition: background-color 0.3s ease;
         }
         .checkout-button:hover {
-            background-color: #43a047;
+            background-color: #4cae4c;
         }
         .empty-cart {
             text-align: center;
             font-style: italic;
             color: #777;
+            font-size: 1.2em;
+            padding: 20px;
+        }
+        .back-to-shop {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #ffaa80;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-to-shop:hover {
+            color: #fff;
         }
 
         /* Responsif untuk Mobile */
         @media (max-width: 600px) {
+            .cart-container {
+                padding: 20px;
+                margin: 10px;
+            }
             .cart-item {
                 flex-direction: column;
                 align-items: flex-start;
             }
             .item-image {
-                margin-bottom: 10px;
+                width: 80px;
+                height: 80px;
+                margin-bottom: 15px;
             }
             .remove-button {
                 margin-left: 0;
-                margin-top: 10px;
+                margin-top: 15px;
             }
             .cart-summary {
                 text-align: left;
+                margin-top: 20px;
+                padding-top: 15px;
             }
             .checkout-button {
                 width: auto;
+            }
+            .quantity-input {
+                width: 50px;
+            }
+            .summary-item {
+                font-size: 1em;
+            }
+            .total {
+                font-size: 1.3em;
             }
         }
     </style>
 </head>
 <body>
     <div class="cart-container">
-        <h1>Keranjang Belanja Anda</h1>
+        <h1><i class="fas fa-shopping-cart"></i> Keranjang Belanja Anda</h1>
         <div id="cart-items-container">
             </div>
         <div id="cart-summary-container">
             </div>
-        <button class="checkout-button">Lanjutkan ke Pembayaran</button>
+        <button class="checkout-button"><i class="fas fa-check"></i> Lanjutkan ke Pembayaran</button>
+        <a href="index.html" class="back-to-shop"><i class="fas fa-arrow-left"></i> Kembali ke Toko</a>
     </div>
 
     <script>
@@ -165,10 +213,10 @@
             const cartSummaryContainer = document.getElementById('cart-summary-container');
             let keranjang = JSON.parse(localStorage.getItem('keranjang') || '[]');
 
-            cartItemsContainer.innerHTML = ''; // Kosongkan kontainer sebelum menampilkan
+            cartItemsContainer.innerHTML = '';
 
             if (keranjang.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="empty-cart">Keranjang Anda kosong.</p>';
+                cartItemsContainer.innerHTML = '<p class="empty-cart"><i class="fas fa-box-open"></i> Keranjang Anda kosong.</p>';
                 cartSummaryContainer.innerHTML = '';
                 return;
             }
@@ -186,7 +234,7 @@
                             <input type="number" class="quantity-input" value="${item.jumlah}" min="1" data-id="${item.id}">
                         </div>
                     </div>
-                    <button class="remove-button" data-id="${item.id}">Hapus</button>
+                    <button class="remove-button" data-id="${item.id}"><i class="fas fa-trash"></i> Hapus</button>
                 `;
                 cartItemsContainer.appendChild(cartItemDiv);
             });
@@ -201,7 +249,7 @@
             if (item) {
                 item.jumlah = parseInt(jumlahBaru);
                 localStorage.setItem('keranjang', JSON.stringify(keranjang));
-                tampilkanIsiKeranjang(); // Perbarui tampilan setelah mengubah jumlah
+                tampilkanIsiKeranjang();
             }
         }
 
@@ -209,7 +257,7 @@
             let keranjang = JSON.parse(localStorage.getItem('keranjang'));
             keranjang = keranjang.filter(item => item.id !== productId);
             localStorage.setItem('keranjang', JSON.stringify(keranjang));
-            tampilkanIsiKeranjang(); // Perbarui tampilan setelah menghapus item
+            tampilkanIsiKeranjang();
         }
 
         function tampilkanRingkasan() {
