@@ -11,14 +11,17 @@
     <style>
         /* Gaya CSS (sama seperti sebelumnya) */
         body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom, #000000, #800000);
-            color: #eee;
-            overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat tap di mobile */
-        }
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #000000, #800000);
+    color: #eee;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat tap di mobile */
+    display: flex; /* Aktifkan Flexbox untuk body */
+    flex-direction: column; /* Atur item body menjadi kolom */
+    min-height: 100vh; /* Pastikan body minimal setinggi viewport */
+}
         header {
             background: rgba(0, 0, 0, 0.8);
             color: white;
@@ -225,12 +228,13 @@
             font-size: 0.7em;
         }
         .footer {
-            background-color: #333;
-            color: #ddd;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.8em;
-        }
+    background-color: #333;
+    color: #ddd;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8em;
+    margin-top: auto; /* Mendorong footer ke bagian paling bawah */
+}
         .footer a {
             color: #ffbb99;
             text-decoration: none;
@@ -507,10 +511,6 @@
             <i class="fas fa-shopping-cart"></i>
             <span>Keranjang</span>
             <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
-        </a>
-        <a href="#">
-            <i class="fas fa-user"></i>
-            <span>Akun</span>
         </a>
     </div>
 
