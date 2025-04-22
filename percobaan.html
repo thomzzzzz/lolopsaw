@@ -181,6 +181,8 @@
             flex-direction: column;
             align-items: center;
             transition: color 0.3s ease;
+            flex-grow: 1; /* Membuat item navigasi mengisi ruang yang tersedia secara merata */
+            justify-content: center; /* Pusatkan ikon dan teks */
         }
         .bottom-navigation a:hover {
             color: #fff;
@@ -214,8 +216,6 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Masuk</a></li>
-                <li><a href="#">Daftar</a></li>
                 <li><a href="#">Keranjang (0)</a></li>
             </ul>
         </nav>
@@ -264,16 +264,8 @@
             Beranda
         </a>
         <a href="#">
-            <i class="fas fa-bell"></i>
-            Notifikasi
-        </a>
-        <a href="#">
             <i class="fas fa-shopping-cart"></i>
             Keranjang
-        </a>
-        <a href="#">
-            <i class="fas fa-user"></i>
-            Akun
         </a>
     </div>
 
