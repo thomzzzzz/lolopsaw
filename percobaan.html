@@ -7,15 +7,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Gaya CSS yang Lebih Baik untuk Mobile dengan Animasi */
+        /* Gaya CSS yang Lebih Baik untuk Mobile dengan Animasi (termasuk gaya pop-up) */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #000000, #800000);
             color: #eee;
-            overflow-x: hidden; /* Mencegah scroll horizontal yang tidak perlu */
+            overflow-x: hidden;
         }
         header {
             background: rgba(0, 0, 0, 0.8);
@@ -25,7 +26,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            position: sticky; /* Header tetap di atas saat di-scroll */
+            position: sticky;
             top: 0;
             z-index: 100;
         }
@@ -34,7 +35,7 @@
             font-size: 1.8em;
             font-weight: bold;
             letter-spacing: 1px;
-            animation: fadeIn 1s ease-out; /* Animasi fade-in */
+            animation: fadeIn 1s ease-out;
         }
         .search-bar {
             display: flex;
@@ -73,6 +74,11 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        nav ul li a i {
+            margin-right: 5px;
         }
         nav ul li a:hover {
             color: #fff;
@@ -83,7 +89,7 @@
             border-bottom: 1px solid #555;
             overflow-x: auto;
             white-space: nowrap;
-            animation: slideInDown 0.5s ease-out; /* Animasi slide-in */
+            animation: slideInDown 0.5s ease-out;
         }
         .category-bar a {
             display: inline-block;
@@ -108,7 +114,7 @@
             margin: 10px;
             border-radius: 8px;
             border: 1px solid #aa0000;
-            animation: pulse 1.5s infinite alternate; /* Animasi pulse */
+            animation: pulse 1.5s infinite alternate;
         }
         .promo-banner h2 {
             color: #ffddcc;
@@ -134,7 +140,7 @@
         .product-list {
             padding: 10px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Lebih banyak kolom untuk mobile */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
         }
         .product-card {
@@ -144,8 +150,9 @@
             padding: 10px;
             text-align: center;
             transition: transform 0.2s ease-in-out;
-            animation: fadeInUp 0.5s ease-out forwards; /* Animasi fade-in up */
+            animation: fadeInUp 0.5s ease-out forwards;
             opacity: 0;
+            cursor: pointer; /* Tambahkan cursor pointer */
         }
         .product-card:hover {
             transform: scale(1.05);
@@ -178,6 +185,7 @@
             margin-top: 8px;
             font-size: 0.8em;
             transition: background-color 0.3s ease;
+            display: none; /* Sembunyikan tombol tambah di card */
         }
         .product-card button:hover {
             background-color: #aa0000;
@@ -240,7 +248,87 @@
             font-size: 0.7em;
         }
 
-        /* Media Queries untuk Responsif */
+        /* Gaya untuk Pop-up Detail Produk */
+        .product-modal {
+            display: none; /* Sembunyikan secara default */
+            position: fixed; /* Tetap di atas konten lain */
+            z-index: 101; /* Lebih tinggi dari header dan navigasi */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Aktifkan scroll jika konten terlalu panjang */
+            background-color: rgba(0, 0, 0, 0.8); /* Latar belakang gelap semi-transparan */
+        }
+        .modal-content {
+            background-color: #222;
+            margin: 15% auto; /* Posisi tengah layar */
+            padding: 20px;
+            border: 1px solid #555;
+            width: 80%; /* Lebar modal */
+            border-radius: 8px;
+            position: relative;
+            animation: slideIn 0.4s ease-out;
+            color: #eee;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+        }
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2em;
+            color: #ff6666;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .modal-price {
+            color: #ffaa80;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .modal-description {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .modal-add-to-cart {
+            background-color: #800000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .modal-add-to-cart:hover {
+            background-color: #aa0000;
+        }
+
+        /* Animasi untuk Modal */
+        @keyframes slideIn {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Media Queries untuk Responsif (termasuk modal) */
         @media (min-width: 600px) {
             .product-list {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -261,6 +349,9 @@
             }
             nav ul li {
                 margin-left: 20px;
+            }
+            nav ul li a i {
+                margin-right: 8px;
             }
             .logo {
                 font-size: 2em;
@@ -286,9 +377,13 @@
             .bottom-navigation a span {
                 font-size: 0.8em;
             }
+            .modal-content {
+                width: 60%;
+                margin: 5% auto; /* Posisi tengah layar untuk desktop */
+            }
         }
 
-        /* Keyframe Animations */
+        /* Keyframe Animations (sudah ada) */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -347,41 +442,70 @@
     </div>
 
     <div class="product-list">
-        <div class="product-card" style="animation-delay: 0.1s;">
+        <div class="product-card" style="animation-delay: 0.1s;"
+             data-id="1" data-name="Pedang Bayangan" data-price="250000"
+             data-image="https://via.placeholder.com/280/330000/eee?Text=Pedang+1"
+             data-description="Pedang legendaris yang ditempa dari bayangan murni. Sangat tajam dan mematikan.">
             <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+1" alt="Pedang Bayangan">
             <h3 class="product-title">Pedang Bayangan</h3>
             <p class="product-price">Rp 250.000</p>
             <button class="add-to-cart-btn" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+1">Tambahkan</button>
         </div>
-        <div class="product-card" style="animation-delay: 0.2s;">
+        <div class="product-card" style="animation-delay: 0.2s;"
+             data-id="2" data-name="Jubah Kegelapan" data-price="350000"
+             data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2"
+             data-description="Jubah yang menyelimuti pemakainya dalam kegelapan. Memungkinkan untuk bergerak tanpa terdeteksi.">
             <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Jubah Kegelapan">
             <h3 class="product-title">Jubah Kegelapan</h3>
             <p class="product-price">Rp 350.000</p>
             <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="350000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2">Tambahkan</button>
         </div>
-        <div class="product-card" style="animation-delay: 0.3s;">
+        <div class="product-card" style="animation-delay: 0.3s;"
+             data-id="3" data-name="Cincin Kekuatan" data-price="500000"
+             data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+3"
+             data-description="Cincin kuno yang memberikan kekuatan magis yang besar kepada penggunanya.">
             <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+3" alt="Cincin Kekuatan">
             <h3 class="product-title">Cincin Kekuatan</h3>
             <p class="product-price">Rp 500.000</p>
             <button class="add-to-cart-btn" data-id="3" data-name="Cincin Kekuatan" data-price="500000" data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+3">Tambahkan</button>
         </div>
-        <div class="product-card" style="animation-delay: 0.4s;">
+        <div class="product-card" style="animation-delay: 0.4s;"
+             data-id="4" data-name="Jimat Pelindung" data-price="180000"
+             data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+4"
+             data-description="Jimat yang melindungi pemakainya dari serangan fisik dan sihir tingkat rendah.">
             <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+4" alt="Jimat Pelindung">
             <h3 class="product-title">Jimat Pelindung</h3>
             <p class="product-price">Rp 180.000</p>
             <button class="add-to-cart-btn" data-id="4" data-name="Jimat Pelindung" data-price="180000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+4">Tambahkan</button>
         </div>
-        <div class="product-card" style="animation-delay: 0.5s;">
+        <div class="product-card" style="animation-delay: 0.5s;"
+             data-id="5" data-name="Obor Kehidupan" data-price="420000"
+             data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+5"
+             data-description="Obor yang memancarkan cahaya hangat dan memiliki kekuatan untuk menyembuhkan luka ringan.">
             <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+5" alt="Obor Kehidupan">
             <h3 class="product-title">Obor Kehidupan</h3>
             <p class="product-price">Rp 420.000</p>
             <button class="add-to-cart-btn" data-id="5" data-name="Obor Kehidupan" data-price="420000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+5">Tambahkan</button>
         </div>
-        <div class="product-card" style="animation-delay: 0.6s;">
+        <div class="product-card" style="animation-delay: 0.6s;"
+             data-id="6" data-name="Tombak Naga" data-price="600000"
+             data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+6"
+             data-description="Tombak yang terbuat dari tulang naga purba. Memiliki kekuatan untuk menembus pertahanan магис.">
             <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+6" alt="Tombak Naga">
             <h3 class="product-title">Tombak Naga</h3>
             <p class="product-price">Rp 600.000</p>
             <button class="add-to-cart-btn" data-id="6" data-name="Tombak Naga" data-price="600000" data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+6">Tambahkan</button>
+        </div>
+    </div>
+
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <img id="modal-image" src="" alt="">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <p id="modal-price" class="modal-price"></p>
+            <p id="modal-description" class="modal-description"></p>
+            <button id="modal-add-to-cart" class="modal-add-to-cart" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
         </div>
     </div>
 
@@ -404,9 +528,17 @@
     <script src="https://kit.fontawesome.com/your_fontawesome_kit_id.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const productCards = document.querySelectorAll('.product-card');
+            const productModal = document.getElementById('productModal');
+            const closeButton = productModal.querySelector('.close-button');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalPrice = document.getElementById('modal-price');
+            const modalDescription = document.getElementById('modal-description');
+            const modalAddToCartButton = document.getElementById('modal-add-to-cart');
             const cartCountElement = document.getElementById('cart-count');
             const bottomCartCountElement = document.getElementById('bottom-cart-count');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
             // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
@@ -432,15 +564,35 @@
             // Inisialisasi jumlah item keranjang saat halaman dimuat
             updateCartCount();
 
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = this.dataset.id;
-                    const name = this.dataset.name;
-                    const price = parseInt(this.dataset.price);
-                    const image = this.dataset.image;
+            function showProductDetails(product) {
+                modalImage.src = product.dataset.image;
+                modalImage.alt = product.dataset.name;
+                modalTitle.textContent = product.dataset.name;
+                modalPrice.textContent = `Rp ${parseInt(product.dataset.price).toLocaleString('id-ID')}`;
+                modalDescription.textContent = product.dataset.description;
+                modalAddToCartButton.dataset.id = product.dataset.id;
+                modalAddToCartButton.dataset.name = product.dataset.name;
+                modalAddToCartButton.dataset.price = product.dataset.price;
+                modalAddToCartButton.dataset.image = product.dataset.image;
+                productModal.style.display = "block";
+            }
 
-                    tambahKeKeranjang(productId, name, price, image);
+            function hideProductDetails() {
+                productModal.style.display = "none";
+            }
+
+            productCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    showProductDetails(this);
                 });
+            });
+
+            closeButton.addEventListener('click', hideProductDetails);
+
+            window.addEventListener('click', function(event) {
+                if (event.target == productModal) {
+                    hideProductDetails();
+                }
             });
 
             function tambahKeKeranjang(productId, nama, harga, gambar) {
@@ -450,12 +602,32 @@
                 if (itemDiKeranjang) {
                     itemDiKeranjang.jumlah++;
                 } else {
-                    keranjang.push({ id: productId, nama: nama, harga: harga, gambar: gambar, jumlah: 1 });
+                    keranjang.push({ id: productId, nama: nama, harga: parseInt(harga), gambar: gambar, jumlah: 1 });
                 }
 
                 saveCart(keranjang);
                 alert(`"${nama}" berhasil ditambahkan ke keranjang!`);
             }
+
+            modalAddToCartButton.addEventListener('click', function() {
+                const productId = this.dataset.id;
+                const name = this.dataset.name;
+                const price = this.dataset.price;
+                const image = this.dataset.image;
+                tambahKeKeranjang(productId, name, price, image);
+                hideProductDetails();
+            });
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Mencegah pop-up muncul saat klik tombol di card
+                    const productId = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = this.dataset.price;
+                    const image = this.dataset.image;
+                    tambahKeKeranjang(productId, name, price, image);
+                });
+            });
         });
     </script>
 </body>
