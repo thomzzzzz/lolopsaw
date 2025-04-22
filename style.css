@@ -1,23 +1,23 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Montserrat', sans-serif; /* Font yang lebih modern */
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #181818; /* Latar belakang gelap */
+    color: #eee; /* Warna teks terang */
     overflow-x: hidden;
 }
 
 .container {
-    max-width: 100%; /* Lebar container penuh di HP */
-    margin: 0;
-    padding: 15px; /* Padding lebih kecil */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 /* Header */
 header {
-    background-color: #fff;
-    padding: 10px 0; /* Padding lebih kecil */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.8); /* Header semi-transparan */
+    padding: 15px 0;
+    box-shadow: 0 1px 5px rgba(255, 255, 255, 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -30,272 +30,390 @@ header .container {
 }
 
 header .logo a {
-    font-size: 22px; /* Ukuran font logo lebih kecil */
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff4d4d; /* Tetap merah sebagai aksen */
+    text-decoration: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-header nav {
-    display: none; /* Sembunyikan navigasi default di HP */
-}
-
-header .actions {
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    align-items: center;
+}
+
+header nav ul li {
+    margin-left: 25px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #ddd;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #ff4d4d;
 }
 
 header .actions input[type="text"] {
-    padding: 8px; /* Padding input lebih kecil */
-    border-radius: 3px;
-    margin-right: 5px;
-    font-size: 14px; /* Ukuran font input lebih kecil */
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #222;
+    color: #eee;
 }
 
 header .actions a {
-    padding: 8px 12px; /* Padding tombol aksi lebih kecil */
-    border-radius: 3px;
-    font-size: 14px; /* Ukuran font tombol aksi lebih kecil */
-    margin-left: 5px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff4d4d;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+header .actions a:hover {
+    background-color: #e64141;
 }
 
 /* Hero Section */
 .hero {
-    padding: 60px 0; /* Padding lebih kecil */
-    background: linear-gradient(135deg, #ffe6e6, #fff);
+    padding: 120px 0;
+    background: linear-gradient(45deg, #222, #181818); /* Gradasi gelap */
     text-align: center;
+    position: relative;
+    overflow: hidden; /* Untuk efek latar belakang */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(to right bottom, #ff4d4d, #b30000);
+    border-radius: 50%;
+    animation: pulseBackground 5s infinite alternate;
+    opacity: 0.6;
 }
 
 .hero .hero-content h1 {
-    font-size: 32px; /* Ukuran font judul lebih kecil */
-    margin-bottom: 15px;
+    font-size: 48px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: fadeInUp 1s ease-out;
 }
 
 .hero .hero-content p {
-    font-size: 16px; /* Ukuran font deskripsi lebih kecil */
-    margin-bottom: 20px;
+    font-size: 18px;
+    color: #ddd;
+    margin-bottom: 30px;
+    animation: fadeInUp 1.2s ease-out 0.2s forwards;
+    opacity: 0;
 }
 
 .hero .hero-content .button {
-    padding: 12px 25px; /* Padding tombol lebih kecil */
-    font-size: 16px; /* Ukuran font tombol lebih kecil */
-    border-radius: 3px;
+    display: inline-block;
+    background: linear-gradient(to right, #ff4d4d, #b30000);
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulseButton 1.5s infinite alternate;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hero .hero-content .button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* Produk Unggulan */
 .featured-products {
-    padding: 30px 0; /* Padding lebih kecil */
-    background-color: #fff;
+    padding: 60px 0;
+    background-color: #222;
 }
 
 .featured-products h2 {
-    font-size: 24px; /* Ukuran font judul bagian lebih kecil */
-    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .featured-products .product-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Kolom produk lebih fleksibel */
-    gap: 15px; /* Jarak antar produk lebih kecil */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
 
 .featured-products .product-item {
-    padding: 15px; /* Padding item produk lebih kecil */
-    border-radius: 5px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.featured-products .product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .featured-products .product-item img {
-    margin-bottom: 10px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.featured-products .product-item:hover img {
+    transform: scale(1.05);
 }
 
 .featured-products .product-item h3 {
-    font-size: 16px; /* Ukuran font nama produk lebih kecil */
-    margin-bottom: 5px;
+    font-size: 22px;
+    color: #eee;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 
 .featured-products .product-item .price {
-    font-size: 16px; /* Ukuran font harga produk lebih kecil */
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 20px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.featured-products .product-item .quick-view {
+    background-color: #ff4d4d;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.featured-products .product-item .quick-view:hover {
+    background-color: #e64141;
 }
 
 /* Kategori Produk */
 .categories {
-    padding: 30px 0; /* Padding lebih kecil */
-    background-color: #f0f0f0;
+    padding: 60px 0;
+    background-color: #181818;
 }
 
 .categories h2 {
-    font-size: 24px; /* Ukuran font judul bagian lebih kecil */
-    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .categories .category-list {
-    gap: 10px; /* Jarak antar kategori lebih kecil */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .categories .category-item {
-    padding: 10px 15px; /* Padding item kategori lebih kecil */
-    border-radius: 20px;
-    font-size: 14px; /* Ukuran font kategori lebih kecil */
+    background-color: #333;
+    color: #eee;
+    padding: 15px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease, color 0.2s ease;
+}
+
+.categories .category-item:hover {
+    transform: scale(1.1);
+    background-color: #ff4d4d;
+    color: #fff;
 }
 
 /* Testimoni */
 .testimonials {
-    padding: 40px 0; /* Padding lebih kecil */
-    background-color: #fff;
+    padding: 70px 0;
+    background-color: #222;
 }
 
 .testimonials h2 {
-    font-size: 24px; /* Ukuran font judul bagian lebih kecil */
-    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.testimonials .testimonial-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 20px;
 }
 
 .testimonials .testimonial {
-    width: 90%; /* Lebar testimoni lebih besar di HP */
-    margin: 0 5%;
-    padding: 20px; /* Padding testimoni lebih kecil */
-    font-size: 14px; /* Ukuran font testimoni lebih kecil */
+    flex: 0 0 auto;
+    width: 80%;
+    margin: 0 10%;
+    padding: 30px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #333;
+    text-align: center;
+    scroll-snap-align: center;
 }
 
 .testimonials .testimonial p {
-    font-size: 14px; /* Ukuran font kutipan testimoni lebih kecil */
-    margin-bottom: 10px;
+    font-style: italic;
+    color: #ddd;
+    margin-bottom: 15px;
+    font-size: 16px;
 }
 
 .testimonials .testimonial span {
-    font-size: 12px; /* Ukuran font nama pemberi testimoni lebih kecil */
+    font-weight: bold;
+    color: #eee;
+    font-size: 14px;
 }
 
 /* Footer */
 footer {
-    padding: 30px 0; /* Padding lebih kecil */
+    background-color: #000;
+    color: #eee;
+    padding: 50px 0;
     text-align: center;
+    border-top: 1px solid #333;
 }
 
 footer .container {
-    flex-direction: column; /* Tata letak footer menjadi satu kolom di HP */
-    align-items: center;
-}
-
-footer .footer-info,
-footer .footer-links,
-footer .footer-social {
-    margin-bottom: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 900px;
 }
 
 footer h3 {
-    font-size: 16px; /* Ukuran font judul footer lebih kecil */
-    margin-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #ff4d4d;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 
 footer p,
 footer a,
 footer ul li a {
-    font-size: 14px; /* Ukuran font tautan footer lebih kecil */
-    margin-bottom: 5px;
+    color: #ccc;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+footer a:hover,
+footer ul li a:hover {
+    color: #eee;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
 }
 
 footer .copyright {
-    font-size: 12px; /* Ukuran font copyright lebih kecil */
-    margin-top: 15px;
+    margin-top: 30px;
+    width: 100%;
+    font-size: 14px;
+    color: #999;
 }
 
 /* Pop-up Produk */
 .product-popup .popup-content {
-    padding: 20px; /* Padding pop-up lebih kecil */
+    background-color: #333;
+    color: #eee;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
 }
 
 .product-popup .close-button {
-    top: 10px;
-    right: 10px;
-    font-size: 20px; /* Ukuran tombol tutup pop-up lebih kecil */
+    color: #ddd;
 }
 
-.product-popup .popup-details img.popup-image {
-    max-width: 150px; /* Ukuran gambar pop-up lebih kecil */
-    margin-bottom: 15px;
+.product-popup .close-button:hover {
+    color: #fff;
 }
 
 .product-popup .popup-details h3.popup-title {
-    font-size: 22px; /* Ukuran judul pop-up lebih kecil */
-    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 
 .product-popup .popup-details p.popup-price {
-    font-size: 18px; /* Ukuran harga pop-up lebih kecil */
-    margin-bottom: 10px;
+    color: #ff4d4d;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 
-.product-popup .popup-details p.popup-description {
-    font-size: 14px; /* Ukuran deskripsi pop-up lebih kecil */
-    line-height: 1.5;
-    margin-bottom: 15px;
+/* Animasi Tambahan */
+@keyframes pulseBackground {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
 }
 
-.product-popup .popup-details .add-to-cart-button {
-    font-size: 14px; /* Ukuran tombol keranjang pop-up lebih kecil */
-    padding: 10px 20px;
-    border-radius: 3px;
+@keyframes pulseButton {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
 }
 
-/* Menu Navigasi Mobile */
+/* Menu Navigasi Mobile (tetap sama, mungkin perlu disesuaikan warnanya) */
 @media (max-width: 768px) {
     header nav {
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        z-index: 99;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    }
-
-    header nav.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    header nav ul {
-        flex-direction: column;
-        padding: 10px;
-    }
-
-    header nav ul li {
-        margin: 10px 0;
-        text-align: center;
+        background-color: #222;
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
     }
 
     header nav ul li a {
-        display: block;
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-    }
-
-    header nav ul li:last-child a {
-        border-bottom: none;
+        color: #ddd;
+        border-bottom: 1px solid #333;
     }
 
     header .menu-icon {
-        display: block;
-        font-size: 24px;
-        color: #333;
-        cursor: pointer;
-    }
-
-    header .actions input[type="text"] {
-        flex-grow: 1;
-    }
-
-    header .actions a {
-        margin-left: 10px;
-    }
-}
-
-/* Penyesuaian Grid Produk untuk HP */
-@media (max-width: 600px) {
-    .featured-products .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        color: #eee;
     }
 }
