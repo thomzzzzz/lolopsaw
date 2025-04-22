@@ -186,8 +186,7 @@
             cursor: pointer;
             margin-top: 8px;
             font-size: 0.8em;
-            transition: background-color 0.3s ease;
-            display: none; /* Sembunyikan tombol tambah di card */
+            transition: background-color 0.3s ease, transform 0.1s ease-in-out; /* Tambahkan transisi untuk scale */
         }
         .product-card button:hover {
             background-color: #aa0000;
@@ -411,6 +410,16 @@
         div:focus {
             outline: none;
         }
+
+        /* CSS untuk Efek Pantulan Tombol */
+        .button-elastic {
+            transition: transform 0.2s cubic-bezier(0.3, 0.7, 0.4, 1); /* Efek elastis */
+        }
+
+        .button-elastic.touched {
+            transform: scale(0.9); /* Sedikit mengecil saat disentuh */
+            transition-duration: 0.1s;
+        }
     </style>
 </head>
 <body>
@@ -426,7 +435,7 @@
                     <a href="store/keranjang.html">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Keranjang</span>
-                        <span id="cart-count" class="cart-notification">0</span>
+                        <span id="cart-count" class="cart-notification" style="display: none;">0</span>
                     </a>
                 </li>
             </ul>
@@ -434,464 +443,410 @@
     </header>
 
     <div class="category-bar">
-    <a href="#" data-category="semua" class="active">Semua Barang</a>
-    <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
-    <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
-    <a href="#" data-category="Cincin Kekuatan">Cincin Kekuatan</a>
-    <a href="#" data-category="Jimat Pelindung">Jimat Pelindung</a>
-    <a href="#" data-category="Obat Mistis">Obat Mistis</a>
-</div>
-
-<div class="promo-carousel-container">
-    <div class="promo-carousel">
-        <img src="images/promo1.jpg" alt="Promo 1">
-        <img src="images/promo2.jpg" alt="Promo 2">
-        <img src="images/promo3.jpg" alt="Promo 3">
+        <a href="#" data-category="semua" class="active">Semua</a>
+        <a href="#" data-category="T-Shirt">T-Shirt</a>
+        <a href="#" data-category="Hoodie">Hoodie</a>
+        <a href="#" data-category="Sweater">Sweater</a>
+        <a href="#" data-category="Jacket">Jacket</a>
+        <a href="#" data-category="Aksesoris">Aksesoris</a>
     </div>
-</div>
 
-<div class="product-list">
-    <div class="loading-indicator" style="display: none; color: #eee; text-align: center; margin-top: 20px;">Memuat produk...</div>
-</div>
-
-<div id="productModal" class="product-modal">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <img id="modal-image" src="" alt="">
-        <h2 id="modal-title" class="modal-title"></h2>
-        <p id="modal-price" class="modal-price"></p>
-        <p id="modal-description" class="modal-description"></p>
-        <button id="modal-add-to-cart" class="modal-add-to-cart" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
+    <div class="promo-carousel-container">
+        <div class="promo-carousel">
+            <img src="https://via.placeholder.com/600/FF0000/FFFFFF?Text=Promo%201" alt="Promo 1">
+            <img src="https://via.placeholder.com/600/800000/FFFFFF?Text=Promo%202" alt="Promo 2">
+            <img src="https://via.placeholder.com/600/AA0000/FFFFFF?Text=Promo%203" alt="Promo 3">
+        </div>
     </div>
-</div>
 
-<div class="bottom-navigation">
-    <a href="#">
-        <i class="fas fa-home"></i>
-        <span>Beranda</span>
-    </a>
-    <a href="#">
-        <i class="fas fa-list"></i>
-        <span>Kategori</span>
-    </a>
-    <a href="#">
-        <i class="fas fa-heart"></i>
-        <span>Favorit</span>
-    </a>
-    <a href="store/keranjang.html">
-        <i class="fas fa-shopping-cart"></i>
-        <span>Keranjang</span>
-        <span id="bottom-cart-count" class="cart-notification">0</span>
-    </a>
-    <a href="#">
-        <i class="fas fa-user"></i>
-        <span>Akun</span>
-    </a>
-</div>
+    <div class="product-list">
+        <div class="product-card" data-id="1" data-name="T-Shirt Merah Menyala" data-price="150000" data-image="https://via.placeholder.com/300/FF0000/FFFFFF?Text=T-Shirt%20Merah" data-description="T-shirt katun combed 24s, desain keren untuk gaya kasualmu." data-best-seller="true">
+            <img src="https://via.placeholder.com/300/FF0000/FFFFFF?Text=T-Shirt%20Merah" alt="T-Shirt Merah Menyala">
+            <h3 class="product-title">T-Shirt Merah Menyala</h3>
+            <p class="product-price">Rp 150.000</p>
+            <button class="add-to-cart-btn button-elastic" data-id="1" data-name="T-Shirt Merah Menyala" data-price="150000" data-image="https://via.placeholder.com/300/FF0000/FFFFFF?Text=T-Shirt%20Merah">Tambahkan</button>
+        </div>
+        <div class="product-card" data-id="2" data-name="Hoodie Hitam Gelap" data-price="250000" data-image="https://via.placeholder.com/300/000000/FFFFFF?Text=Hoodie%20Hitam" data-description="Hoodie fleece tebal, cocok untuk cuaca dingin dan gaya urban." data-promo="true" data-discount="10%">
+            <img src="https://via.placeholder.com/300/000000/FFFFFF?Text=Hoodie%20Hitam" alt="Hoodie Hitam Gelap">
+            <h3 class="product-title">Hoodie Hitam Gelap</h3>
+            <p class="product-price">Rp 250.000</p>
+            <button class="add-to-cart-btn button-elastic" data-id="2" data-name="Hoodie Hitam Gelap" data-price="250000" data-image="https://via.placeholder.com/300/000000/FFFFFF?Text=Hoodie%20Hitam">Tambahkan</button>
+        </div>
+        <div class="product-card" data-id="3" data-name="Sweater Rajut Maroon" data-price="200000" data-image="https://via.placeholder.com/300/800000/FFFFFF?Text=Sweater%20Maroon" data-description="Sweater rajut halus, memberikan kesan hangat dan stylish." data-best-seller="true">
+            <img src="https://via.placeholder.com/300/800000/FFFFFF?Text=Sweater%20Maroon" alt="Sweater Rajut Maroon">
+            <h3 class="product-title">Sweater Rajut Maroon</h3>
+            <p class="product-price">Rp 200.000</p>
+            <button class="add-to-cart-btn button-elastic" data-id="3" data-name="Sweater Rajut Maroon" data-price="200000" data-image="https://via.placeholder.com/300/800000/FFFFFF?Text=Sweater%20Maroon">Tambahkan</button>
+        </div>
+        <div class="product-card" data-id="4" data-name="Jacket Bomber Hitam" data-price="350000" data-image="https://via.placeholder.com/300/1A1A1A/FFFFFF?Text=Jacket%20Hitam" data-description="Jacket bomber dengan desain modern dan bahan berkualitas tinggi." data-promo="true" data-discount="15%">
+            <img src="https://via.placeholder.com/300/1A1A1A/FFFFFF?Text=Jacket%20Hitam" alt="Jacket Bomber Hitam">
+            <h3 class="product-title">Jacket Bomber Hitam</h3>
+            <p class="product-price">Rp 350.000</p>
+            <button class="add-to-cart-btn button-elastic" data-id="4" data-name="Jacket Bomber Hitam" data-price="350000" data-image="https://via.placeholder.com/300/1A1A1A/FFFFFF?Text=Jacket%20Hitam">Tambahkan</button>
+        </div>
+        <div class="product-card" data-id="5" data-name="Aksesoris Topi Merah" data-price="50000" data-image="https://via.placeholder.com/300/CC0000/FFFFFF?Text=Topi%20Merah" data-description="Topi baseball keren untuk melengkapi gayamu." data-best-seller="true">
+            <img src="https://via.placeholder.com/300/CC0000/FFFFFF?Text=Topi%20Merah" alt="Aksesoris Topi Merah">
+            <h3 class="product-title">Aksesoris Topi Merah</h3>
+            <p class="product-price">Rp 50.000</p>
+            <button class="add-to-cart-btn button-elastic" data-id="5" data-name="Aksesoris Topi Merah" data-price="50000" data-image="https://via.placeholder.com/300/CC0000/FFFFFF?Text=Topi%20Merah">Tambahkan</button>
+        </div>
+        <div class="product-card" data-id="6" data-name="T-Shirt Hitam Polos" data-price="120000" data-image="https://via.placeholder.com/300/333333/FFFFFF?Text=T-Shirt%20Hitam" data-description="T-shirt basic warna hitam, nyaman untuk dipakai sehari-hari." data-promo="true" data-discount="5%">
+            <img src="https://via.placeholder.com/300/333333/FFFFFF?Text=T-Shirt%20Hitam" alt="T-Shirt Hitam Polos">
+            <h3 class="product-title">T-Shirt Hitam Polos</h3>
+            <p class="product-price">Rp 120.000</p>
+            <button class="add-to-cart-btn button-elastic" data-id="6" data-name="T-Shirt Hitam Polos" data-price="120000" data-image="https://via.placeholder.com/300/333333/FFFFFF?Text=T-Shirt%20Hitam">Tambahkan</button>
+        </div>
+        <div class="loading-indicator" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white;">Memuat produk...</div>
+    </div>
 
-<footer class="footer">
-    &copy; 2025 InfernoShop. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
-</footer>
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <img id="modal-image" src="" alt="">
+            <h2 id="modal-title"></h2>
+            <p id="modal-price"></p>
+            <p id="modal-description"></p>
+            <button id="modal-add-to-cart" class="modal-add-to-cart button-elastic" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
+        </div>
+    </div>
 
-<script>
-    const productList = document.querySelector('.product-list');
-    const categoryLinks = document.querySelectorAll('.category-bar a');
-    const searchInput = document.getElementById('searchInput');
-    const loadingIndicator = document.querySelector('.loading-indicator');
-    const cartCountElement = document.getElementById('cart-count');
-    const bottomCartCountElement = document.getElementById('bottom-cart-count');
-    const productModal = document.getElementById('productModal');
-    const modalImage = document.getElementById('modal-image');
-    const modalTitle = document.getElementById('modal-title');
-    const modalPrice = document.getElementById('modal-price');
-    const modalDescription = document.getElementById('modal-description');
-    const modalAddToCartButton = document.getElementById('modal-add-to-cart');
-    const closeButton = document.querySelector('.close-button');
-    const promoCarousel = document.querySelector('.promo-carousel');
-    const promoCarouselContainer = document.querySelector('.promo-carousel-container');
-    const carouselImages = document.querySelectorAll('.promo-carousel img');
-    let carouselCounter = 0;
-    const carouselInterval = 3000; // Interval otomatis carousel (ms)
-    let touchStartX = null;
+    <div class="bottom-navigation">
+        <a href="#">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-list"></i>
+            <span>Kategori</span>
+        </a>
+        <a href="store/keranjang.html" class="animate-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Keranjang</span>
+            <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-user"></i>
+            <span>Akun</span>
+        </a>
+    </div>
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    updateCartDisplay();
+    <footer class="footer">
+        <p>&copy; 2025 InfernoShop. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a></p>
+    </footer>
 
-    // Contoh data produk (bisa diganti dengan data dari API)
-    const allProducts = [
-        {
-            dataset: {
-                id: '1',
-                name: 'Pedang Bayangan',
-                price: 150000,
-                image: 'images/pedang_bayangan.jpg',
-                description: 'Pedang legendaris yang ditempa dalam kegelapan, sangat tajam dan mematikan.',
-                category: 'Pedang Bayangan',
-                tags: ['senjata', 'pedang', 'hitam']
-            },
-            badges: ['best-seller']
-        },
-        {
-            dataset: {
-                id: '2',
-                name: 'Jubah Kegelapan',
-                price: 200000,
-                image: 'images/jubah_kegelapan.jpg',
-                description: 'Jubah yang menyelimuti pemakainya dalam kegelapan, memberikan perlindungan dan siluman.',
-                category: 'Jubah Kegelapan',
-                tags: ['pakaian', 'jubah', 'hitam', 'pelindung']
-            },
-            badges: ['promo']
-        },
-        {
-            dataset: {
-                id: '3',
-                name: 'Cincin Kekuatan',
-                price: 120000,
-                image: 'images/cincin_kekuatan.jpg',
-                description: 'Cincin yang meningkatkan kekuatan fisik dan energi магическая pemakainya.',
-                category: 'Cincin Kekuatan',
-                tags: ['aksesoris', 'cincin', 'magis', 'kuat']
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            const productModal = document.getElementById('productModal');
+            const closeButton = productModal.querySelector('.close-button');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalPrice = document.getElementById('modal-price');
+            const modalDescription = document.getElementById('modal-description');
+            const modalAddToCartButton = document.getElementById('modal-add-to-cart');
+            const cartCountElement = document.getElementById('cart-count');
+            const bottomCartCountElement = document.getElementById('bottom-cart-count');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const categoryLinks = document.querySelectorAll('.category-bar a');
+            const productList = document.querySelector('.product-list');
+            const allProducts = Array.from(productList.children); // Simpan semua produk awal
+            const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
+            const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
+            const carousel = document.querySelector('.promo-carousel');
+            const carouselImages = carousel ? carousel.querySelectorAll('img') : [];
+            let carouselCounter = 0;
+            const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
+            const carouselContainer = document.querySelector('.promo-carousel-container');
+            let touchStartX = null;
+
+            // Fungsi untuk mendapatkan keranjang dari localStorage
+            function getCart() {
+                return JSON.parse(localStorage.getItem('keranjang') || '[]');
             }
-        },
-        {
-            dataset: {
-                id: '4',
-                name: 'Jimat Pelindung',
-                price: 90000,
-                image: 'images/jimat_pelindung.jpg',
-                description: 'Jimat kuno yang memberikan perlindungan dari serangan магическая dan физическая.',
-                category: 'Jimat Pelindung',
-                tags: ['aksesoris', 'jimat', 'pelindung', 'magis']
-            }
-        },
-        {
-            dataset: {
-                id: '5',
-                name: 'Obat Mistis',
-                price: 75000,
-                image: 'images/obat_mistis.jpg',
-                description: 'Ramuan магическая yang dapat menyembuhkan luka dan meningkatkan stamina.',
-                category: 'Obat Mistis',
-                tags: ['obat', 'ramuan', 'magis', 'sembuh']
-            }
-        },
-        {
-            dataset: {
-                id: '6',
-                name: 'Pedang Bayangan Elite',
-                price: 250000,
-                image: 'images/pedang_bayangan_elite.jpg',
-                description: 'Versi усиленный dari Pedang Bayangan, dengan kekuatan dan ketajaman yang lebih tinggi.',
-                category: 'Pedang Bayangan',
-                tags: ['senjata', 'pedang', 'hitam', 'elite']
-            },
-            badges: ['best-seller']
-        },
-        {
-            dataset: {
-                id: '7',
-                name: 'Jubah Malam Abadi',
-                price: 280000,
-                image: 'images/jubah_malam_abadi.jpg',
-                description: 'Jubah yang terbuat dari bayangan abadi, memberikan siluman абсолютный dan perlindungan магическая.',
-                category: 'Jubah Kegelapan',
-                tags: ['pakaian', 'jubah', 'hitam', 'siluman', 'magis']
-            },
-            badges: ['promo']
-        },
-        {
-            dataset: {
-                id: '8',
-                name: 'Cincin Elemen',
-                price: 180000,
-                image: 'images/cincin_elemen.jpg',
-                description: 'Cincin yang mengandung kekuatan elemen alam, memberikan berbagai kemampuan магическая.',
-                category: 'Cincin Kekuatan',
-                tags: ['aksesoris', 'cincin', 'magis', 'elemen']
-            }
-        },
-        {
-            dataset: {
-                id: '9',
-                name: 'Amulet Kehidupan',
-                price: 140000,
-                image: 'images/jimat_kehidupan.jpg',
-                description: 'Amulet yang memancarkan energi kehidupan, meningkatkan vitalitas dan mempercepat penyembuhan.',
-                category: 'Jimat Pelindung',
-                tags: ['aksesoris', 'jimat', 'hidup', 'sehat']
-            }
-        },
-        {
-            dataset: {
-                id: '10',
-                name: 'Elixir Kekuatan Gaib',
-                price: 110000,
-                image: 'images/obat_kuat.jpg',
-                description: 'Elixir магическая yang memberikan peningkatan kekuatan dan daya tahan временный.',
-                category: 'Obat Mistis',
-                tags: ['obat', 'elixir', 'magis', 'kuat', 'sementara']
-            }
-        }
-    ];
 
-    function formatPrice(price) {
-        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
-    }
+            // Fungsi untuk menyimpan keranjang ke localStorage
+            function saveCart(cart) {
+                localStorage.setItem('keranjang', JSON.stringify(cart));
+                updateCartCount();
+            }
 
-    function updateProductList(products) {
-        productList.innerHTML = '';
-        products.forEach(productData => {
-            const priceDisplay = formatPrice(productData.dataset.price);
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
-            productCard.dataset.id = productData.dataset.id;
-            productCard.dataset.name = productData.dataset.name;
-            productCard.dataset.price = productData.dataset.price;
-            productCard.dataset.image = productData.dataset.image;
-            productCard.dataset.description = productData.dataset.description;
+            // Fungsi untuk memperbarui tampilan jumlah item di keranjang
+            function updateCartCount() {
+                const cart = getCart();
+                const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
+                cartCountElement.textContent = totalItems;
+                bottomCartCountElement.textContent = totalItems > 0 ? totalItems : 0;
+                bottomCartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+                cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+            }
 
-            if (productData.badges && productData.badges.length > 0) {
-                productData.badges.forEach(badge => {
-                    const badgeElement = document.createElement('span');
-                    badgeElement.classList.add('badge');
-                    badgeElement.classList.add(badge.replace('-', '')); // Contoh: best-seller jadi bestseller
-                    badgeElement.textContent = badge.replace('-', ' ').toUpperCase();
-                    productCard.appendChild(badgeElement);
+            // Inisialisasi jumlah item keranjang saat halaman dimuat
+            updateCartCount();
+
+            function showProductDetails(product) {
+                modalImage.src = product.dataset.image;
+                modalImage.alt = product.dataset.name;
+                modalTitle.textContent = product.dataset.name;
+                modalPrice.textContent = `Rp ${parseInt(product.dataset.price).toLocaleString('id-ID')}`;
+                modalDescription.textContent = product.dataset.description;
+                modalAddToCartButton.dataset.id = product.dataset.id;
+                modalAddToCartButton.dataset.name = product.dataset.name;
+                modalAddToCartButton.dataset.price = product.dataset.price;
+                modalAddToCartButton.dataset.image = product.dataset.image;
+                productModal.style.display = "block";
+            }
+
+            function hideProductDetails() {
+                productModal.style.display = "none";
+            }
+
+            function tambahKeKeranjang(productId, namaProduk, hargaProduk, gambarProduk) {
+                let cart = getCart();
+                const existingItem = cart.find(item => item.id === productId);
+
+                if (existingItem) {
+                    existingItem.jumlah++;
+                } else {
+                    cart.push({
+                        id: productId,
+                        nama: namaProduk,
+                        harga: hargaProduk,
+                        gambar: gambarProduk,
+                        jumlah: 1
+                    });
+                }
+
+                saveCart(cart);
+                const cartIcon = document.querySelector('.animate-cart');
+                cartIcon.classList.add('animate-cart');
+                setTimeout(() => {
+                    cartIcon.classList.remove('animate-cart');
+                }, 300);
+            }
+
+            function addBadges(productCard) {
+                if (productCard.dataset.bestSeller === 'true') {
+                    const badge = document.createElement('span');
+                    badge.classList.add('badge');
+                    badge.textContent = 'Best Seller';
+                    productCard.appendChild(badge);
+                }
+                if (productCard.dataset.promo === 'true') {
+                    const badge = document.createElement('span');
+                    badge.classList.add('badge', 'promo');
+                    const discount = productCard.dataset.discount ? ` (-${productCard.dataset.discount})` : '';
+                    badge.textContent = 'Promo' + discount;
+                    productCard.appendChild(badge);
+                }
+            }
+
+            function updateProductList(products) {
+                productList.innerHTML = '';
+                products.forEach(productData => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    productCard.dataset.id = productData.dataset.id;
+                    productCard.dataset.name = productData.dataset.name;
+                    productCard.dataset.price = productData.dataset.price;
+                    productCard.dataset.image = productData.dataset.image;
+                    productCard.dataset.description = productData.dataset.description;
+                    if (productData.dataset.bestSeller) {
+                        productCard.dataset.bestSeller = productData.dataset.bestSeller;
+                    }
+                    if (productData.dataset.promo) {
+                        productCard.dataset.promo = productData.dataset.promo;
+                        if (productData.dataset.discount) {
+                            productCard.dataset.discount = productData.dataset.discount;
+                        }
+                    }
+
+                    productCard.innerHTML = `
+                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
+                        <h3 class="product-title">${productData.dataset.name}</h3>
+                        <p class="product-price">Rp <span class="math-inline">\{parseInt\(productData\.dataset\.price\)\.toLocaleString\('id\-ID'\)\}</p\>
+<button class\="add\-to\-cart\-btn button\-elastic" data\-id\="</span>{productData.dataset.id}" data-name="<span class="math-inline">\{productData\.dataset\.name\}" data\-price\="</span>{productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+                    `;
+
+                    addBadges(productCard);
+                    productList.appendChild(productCard);
                 });
+                productList.classList.remove('filtering');
             }
 
-            const imageElement = `<img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">`;
-            const titleElement = `<h3 class="product-title">${productData.dataset.name}</h3>`;
-            const priceElement = `<p class="product-price">${priceDisplay}</p>`;
-            const detailButtonElement = `<button class="detail-btn" data-id="${productData.dataset.id}">Detail</button>`;
-            const addToCartButtonElement = `<button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>`;
+            // Tambahkan badge saat halaman pertama kali dimuat
+            const initialProductCards = document.querySelectorAll('.product-card');
+            initialProductCards.forEach(addBadges);
 
-            productCard.innerHTML = imageElement + titleElement + priceElement + detailButtonElement + addToCartButtonElement;
-            productList.appendChild(productCard);
-        });
+            productCards.forEach(card => {
+                card.addEventListener('click', function(event) {
+                    showProductDetails(this); // Panggil fungsi untuk menampilkan detail
 
-        const initialProductCards = document.querySelectorAll('.product-card');
-        initialProductCards.forEach(addBadges);
-        attachProductCardListeners();
-        productList.classList.remove('filtering');
-    }
-
-    function addBadges(card) {
-        const productId = card.dataset.id;
-        const productInfo = allProducts.find(p => p.dataset.id === productId);
-        if (productInfo && productInfo.badges) {
-            productInfo.badges.forEach(badge => {
-                const badgeElement = document.createElement('span');
-                badgeElement.classList.add('badge');
-                badgeElement.classList.add(badge.replace('-', ''));
-                badgeElement.textContent = badge.replace('-', ' ').toUpperCase();
-                card.appendChild(badgeElement);
-            });
-        }
-    }
-
-    function attachProductCardListeners() {
-        const productCards = document.querySelectorAll('.product-card');
-        productCards.forEach(card => {
-            // Event listener untuk menampilkan detail produk saat kartu diklik (selain tombol)
-            card.addEventListener('click', function(event) {
-                if (!event.target.classList.contains('add-to-cart-btn') && !event.target.classList.contains('detail-btn')) {
-                    showProductDetails(this);
                     const rect = this.getBoundingClientRect();
                     const x = event.clientX - rect.left;
                     const y = event.clientY - rect.top;
+
                     const ripple = document.createElement('span');
                     ripple.classList.add('ripple');
                     ripple.style.left = `${x}px`;
                     ripple.style.top = `${y}px`;
                     this.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 600);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600); // Durasi animasi ripple
+                });
+
+                const addToCartButton = card.querySelector('.add-to-cart-btn');
+                if (addToCartButton) {
+                    addToCartButton.addEventListener('touchstart', function() {
+                        this.classList.add('touched');
+                    });
+
+                    addToCartButton.addEventListener('touchend', function() {
+                        this.classList.remove('touched');
+                    });
+
+                    addToCartButton.addEventListener('touchcancel', function() {
+                        this.classList.remove('touched');
+                    });
+
+                    addToCartButton.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        const productId = this.dataset.id;
+                        const name = this.dataset.name;
+                        const price = this.dataset.price;
+                        const image = this.dataset.image;
+                        tambahKeKeranjang(productId, name, price, image);
+                    });
                 }
             });
 
-            const addToCartButton = card.querySelector('.add-to-cart-btn');
-            if (addToCartButton) {
-                addToCartButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    const productId = this.dataset.id;
-                    const name = this.dataset.name;
-                    const price = this.dataset.price;
-                    const image = this.dataset.image;
-                    tambahKeKeranjang(productId, name, price, image);
-                });
-            }
+            closeButton.addEventListener('click', hideProductDetails);
+            window.addEventListener('click', function(event) {
+                if (event.target === productModal) {
+                    hideProductDetails();
+                }
+            });
 
-            // Tambahkan event listener untuk tombol "Detail"
-            const detailButton = card.querySelector('.detail-btn');
-            if (detailButton) {
-                detailButton.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Mencegah klik pada card juga terpicu
-                    const cardElement = this.closest('.product-card');
-                    if (cardElement) {
-                        // Tambahkan kelas animasi pantul
-                        cardElement.classList.add('animate-bounce');
-                        // Setelah animasi selesai, tampilkan detail produk
+            modalAddToCartButton.addEventListener('touchstart', function() {
+                this.classList.add('touched');
+            });
+
+            modalAddToCartButton.addEventListener('touchend', function() {
+                this.classList.remove('touched');
+            });
+
+            modalAddToCartButton.addEventListener('touchcancel', function() {
+                this.classList.remove('touched');
+            });
+
+            modalAddToCartButton.addEventListener('click', function() {
+                const productId = this.dataset.id;
+                const name = this.dataset.name;
+                const price = this.dataset.price;
+                const image = this.dataset.image;
+                tambahKeKeranjang(productId, name, price, image);
+                hideProductDetails();
+            });
+
+            const categoryBar = document.querySelector('.category-bar');
+            if (categoryBar) {
+                categoryBar.addEventListener('click', function(event) {
+                    if (event.target.matches('a[data-category]')) {
+                        event.preventDefault();
+                        const selectedCategory = event.target.dataset.category;
+                        categoryLinks.forEach(l => l.classList.remove('active'));
+                        event.target.classList.add('active');
+                        productList.classList.add('filtering');
                         setTimeout(() => {
-                            cardElement.classList.remove('animate-bounce');
-                            showProductDetails(cardElement);
-                        }, 300); // Durasi animasi bounce
+                            let productsToShow = [];
+                            if (selectedCategory === 'semua') {
+                                productsToShow = allProducts;
+                            } else {
+                                productsToShow = allProducts.filter(product => product.dataset.name === selectedCategory);
+                            }
+                            updateProductList(productsToShow);
+                        }, 300);
                     }
                 });
             }
-        });
-    }
 
-    function showProductDetails(productCard) {
-        modalImage.src = productCard.dataset.image;
-        modalTitle.textContent = productCard.dataset.name;
-        modalPrice.textContent = formatPrice(productCard.dataset.price);
-        modalDescription.textContent = productCard.dataset.description;
-        modalAddToCartButton.dataset.id = productCard.dataset.id;
-        modalAddToCartButton.dataset.name = productCard.dataset.name;
-        modalAddToCartButton.dataset.price = productCard.dataset.price;
-        modalAddToCartButton.dataset.image = productCard.dataset.image;
-        productModal.style.display = 'block';
-    }
+            function cariProduk() {
+                const searchTerm = searchInput.value.toLowerCase();
+                productList.innerHTML = '';
+                loadingIndicator.style.display = 'block';
+                setTimeout(() => {
+                    const hasilPencarian = allProducts.filter(productCard => {
+                        const namaProduk = productCard.dataset.name.toLowerCase();
+                        const deskripsiProduk = productCard.dataset.description.toLowerCase();
+                        return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
+                    });
+                    if (hasilPencarian.length === 0) {
+                        productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
+                    } else {
+                        updateProductList(hasilPencarian);
+                    }
+                    loadingIndicator.style.display = 'none';
+                }, 500);
+            }
 
-    function hideProductDetails() {
-        productModal.style.display = 'none';
-    }
-
-    closeButton.addEventListener('click', hideProductDetails);
-
-    window.addEventListener('click', function(event) {
-        if (event.target === productModal) {
-            hideProductDetails();
-        }
-    });
-
-    modalAddToCartButton.addEventListener('click', function() {
-        const productId = this.dataset.id;
-        const name = this.dataset.name;
-        const price = this.dataset.price;
-        const image = this.dataset.image;
-        tambahKeKeranjang(productId, name, price, image);
-        hideProductDetails();
-    });
-
-    function tambahKeKeranjang(id, name, price, image) {
-        const itemDiKeranjang = cart.find(item => item.id === id);
-        if (itemDiKeranjang) {
-            itemDiKeranjang.quantity++;
-        } else {
-            cart.push({ id, name, price, image, quantity: 1 });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartDisplay();
-        animateCartIcon();
-    }
-
-    function updateCartDisplay() {
-        const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountElement.textContent = totalQuantity;
-        bottomCartCountElement.textContent = totalQuantity;
-    }
-
-    function animateCartIcon() {
-        const cartIcon = document.querySelector('nav ul li a i.fa-shopping-cart');
-        const bottomCartIcon = document.querySelector('.bottom-navigation a i.fa-shopping-cart');
-        if (cartIcon) {
-            cartIcon.classList.add('animate-cart');
-            setTimeout(() => {
-                cartIcon.classList.remove('animate-cart');
-            }, 300);
-        }
-        if (bottomCartIcon) {
-            bottomCartIcon.classList.add('animate-cart');
-            setTimeout(() => {
-                bottomCartIcon.classList.remove('animate-cart');
-            }, 300);
-        }
-    }
-
-    categoryLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const selectedCategory = this.dataset.category;
-            categoryLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            this.classList.add('active');
-            productList.classList.add('filtering');
-            setTimeout(() => {
-                let productsToShow = [];
-                if (selectedCategory === 'semua') {
-                    productsToShow = allProducts;
-                } else {
-                    productsToShow = allProducts.filter(product => product.dataset.category === selectedCategory);
+            searchInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    cariProduk();
                 }
-                updateProductList(productsToShow); // Gunakan fungsi updateProductList
-            }, 300);
-        });
-    });
-
-    function cariProduk() {
-        const searchTerm = searchInput.value.toLowerCase();
-        productList.innerHTML = '';
-        loadingIndicator.style.display = 'block';
-        setTimeout(() => {
-            const hasilPencarian = allProducts.filter(productCard => {
-                const namaProduk = productCard.dataset.name.toLowerCase();
-                const deskripsiProduk = productCard.dataset.description.toLowerCase();
-                return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
             });
-            if (hasilPencarian.length === 0) {
-                productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
-            } else {
-                updateProductList(hasilPencarian); // Gunakan fungsi updateProductList
-            }
-            loadingIndicator.style.display = 'none';
-        }, 500);
-    }
 
-    searchInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            cariProduk();
-        }
-    });
-
-    function nextCarouselSlide() {
-        carouselCounter++;
-        if (carouselCounter >= carouselImages.length) {
-            carouselCounter = 0;
-        }
-        promoCarousel.style.transform = `translateX(-${carouselCounter * 100}%)`;
-    }
-
-    if (promoCarousel && carouselImages.length > 0) {
-        setInterval(nextCarouselSlide, carouselInterval);
-
-        promoCarouselContainer.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        });
-
-        promoCarouselContainer.addEventListener('touchend', (e) => {
-            if (touchStartX === null) {
-                return;
-            }
-            const touchEndX = e.changedTouches[0].clientX;
-            const diffX = touchStartX - touchEndX;
-
-            if (diffX > 50) {
-                nextCarouselSlide(); // Swipe ke kiri
-            } else if (diffX < -50) {
-                carouselCounter--;
-                if (carouselCounter < 0) {
-                    carouselCounter = carouselImages.length - 1;
+            function nextCarouselSlide() {
+                carouselCounter++;
+                if (carouselCounter >= carouselImages.length) {
+                    carouselCounter = 0;
                 }
-                promoCarousel.style.transform = `translateX(-${carouselCounter * 100}%)`; // Swipe ke kanan
+                carousel.style.transform = `translateX(-${carouselCounter * 100}%)`;
             }
-            touchStartX = null;
-        });
-    }
 
-    // Inisialisasi tampilan produk saat halaman dimuat
-    updateProductList(allProducts);
-</script>
+            if (carousel && carouselImages.length > 0) {
+                setInterval(nextCarouselSlide, carouselInterval);
+
+                carouselContainer.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                });
+
+                carouselContainer.addEventListener('touchend', (e) => {
+                    if (touchStartX === null) {
+                        return;
+                    }
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const diffX = touchStartX - touchEndX;
+
+                    if (diffX > 50) {
+                        nextCarouselSlide(); // Swipe ke kiri
+                    } else if (diffX < -50) {
+                        carouselCounter--;
+                        if (carouselCounter < 0) {
+                            carouselCounter = carouselImages.length - 1;
+                        }
+                        carousel.style.transform = `translateX(-${carouselCounter * 100}%)`; // Swipe ke kanan
+                    }
+                    touchStartX = null;
+                });
+            }
+
+            const elasticButtons = document.querySelectorAll('.button-elastic');
+
+            elasticButtons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.classList.add('touched');
+                });
+
+                button.addEventListener('touchend', function() {
+                    this.classList.remove('touched');
+                });
+
+                button.addEventListener('touchcancel', function() {
+                    this.classList.remove('touched');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
