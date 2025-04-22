@@ -462,16 +462,20 @@
             <p class="product-price">Rp 250.000</p>
             <button class="add-to-cart-btn" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="https://via.placeholder.com/280/330000/eee?Text=Produk+1">Tambahkan</button>
         </div>
+           //FITUR DISKON
         <div class="product-card" style="animation-delay: 0.2s;"
-             data-id="2" data-name="Jubah Kegelapan" data-price="350000"
-             data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2"
-             data-description="Jubah yang menyelimuti pemakainya dalam kegelapan. Memungkinkan untuk bergerak tanpa terdeteksi."
-             data-promo="true" data-discount="10%">
-            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Jubah Kegelapan">
-            <h3 class="product-title">Jubah Kegelapan</h3>
-            <p class="product-price">Rp 350.000</p>
-            <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="350000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2">Tambahkan</button>
-        </div>
+     data-id="2" data-name="Jubah Kegelapan" data-price="350000"
+     data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2"
+     data-description="Jubah yang menyelimuti pemakainya dalam kegelapan. Memungkinkan untuk bergerak tanpa terdeteksi."
+     data-promo="true" data-discount="10%" data-original-price="388888">
+    <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Jubah Kegelapan">
+    <h3 class="product-title">Jubah Kegelapan</h3>
+    <p class="product-price">
+        <span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 388.888</span>
+        Rp 350.000
+    </p>
+    <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="350000" data-image="https://via.placeholder.com/280/550000/eee?Text=Produk+2">Tambahkan</button>
+</div>
         <div class="product-card" style="animation-delay: 0.3s;"
              data-id="3" data-name="Cincin Kekuatan" data-price="500000"
              data-image="https://via.placeholder.com/280/770000/eee?Text=Produk+3"
@@ -652,25 +656,33 @@
             }
 
             function updateProductList(products) {
-                productList.innerHTML = '';
-                products.forEach((productData, index) => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    productCard.style.animationDelay = `${index * 0.1}s`;
-                    productCard.dataset.id = productData.dataset.id;
-                    productCard.dataset.name = productData.dataset.name;
-                    productCard.dataset.price = productData.dataset.price;
-                    productCard.dataset.image = productData.dataset.image;
-                    productCard.dataset.description = productData.dataset.description;
-                    if (productData.dataset.bestSeller) {
-                        productCard.dataset.bestSeller = productData.dataset.bestSeller;
-                    }
-                    if (productData.dataset.promo) {
-                        productCard.dataset.promo = productData.dataset.promo;
-                        if (productData.dataset.discount) {
-                            productCard.dataset.discount = productData.dataset.discount;
-                        }
-                    }
+    productList.innerHTML = '';
+    products.forEach((productData, index) => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+        productCard.style.animationDelay = `${index * 0.1}s`;
+        productCard.dataset.id = productData.dataset.id;
+        productCard.dataset.name = productData.dataset.name;
+        productCard.dataset.price = productData.dataset.price;
+        productCard.dataset.image = productData.dataset.image;
+        productCard.dataset.description = productData.dataset.description;
+        if (productData.dataset.bestSeller) {
+            productCard.dataset.bestSeller = productData.dataset.bestSeller;
+        }
+        if (productData.dataset.promo) {
+            productCard.dataset.promo = productData.dataset.promo;
+            if (productData.dataset.discount) {
+                productCard.dataset.discount = productData.dataset.discount;
+            }
+            if (productData.dataset.originalPrice) {
+                productCard.dataset.originalPrice = productData.dataset.originalPrice;
+            }
+        }
+
+        let priceDisplay = `Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}`;
+        if (productData.dataset.originalPrice && productData.dataset.promo === 'true') {
+            priceDisplay = `<span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp ${parseInt(productData.dataset.originalPrice).toLocaleString('id-ID')}</span> Rp ${parseInt(productData.dataset.price).toLocaleString('id-ID')}`;
+        }
 
                     productCard.innerHTML = `
                         <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
