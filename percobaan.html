@@ -3,33 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Online Anda - Gaya Merah Hitam</title>
+    <title>Toko Online Anda - Gaya Merah Hitam (Mobile)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Gaya CSS yang Lebih Menarik dengan Gradasi Merah Hitam */
+        /* Gaya CSS yang Lebih Baik untuk Mobile dengan Animasi */
         body {
-            font-family: 'Roboto', sans-serif; /* Font yang mudah dibaca */
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #000000, #800000); /* Gradasi Hitam ke Merah */
-            color: #eee; /* Warna teks terang agar kontras */
+            background: linear-gradient(to bottom, #000000, #800000);
+            color: #eee;
+            overflow-x: hidden; /* Mencegah scroll horizontal yang tidak perlu */
         }
         header {
-            background: rgba(0, 0, 0, 0.8); /* Latar belakang semi-transparan hitam */
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 15px 20px;
+            padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: sticky; /* Header tetap di atas saat di-scroll */
+            top: 0;
+            z-index: 100;
         }
         .logo {
-            font-family: 'Bebas Neue', sans-serif; /* Font keren untuk logo */
-            font-size: 2em;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
             font-weight: bold;
             letter-spacing: 1px;
+            animation: fadeIn 1s ease-out; /* Animasi fade-in */
         }
         .search-bar {
             display: flex;
@@ -37,19 +42,21 @@
             border-radius: 5px;
             overflow: hidden;
             border: 1px solid #555;
+            flex-grow: 1;
+            margin-left: 15px;
         }
         .search-bar input[type="text"] {
-            padding: 10px;
+            padding: 8px;
             border: none;
             flex-grow: 1;
             background-color: transparent;
             color: #eee;
         }
         .search-bar button {
-            background-color: #800000; /* Merah */
+            background-color: #800000;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 8px 12px;
             cursor: pointer;
         }
         nav ul {
@@ -59,7 +66,7 @@
             display: flex;
         }
         nav ul li {
-            margin-left: 25px;
+            margin-left: 15px;
         }
         nav ul li a {
             color: #ddd;
@@ -72,93 +79,104 @@
         }
         .category-bar {
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-bottom: 1px solid #555;
             overflow-x: auto;
             white-space: nowrap;
+            animation: slideInDown 0.5s ease-out; /* Animasi slide-in */
         }
         .category-bar a {
             display: inline-block;
             color: #ccc;
             text-decoration: none;
-            margin-right: 20px;
-            padding: 8px 15px;
+            margin-right: 15px;
+            padding: 6px 10px;
             border-radius: 5px;
             border: 1px solid #555;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out;
+            font-size: 0.9em;
         }
         .category-bar a:hover {
             background-color: #555;
             color: #fff;
+            transform: scale(1.05);
         }
         .promo-banner {
-            background-color: rgba(255, 0, 0, 0.1); /* Merah semi-transparan */
-            padding: 20px;
+            background-color: rgba(255, 0, 0, 0.1);
+            padding: 15px;
             text-align: center;
-            margin: 20px;
+            margin: 10px;
             border-radius: 8px;
             border: 1px solid #aa0000;
+            animation: pulse 1.5s infinite alternate; /* Animasi pulse */
         }
         .promo-banner h2 {
             color: #ffddcc;
             margin-top: 0;
             font-family: 'Bebas Neue', sans-serif;
             letter-spacing: 1px;
+            font-size: 1.4em;
         }
         .promo-banner p {
             color: #eee;
+            font-size: 0.9em;
         }
         .promo-banner a {
             color: #ffbb99;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
+            font-size: 0.9em;
         }
         .promo-banner a:hover {
             color: #fff;
         }
         .product-list {
-            padding: 20px;
+            padding: 10px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Lebar kartu produk sedikit lebih besar */
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Lebih banyak kolom untuk mobile */
+            gap: 10px;
         }
         .product-card {
             background-color: #222;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            padding: 10px;
             text-align: center;
             transition: transform 0.2s ease-in-out;
+            animation: fadeInUp 0.5s ease-out forwards; /* Animasi fade-in up */
+            opacity: 0;
         }
         .product-card:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
         }
         .product-card img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             border: 1px solid #444;
         }
         .product-title {
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             color: #eee;
+            font-size: 0.9em;
         }
         .product-price {
             color: #ffaa80;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1em;
         }
         .product-card button {
-            background-color: #800000; /* Merah */
+            background-color: #800000;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 6px 12px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
+            font-size: 0.8em;
             transition: background-color 0.3s ease;
         }
         .product-card button:hover {
@@ -167,12 +185,13 @@
         .bottom-navigation {
             background-color: rgba(0, 0, 0, 0.8);
             border-top: 1px solid #555;
-            padding: 10px 0;
+            padding: 8px 0;
             display: flex;
             justify-content: space-around;
             position: fixed;
             bottom: 0;
             width: 100%;
+            z-index: 100;
         }
         .bottom-navigation a {
             color: #ccc;
@@ -180,22 +199,27 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: color 0.3s ease;
-            flex-grow: 1; /* Membuat item navigasi mengisi ruang yang tersedia secara merata */
-            justify-content: center; /* Pusatkan ikon dan teks */
+            transition: color 0.3s ease, transform 0.2s ease-in-out;
+            flex-grow: 1;
+            justify-content: center;
         }
         .bottom-navigation a:hover {
             color: #fff;
+            transform: translateY(-2px);
         }
         .bottom-navigation a i {
-            font-size: 1.4em;
-            margin-bottom: 5px;
+            font-size: 1.2em;
+            margin-bottom: 3px;
+        }
+        .bottom-navigation a span {
+            font-size: 0.7em;
         }
         .footer {
             background-color: #333;
             color: #ddd;
             text-align: center;
-            padding: 15px;
+            padding: 10px;
+            font-size: 0.8em;
         }
         .footer a {
             color: #ffbb99;
@@ -205,13 +229,82 @@
         .footer a:hover {
             color: #fff;
         }
+
+        /* Media Queries untuk Responsif */
+        @media (min-width: 600px) {
+            .product-list {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+            .product-card {
+                padding: 15px;
+            }
+            .product-title {
+                font-size: 1em;
+            }
+            .product-price {
+                font-size: 1.1em;
+            }
+            .search-bar {
+                max-width: 300px;
+            }
+            nav ul li {
+                margin-left: 20px;
+            }
+            .logo {
+                font-size: 2em;
+            }
+            .category-bar {
+                padding: 10px 20px;
+            }
+            .category-bar a {
+                font-size: 1em;
+                padding: 8px 12px;
+                margin-right: 20px;
+            }
+            .promo-banner h2 {
+                font-size: 1.6em;
+            }
+            .promo-banner p {
+                font-size: 1em;
+            }
+            .bottom-navigation a i {
+                font-size: 1.4em;
+                margin-bottom: 5px;
+            }
+            .bottom-navigation a span {
+                font-size: 0.8em;
+            }
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">InfernoShop</div>
         <div class="search-bar">
-            <input type="text" placeholder="Jelajahi kegelapan produk...">
+            <input type="text" placeholder="Cari produk...">
             <button>Cari</button>
         </div>
         <nav>
@@ -238,34 +331,52 @@
     </div>
 
     <div class="product-list">
-        <div class="product-card">
+        <div class="product-card" style="animation-delay: 0.1s;">
             <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+1" alt="Produk 1">
             <h3 class="product-title">Pedang Bayangan</h3>
             <p class="product-price">Rp 250.000</p>
             <button>Tambahkan</button>
         </div>
-        <div class="product-card">
+        <div class="product-card" style="animation-delay: 0.2s;">
             <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+2" alt="Produk 2">
             <h3 class="product-title">Jubah Kegelapan</h3>
             <p class="product-price">Rp 350.000</p>
             <button>Tambahkan</button>
         </div>
-        <div class="product-card">
+        <div class="product-card" style="animation-delay: 0.3s;">
             <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+3" alt="Produk 3">
             <h3 class="product-title">Cincin Kekuatan</h3>
             <p class="product-price">Rp 500.000</p>
             <button>Tambahkan</button>
         </div>
+        <div class="product-card" style="animation-delay: 0.4s;">
+            <img src="https://via.placeholder.com/280/330000/eee?Text=Produk+4" alt="Produk 4">
+            <h3 class="product-title">Jimat Pelindung</h3>
+            <p class="product-price">Rp 180.000</p>
+            <button>Tambahkan</button>
         </div>
+        <div class="product-card" style="animation-delay: 0.5s;">
+            <img src="https://via.placeholder.com/280/550000/eee?Text=Produk+5" alt="Produk 5">
+            <h3 class="product-title">Obor Kehidupan</h3>
+            <p class="product-price">Rp 420.000</p>
+            <button>Tambahkan</button>
+        </div>
+        <div class="product-card" style="animation-delay: 0.6s;">
+            <img src="https://via.placeholder.com/280/770000/eee?Text=Produk+6" alt="Produk 6">
+            <h3 class="product-title">Tombak Naga</h3>
+            <p class="product-price">Rp 600.000</p>
+            <button>Tambahkan</button>
+        </div>
+    </div>
 
     <div class="bottom-navigation">
         <a href="#">
             <i class="fas fa-fire"></i>
-            Beranda
+            <span>Beranda</span>
         </a>
         <a href="#">
             <i class="fas fa-shopping-cart"></i>
-            Keranjang
+            <span>Keranjang</span>
         </a>
     </div>
 
