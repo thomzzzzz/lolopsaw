@@ -117,6 +117,11 @@
         .checkout-button:hover {
             background-color: #43a047;
         }
+        .empty-cart {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
 
         /* Responsif untuk Mobile */
         @media (max-width: 600px) {
@@ -143,52 +148,118 @@
 <body>
     <div class="cart-container">
         <h1>Keranjang Belanja Anda</h1>
-
-        <div class="cart-item">
-            <div class="item-image">
-                <img src="https://via.placeholder.com/80/330000/eee?Text=Produk+1" alt="Produk 1">
+        <div id="cart-items-container">
             </div>
-            <div class="item-details">
-                <div class="item-name">Pedang Bayangan</div>
-                <div class="item-price">Rp 250.000</div>
-                <div class="item-quantity">
-                    <span class="quantity-label">Jumlah:</span>
-                    <input type="number" class="quantity-input" value="1" min="1">
-                </div>
+        <div id="cart-summary-container">
             </div>
-            <button class="remove-button">Hapus</button>
-        </div>
-
-        <div class="cart-item">
-            <div class="item-image">
-                <img src="https://via.placeholder.com/80/550000/eee?Text=Produk+2" alt="Produk 2">
-            </div>
-            <div class="item-details">
-                <div class="item-name">Jubah Kegelapan</div>
-                <div class="item-price">Rp 350.000</div>
-                <div class="item-quantity">
-                    <span class="quantity-label">Jumlah:</span>
-                    <input type="number" class="quantity-input" value="1" min="1">
-                </div>
-            </div>
-            <button class="remove-button">Hapus</button>
-        </div>
-
-        <div class="cart-summary">
-            <div class="summary-item">
-                <span>Subtotal:</span>
-                <span>Rp 600.000</span>
-            </div>
-            <div class="summary-item">
-                <span>Pengiriman:</span>
-                <span>Rp 20.000</span>
-            </div>
-            <div class="summary-item total">
-                <span>Total:</span>
-                <span>Rp 620.000</span>
-            </div>
-            <button class="checkout-button">Lanjutkan ke Pembayaran</button>
-        </div>
+        <button class="checkout-button">Lanjutkan ke Pembayaran</button>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            tampilkanIsiKeranjang();
+        });
+
+        function tampilkanIsiKeranjang() {
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const cartSummaryContainer = document.getElementById('cart-summary-container');
+            let keranjang = JSON.parse(localStorage.getItem('keranjang') || '[]');
+
+            cartItemsContainer.innerHTML = ''; // Kosongkan kontainer sebelum menampilkan
+
+            if (keranjang.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Keranjang Anda kosong.</p>';
+                cartSummaryContainer.innerHTML = '';
+                return;
+            }
+
+            keranjang.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <div class="item-image"><img src="${item.gambar}" alt="${item.nama}"></div>
+                    <div class="item-details">
+                        <div class="item-name">${item.nama}</div>
+                        <div class="item-price">Rp ${formatRupiah(item.harga)}</div>
+                        <div class="item-quantity">
+                            <span class="quantity-label">Jumlah:</span>
+                            <input type="number" class="quantity-input" value="${item.jumlah}" min="1" data-id="${item.id}">
+                        </div>
+                    </div>
+                    <button class="remove-button" data-id="${item.id}">Hapus</button>
+                `;
+                cartItemsContainer.appendChild(cartItemDiv);
+            });
+
+            tampilkanRingkasan();
+            tambahkanEventListeners();
+        }
+
+        function perbaruiJumlah(productId, jumlahBaru) {
+            let keranjang = JSON.parse(localStorage.getItem('keranjang'));
+            let item = keranjang.find(item => item.id === productId);
+            if (item) {
+                item.jumlah = parseInt(jumlahBaru);
+                localStorage.setItem('keranjang', JSON.stringify(keranjang));
+                tampilkanIsiKeranjang(); // Perbarui tampilan setelah mengubah jumlah
+            }
+        }
+
+        function hapusItem(productId) {
+            let keranjang = JSON.parse(localStorage.getItem('keranjang'));
+            keranjang = keranjang.filter(item => item.id !== productId);
+            localStorage.setItem('keranjang', JSON.stringify(keranjang));
+            tampilkanIsiKeranjang(); // Perbarui tampilan setelah menghapus item
+        }
+
+        function tampilkanRingkasan() {
+            const cartSummaryContainer = document.getElementById('cart-summary-container');
+            let keranjang = JSON.parse(localStorage.getItem('keranjang') || '[]');
+            let subtotal = keranjang.reduce((acc, item) => acc + (item.harga * item.jumlah), 0);
+            const biayaPengiriman = 20000; // Contoh biaya pengiriman
+            const total = subtotal + biayaPengiriman;
+
+            cartSummaryContainer.innerHTML = `
+                <div class="cart-summary">
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span>Rp ${formatRupiah(subtotal)}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Pengiriman:</span>
+                        <span>Rp ${formatRupiah(biayaPengiriman)}</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span>Rp ${formatRupiah(total)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function tambahkanEventListeners() {
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const productId = this.dataset.id;
+                    const jumlahBaru = this.value;
+                    perbaruiJumlah(productId, jumlahBaru);
+                });
+            });
+
+            const removeButtons = document.querySelectorAll('.remove-button');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    hapusItem(productId);
+                });
+            });
+        }
+
+        function formatRupiah(angka) {
+            const format = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            return format.format(angka);
+        }
+    </script>
 </body>
 </html>
