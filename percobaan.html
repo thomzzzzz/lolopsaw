@@ -340,166 +340,168 @@
             100% { transform: scale(1); }
         }
 
-        /* Media query untuk layar dengan lebar maksimum 600px (biasanya perangkat seluler) */
+        /* Style untuk Pop-up Selamat Datang */
+        .welcome-popup {
+            display: none; /* Sembunyikan pop-up secara default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Latar belakang semi-transparan */
+            z-index: 102; /* Pastikan di atas elemen lain */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #333;
+            color: #eee;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            width: 400px; /* Sesuaikan lebar sesuai keinginan */
+        }
+
+        .popup-logo {
+            max-width: 150px; /* Sesuaikan ukuran logo */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .popup-content h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .popup-content p {
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+        }
+
+        .popup-button {
+            background-color: #aa0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        .popup-button:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+
+        /* Responsif untuk layar lebih kecil */
         @media (max-width: 600px) {
-            header {
-                padding: 8px 10px;
+            .popup-content {
+                padding: 20px;
+                max-width: 95%;
+                width: auto;
             }
-            .logo {
+
+            .popup-logo {
+                max-width: 120px;
+                margin-bottom: 15px;
+            }
+
+            .popup-content h2 {
                 font-size: 1.3em;
             }
-            .search-bar {
-                padding: 6px 8px;
-                margin: 0 8px;
+
+            .popup-content p {
+                font-size: 0.85em;
+                margin-bottom: 20px;
             }
-            .search-bar input[type="text"] {
-                font-size: 0.8em;
-            }
-            .search-bar button {
-                font-size: 1em;
-            }
-            .cart-icon {
-                font-size: 1.2em;
-                margin-left: 8px;
-            }
-            .category-bar {
-                padding: 6px 8px;
-                font-size: 0.7em;
-            }
-            .category-bar a {
-                margin-right: 8px;
-                padding: 5px 8px;
-            }
-            .product-list {
-                padding: 10px;
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 8px;
-            }
-            .product-card {
-                padding: 8px;
-            }
-            .product-title {
-                font-size: 0.8em;
-                margin-bottom: 3px;
-            }
-            .product-price {
+
+            .popup-button {
                 font-size: 0.9em;
-            }
-            .add-to-cart-btn {
-                padding: 6px 10px;
-                font-size: 0.7em;
-                margin-top: 5px;
-            }
-            .badge {
-                top: 3px;
-                left: 3px;
-                padding: 2px 5px;
-                font-size: 0.6em;
-            }
-            .modal-content {
-                margin: 10% auto;
-                padding: 10px;
-            }
-            .close-button {
-                font-size: 20px;
-            }
-            #modal-title {
-                font-size: 1.1em;
-                margin-bottom: 5px;
-            }
-            #modal-price {
-                font-size: 1em;
-                margin-bottom: 10px;
-            }
-            #modal-description {
-                font-size: 0.8em;
-                margin-bottom: 12px;
-            }
-            .modal-add-to-cart {
-                padding: 8px 12px;
-                font-size: 0.8em;
-            }
-            .bottom-navigation {
-                font-size: 0.6em;
-                padding: 5px 0;
-            }
-            .bottom-navigation a i {
-                font-size: 1em;
-                margin-bottom: 2px;
-            }
-            .footer {
-                padding: 8px;
-                font-size: 0.7em;
+                padding: 8px 16px;
             }
         }
     </style>
 </head>
 <body>
+    <div id="welcomePopup" class="welcome-popup">
+        <div class="popup-content">
+            <img src="path/ke/logo-anda.png" alt="Logo InfernoShop" class="popup-logo">
+            <h2>Selamat Datang di InfernoShop!</h2>
+            <p>Jelajahi koleksi gaya merah hitam kami yang penuh semangat dan temukan produk-produk eksklusif yang akan meningkatkan penampilan Anda.</p>
+            <button id="closeWelcomePopup" class="popup-button">Mulai Jelajahi</button>
+        </div>
+    </div>
     <header>
         <div class="logo">InfernoShop</div>
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Cari produk...">
             <button><i class="fas fa-search"></i></button>
         </div>
-        <a href="store/keranjang.html" class="cart-icon">
+        <div class="cart-icon">
             <i class="fas fa-shopping-cart animate-cart"></i>
-            <span id="cart-count" class="cart-notification" style="display: none;">0</span>
-        </a>
+            <span class="cart-notification" id="cart-count">0</span>
+        </div>
     </header>
-
-    <div class="category-bar">
-        <a href="#" data-filter="semua" class="active">Semua Produk</a>
+    <nav class="category-bar">
+        <a href="#" data-filter="semua" class="active">Semua</a>
         <a href="#" data-filter="promo">Promo</a>
         <a href="#" data-filter="best-seller">Best Seller</a>
-    </div>
-
+    </nav>
     <div class="promo-carousel-container">
         <div class="promo-carousel">
-            <img src="images/banner1.jpg" alt="Promo Banner 1">
-            <img src="images/banner2.jpg" alt="Promo Banner 2">
+            <img src="path/ke/gambar-carousel1.jpg" alt="Promo 1">
+            <img src="path/ke/gambar-carousel2.jpg" alt="Promo 2">
+            <img src="path/ke/gambar-carousel3.jpg" alt="Promo 3">
         </div>
     </div>
-
     <div class="product-list">
-        <div class="product-card" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="images/pedang1.jpg" data-description="Pedang legendaris yang ditempa dalam kegelapan abadi." data-best-seller="true">
-            <img src="images/pedang1.jpg" alt="Pedang Bayangan">
-            <h3 class="product-title">Pedang Bayangan</h3>
-            <p class="product-price">Rp 250.000</p>
-            <button class="add-to-cart-btn" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="images/pedang1.jpg">Tambahkan</button>
-            <span class="badge best-seller">Best Seller</span>
+        <div class="product-card" data-id="1" data-name="T-Shirt Crimson Fury" data-price="149000" data-image="path/ke/tshirt1.jpg" data-description="T-shirt katun premium dengan desain merah menyala." data-best-seller="true">
+            <img src="path/ke/tshirt1.jpg" alt="T-Shirt Crimson Fury">
+            <h3 class="product-title">T-Shirt Crimson Fury</h3>
+            <p class="product-price">Rp 149.000</p>
+            <button class="add-to-cart-btn" data-id="1" data-name="T-Shirt Crimson Fury" data-price="149000" data-image="path/ke/tshirt1.jpg">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="2" data-name="Jubah Kegelapan" data-price="162000" data-image="images/jubah1.jpg" data-description="Jubah yang menyelimuti pemakainya dalam bayangan malam." data-promo="true" data-discount="10%" data-original-price="180000">
-            <img src="images/jubah1.jpg" alt="Jubah Kegelapan">
-            <h3 class="product-title">Jubah Kegelapan</h3>
-            <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 180.000</span> Rp 162.000</p>
-            <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="162000" data-image="images/jubah1.jpg">Tambahkan</button>
-            <span class="badge promo">Promo (-10%)</span>
+        <div class="product-card" data-id="2" data-name="Hoodie Shadow Strike" data-price="299000" data-image="path/ke/hoodie1.jpg" data-description="Hoodie hitam elegan dengan aksen merah yang kuat." data-promo="true" data-discount="10%" data-original-price="332000">
+            <img src="path/ke/hoodie1.jpg" alt="Hoodie Shadow Strike">
+            <h3 class="product-title">Hoodie Shadow Strike</h3>
+            <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 332.000</span> Rp 299.000</p>
+            <button class="add-to-cart-btn" data-id="2" data-name="Hoodie Shadow Strike" data-price="299000" data-image="path/ke/hoodie1.jpg">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg" data-description="Topeng yang memberikan aura menakutkan dan misterius.">
-            <img src="images/topeng1.jpg" alt="Topeng Tengkorak">
-            <h3 class="product-title">Topeng Tengkorak</h3>
-            <p class="product-price">Rp 90.000</p>
-            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambambahkan</button>
+        <div class="product-card" data-id="3" data-name="Jacket Scarlet Edge" data-price="499000" data-image="path/ke/jacket1.jpg" data-description="Jacket kulit sintetis dengan detail merah yang berani.">
+            <img src="path/ke/jacket1.jpg" alt="Jacket Scarlet Edge">
+            <h3 class="product-title">Jacket Scarlet Edge</h3>
+            <p class="product-price">Rp 499.000</p>
+            <button class="add-to-cart-btn" data-id="3" data-name="Jacket Scarlet Edge" data-price="499000" data-image="path/ke/jacket1.jpg">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="4" data-name="Obor Abadi" data-price="125000" data-image="images/obor1.jpg" data-description="Obor yang apinya tak pernah padam, menerangi jalan dalam kegelapan.">
-            <img src="images/obor1.jpg" alt="Obor Abadi">
-            <h3 class="product-title">Obor Abadi</h3>
-            <p class="product-price">Rp 125.000</p>
-            <button class="add-to-cart-btn" data-id="4" data-name="Obor Abadi" data-price="125000" data-image="images/obor1.jpg">Tambahkan</button>
+        <div class="product-card" data-id="4" data-name="T-Shirt Ember Glow" data-price="129000" data-image="path/ke/tshirt2.jpg" data-description="T-shirt nyaman dengan gradasi warna merah membara." data-promo="true" data-discount="15%" data-original-price="152000">
+            <img src="path/ke/tshirt2.jpg" alt="T-Shirt Ember Glow">
+            <h3 class="product-title">T-Shirt Ember Glow</h3>
+            <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 152.000</span> Rp 129.000</p>
+            <button class="add-to-cart-btn" data-id="4" data-name="T-Shirt Ember Glow" data-price="129000" data-image="path/ke/tshirt2.jpg">Tambahkan</button>
         </div>
-        <div class="product-card" data-id="5" data-name="Jubah Kegelapan Edisi Terbatas" data-price="161500" data-image="images/jubah2.jpg" data-description="Jubah Kegelapan edisi terbatas dengan sulaman benang perak." data-best-seller="true" data-promo="true" data-discount="15%" data-original-price="190000">
-            <img src="images/jubah2.jpg" alt="Jubah Kegelapan Edisi Terbatas">
-            <h3 class="product-title">Jubah Kegelapan Edisi Terbatas</h3>
-            <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 190.000</span> Rp 161.500</p>
-            <button class="add-to-cart-btn" data-id="5" data-name="Jubah Kegelapan Edisi Terbatas" data-price="161500" data-image="images/jubah2.jpg">Tambahkan</button>
-            <span class="badge best-seller">Best Seller</span>
-            <span class="badge promo">Promo (-15%)</span>
+        <div class="product-card" data-id="5" data-name="Pants Obsidian Redline" data-price="349000" data-image="path/ke/pants1.jpg" data-description="Celana panjang hitam dengan garis merah yang ikonik." data-best-seller="true">
+            <img src="path/ke/pants1.jpg" alt="Pants Obsidian Redline">
+            <h3 class="product-title">Pants Obsidian Redline</h3>
+            <p class="product-price">Rp 349.000</p>
+            <button class="add-to-cart-btn" data-id="5" data-name="Pants Obsidian Redline" data-price="349000" data-image="path/ke/pants1.jpg">Tambahkan</button>
+        </div>
+        <div class="product-card" data-id="6" data-name="Sweater Crimson Fade" data-price="279000" data-image="path/ke/sweater1.jpg" data-description="Sweater rajut lembut dengan efek pudar warna merah yang unik.">
+            <img src="path/ke/sweater1.jpg" alt="Sweater Crimson Fade">
+            <h3 class="product-title">Sweater Crimson Fade</h3>
+            <p class="product-price">Rp 279.000</p>
+            <button class="add-to-cart-btn" data-id="6" data-name="Sweater Crimson Fade" data-price="279000" data-image="path/ke/sweater1.jpg">Tambahkan</button>
         </div>
     </div>
-
+    <div id="loading-indicator">Memuat Produk...</div>
     <div id="productModal" class="product-modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button">×</span>
             <img id="modal-image" src="" alt="">
             <h2 id="modal-title"></h2>
             <p id="modal-price"></p>
@@ -507,29 +509,32 @@
             <button id="modal-add-to-cart" class="modal-add-to-cart" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
         </div>
     </div>
-
-    <div id="loading-indicator">Memuat Produk...</div>
-
-    <div class="bottom-navigation">
+    <nav class="bottom-navigation">
         <a href="#">
             <i class="fas fa-home"></i>
             <span>Beranda</span>
         </a>
         <a href="#">
-            <i class="fas fa-list"></i>
-            <span>Kategori</span>
+            <i class="fas fa-search"></i>
+            <span>Cari</span>
         </a>
-        <a href="store/keranjang.html">
+        <a href="#">
+            <i class="fas fa-heart"></i>
+            <span>Favorit</span>
+        </a>
+        <a href="#">
             <i class="fas fa-shopping-cart"></i>
             <span>Keranjang</span>
-            <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
+            <span class="cart-notification" id="bottom-cart-count" style="display: none;">0</span>
         </a>
-    </div>
-
+        <a href="#">
+            <i class="fas fa-user"></i>
+            <span>Akun</span>
+        </a>
+    </nav>
     <footer class="footer">
-        <p>&copy; 2025 InfernoShop - Gaya Merah Hitam</p>
-        <p>Dibuat dengan <i class="fas fa-heart" style="color: #ff4d4d;"></i> di Bandung</p>
-        <p><a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a></p>
+        © 2023 InfernoShop - Gaya Merah Hitam. All rights reserved.
+        <p>Dibuat dengan <i class="fas fa-heart" style="color: #dc3545;"></i> oleh <a href="#" target="_blank">Tim Inferno</a></p>
     </footer>
 
     <script>
@@ -554,6 +559,26 @@
             const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
             const carouselContainer = document.querySelector('.promo-carousel-container');
             let touchStartX = null;
+
+            // Pop-up Selamat Datang
+            const welcomePopup = document.getElementById('welcomePopup');
+            const closeWelcomePopup = document.getElementById('closeWelcomePopup');
+            const hasVisited = localStorage.getItem('hasVisited');
+
+            if (!hasVisited) {
+                welcomePopup.style.display = 'flex';
+                localStorage.setItem('hasVisited', 'true');
+            }
+
+            closeWelcomePopup.addEventListener('click', () => {
+                welcomePopup.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === welcomePopup) {
+                    welcomePopup.style.display = 'none';
+                }
+            });
 
             // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
@@ -679,10 +704,10 @@
                     }
 
                     productCard.innerHTML = `
-                        <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
-                        <h3 class="product-title">${productData.dataset.name}</h3>
-                        <p class="product-price">${priceDisplay}</p>
-                        <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
+                        <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
+<p class\="product\-price"\></span>{priceDisplay}</p>
+                        <button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>
                     `;
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
                     productList.appendChild(productCard);
@@ -824,6 +849,26 @@
                     touchStartX = null;
                 });
             }
+
+            // Pop-up Selamat Datang (bagian ini sudah ada di atas)
+            // const welcomePopup = document.getElementById('welcomePopup');
+            // const closeWelcomePopup = document.getElementById('closeWelcomePopup');
+            // const hasVisited = localStorage.getItem('hasVisited');
+
+            // if (!hasVisited) {
+            //     welcomePopup.style.display = 'flex';
+            //     localStorage.setItem('hasVisited', 'true');
+            // }
+
+            // closeWelcomePopup.addEventListener('click', () => {
+            //     welcomePopup.style.display = 'none';
+            // });
+
+            // window.addEventListener('click', (event) => {
+            //     if (event.target === welcomePopup) {
+            //         welcomePopup.style.display = 'none';
+            //     }
+            // });
         });
     </script>
 </body>
