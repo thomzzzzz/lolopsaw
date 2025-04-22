@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nama Toko Anda</title>
-    <link rel="stylesheet" href="style.css"> </head>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
     <header>
         <div class="container">
-            <div class="logo"><a>Logo Toko</a></div>
+            <div class="logo"><a href="#">Logo Toko</a></div>
             <nav>
                 <ul>
                     <li><a href="#">Beranda</a></li>
@@ -29,9 +30,9 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Judul Promosi yang Menarik</h1>
-                <p>Deskripsi singkat produk unggulan atau penawaran menarik Anda.</p>
-                <a href="#" class="button">Beli Sekarang</a>
+                <h1>Belanja Mudah dan Aman di Toko Kami!</h1>
+                <p>Temukan berbagai produk berkualitas dengan penawaran menarik setiap hari.</p>
+                <a href="#" class="button">Lihat Produk</a>
             </div>
         </div>
     </section>
@@ -43,57 +44,73 @@
                 <div class="product-item" data-product-id="1">
                     <img src="gambar/produk1.jpg" alt="Produk 1">
                     <h3>Nama Produk 1</h3>
-                    <p>Rp 100.000</p>
+                    <p class="price">Rp 100.000</p>
                 </div>
                 <div class="product-item" data-product-id="2">
                     <img src="gambar/produk2.jpg" alt="Produk 2">
                     <h3>Nama Produk 2</h3>
-                    <p>Rp 150.000</p>
+                    <p class="price">Rp 150.000</p>
                 </div>
+                <div class="product-item" data-product-id="3">
+                    <img src="gambar/produk3.jpg" alt="Produk 3">
+                    <h3>Nama Produk 3</h3>
+                    <p class="price">Rp 200.000</p>
                 </div>
+                <div class="product-item" data-product-id="4">
+                    <img src="gambar/produk4.jpg" alt="Produk 4">
+                    <h3>Nama Produk 4</h3>
+                    <p class="price">Rp 120.000</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="categories">
         <div class="container">
-            <h2>Kategori Produk</h2>
+            <h2>Kategori Pilihan</h2>
             <div class="category-list">
                 <a href="#" class="category-item">Elektronik</a>
-                <a href="#" class="category-item">Pakaian</a>
-                <a href="#" class="category-item">Aksesoris</a>
-                </div>
+                <a href="#" class="category-item">Fashion Pria</a>
+                <a href="#" class="category-item">Fashion Wanita</a>
+                <a href="#" class="category-item">Perlengkapan Rumah</a>
+                <a href="#" class="category-item">Kecantikan</a>
+                <a href="#" class="category-item">Buku & Alat Tulis</a>
+            </div>
         </div>
     </section>
 
     <section class="testimonials">
         <div class="container">
-            <h2>Testimoni Pelanggan</h2>
+            <h2>Apa Kata Mereka?</h2>
             <div class="testimonial-slider">
                 <div class="testimonial">
-                    <p>"Produknya bagus sekali! Pelayanan juga memuaskan."</p>
-                    <span>- Pelanggan 1</span>
+                    <p>"Pengalaman belanja yang menyenangkan! Produk berkualitas dan pengiriman cepat."</p>
+                    <span>- Ayu, Jakarta</span>
                 </div>
                 <div class="testimonial">
-                    <p>"Pengiriman cepat dan kualitas produk sesuai ekspektasi."</p>
-                    <span>- Pelanggan 2</span>
+                    <p>"Pelayanan pelanggan sangat baik. Saya pasti akan berbelanja lagi di sini."</p>
+                    <span>- Budi, Bandung</span>
                 </div>
-                </div>
+            </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
             <div class="footer-info">
-                <p>Alamat Toko Anda</p>
-                <p>Email: info@tokoonline.com</p>
-                <p>Telepon: +62 8xx xxx xxx</p>
+                <h3>Tentang Kami</h3>
+                <p>Toko online terpercaya dengan berbagai pilihan produk berkualitas.</p>
             </div>
             <div class="footer-links">
-                <a href="#">Kebijakan Privasi</a>
-                <a href="#">Syarat & Ketentuan</a>
-                <a href="#">FAQ</a>
+                <h3>Bantuan</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Cara Pemesanan</a></li>
+                    <li><a href="#">Pengiriman</a></li>
+                </ul>
             </div>
             <div class="footer-social">
+                <h3>Ikuti Kami</h3>
                 <a href="#">Facebook</a>
                 <a href="#">Instagram</a>
                 <a href="#">Twitter</a>
@@ -105,17 +122,16 @@
     <div class="product-popup" id="productPopup">
         <div class="popup-content">
             <span class="close-button">&times;</span>
-            <div class="popup-image">
-                <img src="" alt="">
-            </div>
             <div class="popup-details">
-                <h3></h3>
-                <p class="price"></p>
-                <p class="description"></p>
+                <img src="" alt="" class="popup-image">
+                <h3 class="popup-title"></h3>
+                <p class="popup-price"></p>
+                <p class="popup-description"></p>
                 <button class="add-to-cart-button">Tambah ke Keranjang</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script> </body>
+    <script src="script.js"></script>
+</body>
 </html>
