@@ -389,14 +389,21 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+
+        /* Menghilangkan outline fokus */
+        button:focus,
+        a:focus,
+        div:focus {
+            outline: none;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">InfernoShop</div>
         <div class="search-bar">
-            <input type="text" placeholder="Cari produk...">
-            <button>Cari</button>
+            <input type="text" id="searchInput" placeholder="Cari produk...">
+            <button onclick="cariProduk()">Cari</button>
         </div>
         <nav>
             <ul>
@@ -528,6 +535,7 @@
             const categoryLinks = document.querySelectorAll('.category-bar a');
             const productList = document.querySelector('.product-list');
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
+            const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
 
             // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
@@ -671,12 +679,8 @@
                             const clonedProduct = product.cloneNode(true);
                             clonedProduct.style.animationDelay = `${index * 0.1}s`; // Penundaan bertahap
                             productList.appendChild(clonedProduct);
-                        });
-
-                        // Tambahkan kembali *event listener* untuk menampilkan detail produk
-                        const newProductCards = productList.querySelectorAll('.product-card');
-                        newProductCards.forEach(card => {
-                            card.addEventListener('click', function() {
+                            // Tambahkan kembali event listener untuk detail produk
+                            clonedProduct.addEventListener('click', function() {
                                 showProductDetails(this);
                             });
                         });
@@ -684,6 +688,40 @@
                         productList.classList.remove('filtering'); // Hapus kelas filtering
                     }, 300); // Jeda sebentar sebelum menampilkan hasil filter
                 });
+            });
+
+            // Fungsi untuk melakukan pencarian produk
+            function cariProduk() {
+                const searchTerm = searchInput.value.toLowerCase();
+                productList.innerHTML = ''; // Kosongkan daftar produk
+
+                const hasilPencarian = allProducts.filter(productCard => {
+                    const namaProduk = productCard.dataset.name.toLowerCase();
+                    const deskripsiProduk = productCard.dataset.description.toLowerCase();
+                    return namaProduk.includes(searchTerm) || deskripsiProduk.includes(searchTerm);
+                });
+
+                hasilPencarian.forEach((product, index) => {
+                    const clonedProduct = product.cloneNode(true);
+                    clonedProduct.style.animationDelay = `${index * 0.1}s`;
+                    productList.appendChild(clonedProduct);
+                    // Tambahkan kembali event listener untuk detail produk
+                    clonedProduct.addEventListener('click', function() {
+                        showProductDetails(this);
+                    });
+                });
+
+                // Jika tidak ada hasil pencarian, tampilkan pesan
+                if (hasilPencarian.length === 0) {
+                    productList.innerHTML = '<p style="color:#eee; text-align:center;">Tidak ada produk yang sesuai dengan pencarian Anda.</p>';
+                }
+            }
+
+            // Tambahkan event listener untuk tombol Enter di input pencarian
+            searchInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    cariProduk();
+                }
             });
         });
     </script>
