@@ -113,35 +113,122 @@
             color: #fff;
             border-color: #aa0000;
         }
-        .promo-banner {
-            background-color: rgba(255, 0, 0, 0.1);
-            padding: 15px;
-            text-align: center;
+        /* Gaya untuk Slider Promo */
+        .promo-slider-container {
+            position: relative;
+            overflow: hidden;
             margin: 10px;
             border-radius: 8px;
-            border: 1px solid #aa0000;
-            animation: slideInDownPromo 0.7s ease-out, pulse 1.5s infinite alternate;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .promo-banner h2 {
-            color: #ffddcc;
+
+        .promo-slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            flex: 0 0 100%; /* Setiap slide mengambil 100% lebar container */
+            position: relative;
+        }
+
+        .slide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .slide-caption h2 {
             margin-top: 0;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px;
-            font-size: 1.4em;
+            font-size: 1.2em;
         }
-        .promo-banner p {
-            color: #eee;
+
+        .slide-caption p {
             font-size: 0.9em;
+            margin-bottom: 10px;
         }
-        .promo-banner a {
+
+        .slide-caption a {
             color: #ffbb99;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
             font-size: 0.9em;
         }
-        .promo-banner a:hover {
+
+        .slide-caption a:hover {
             color: #fff;
+        }
+
+        .slider-controls {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            transform: translateY(-50%);
+        }
+
+        .slider-controls button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-controls button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .slider-controls button i {
+            vertical-align: middle;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .slider-dots button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-dots button.active {
+            background-color: white;
+        }
+
+        .slider-dots button:hover {
+            background-color: rgba(255, 255, 255, 0.8);
         }
         .product-list {
             padding: 10px;
@@ -434,10 +521,39 @@
         <a href="#" data-category="Tombak Naga">Tombak Naga</a>
     </div>
 
-    <div class="promo-banner">
-        <h2>🔥 SALE MEMBARA! Diskon Hingga 80% 🔥</h2>
-        <p>Jangan biarkan kesempatan ini hangus!</p>
-        <a href="#">Lihat Semua Penawaran</a>
+    <div class="promo-slider-container">
+        <div class="promo-slider">
+            <div class="slide">
+                <img src="URL_FOTO_SALE_1_ANDA" alt="Sale Membara 1">
+                <div class="slide-caption">
+                    <h2>Diskon Hingga 80%!</h2>
+                    <p>Produk pilihan dengan harga terbaik!</p>
+                    <a href="#">Lihat Sekarang</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="URL_FOTO_SALE_2_ANDA" alt="Sale Membara 2">
+                <div class="slide-caption">
+                    <h2>Penawaran Terbatas!</h2>
+                    <p>Jangan sampai ketinggalan!</p>
+                    <a href="#">Beli Sekarang</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="URL_FOTO_SALE_3_ANDA" alt="Sale Membara 3">
+                <div class="slide-caption">
+                    <h2>Promo Akhir Pekan!</h2>
+                    <p>Spesial untuk Anda!</p>
+                    <a href="#">Cek Disini</a>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="slider-dots">
+        </div>
     </div>
 
     <div class="product-list">
@@ -548,6 +664,58 @@
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
             const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
+
+            const promoSliderContainer = document.querySelector('.promo-slider-container');
+            const promoSlider = document.querySelector('.promo-slider');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const sliderDotsContainer = document.querySelector('.slider-dots');
+
+            let currentIndex = 0;
+
+            function updateSlider() {
+                promoSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateDots();
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateSlider();
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateSlider();
+            }
+
+            function updateDots() {
+                sliderDotsContainer.innerHTML = ''; // Bersihkan dots sebelumnya
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.addEventListener('click', () => goToSlide(index));
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    }
+                    sliderDotsContainer.appendChild(dot);
+                });
+            }
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+            }
+
+            // Inisialisasi dots
+            updateDots();
+
+            // Optional: Auto slide
+            // setInterval(nextSlide, 3000); // Ganti angka untuk interval (ms)
 
             // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
@@ -749,6 +917,59 @@
                     link.classList.add('active');
                 }
             });
+
+            // JavaScript untuk Slider Promo
+            const promoSliderContainer = document.querySelector('.promo-slider-container');
+            const promoSlider = document.querySelector('.promo-slider');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const sliderDotsContainer = document.querySelector('.slider-dots');
+
+            let currentIndex = 0;
+
+            function updateSlider() {
+                promoSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateDots();
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateSlider();
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateSlider();
+            }
+
+            function updateDots() {
+                sliderDotsContainer.innerHTML = ''; // Bersihkan dots sebelumnya
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.addEventListener('click', () => goToSlide(index));
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    }
+                    sliderDotsContainer.appendChild(dot);
+                });
+            }
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+            }
+
+            // Inisialisasi dots
+            updateDots();
+
+            // Optional: Auto slide
+            // setInterval(nextSlide, 3000); // Ganti angka untuk interval (ms)
         });
     </script>
 </body>
