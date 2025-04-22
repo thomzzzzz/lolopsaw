@@ -434,10 +434,6 @@
     </header>
 
     <div class="category-bar">
-        <a href="#" data-category="semua" class="active">Semua Barang</a>
-        <a href="#" data-category="Pedang Bayangan">Pedang Bayangan</a>
-        <a href="#" data-category="Jubah Kegelapan">Jubah Kegelapan</a>
-        <a href="#" data-category="Topeng Tengkorak">Topeng Tengkorak</a>
         <a href="#" data-filter="promo">Promo</a>
         <a href="#" data-filter="best-seller">Best Seller</a>
     </div>
@@ -449,7 +445,6 @@
             <img src="images/banner3.jpg" alt="Promo Banner 3">
         </div>
     </div>
-
     <div class="product-list">
         <div class="product-card" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="images/pedang1.jpg" data-description="Pedang legendaris yang ditempa dalam kegelapan abadi." data-best-seller="true">
             <img src="images/pedang1.jpg" alt="Pedang Bayangan">
@@ -541,7 +536,6 @@
             const modalAddToCartButton = document.getElementById('modal-add-to-cart');
             const cartCountElement = document.getElementById('cart-count');
             const bottomCartCountElement = document.getElementById('bottom-cart-count');
-            const categoryLinks = document.querySelectorAll('.category-bar a[data-category]');
             const filterLinks = document.querySelectorAll('.category-bar a[data-filter]');
             const productList = document.querySelector('.product-list');
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
@@ -734,7 +728,6 @@
                     event.preventDefault();
                     const selectedFilter = this.dataset.filter;
 
-                    categoryLinks.forEach(l => l.classList.remove('active'));
                     filterLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
 
@@ -747,28 +740,6 @@
                             productsToShow = allProducts.filter(product => product.dataset.bestSeller === 'true');
                         } else {
                             productsToShow = allProducts; // Jika filter tidak dikenali, tampilkan semua
-                        }
-                        updateProductList(productsToShow);
-                    }, 300);
-                });
-            });
-
-            categoryLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const selectedCategory = this.dataset.category;
-
-                    categoryLinks.forEach(l => l.classList.remove('active'));
-                    filterLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-
-                    productList.classList.add('filtering');
-                    setTimeout(() => {
-                        let productsToShow = [];
-                        if (selectedCategory === 'semua') {
-                            productsToShow = allProducts;
-                        } else {
-                            productsToShow = allProducts.filter(product => product.dataset.name.toLowerCase().includes(selectedCategory.toLowerCase()));
                         }
                         updateProductList(productsToShow);
                     }, 300);
