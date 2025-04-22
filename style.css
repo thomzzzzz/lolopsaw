@@ -1,9 +1,9 @@
 body {
-    font-family: 'Montserrat', sans-serif; /* Font yang lebih modern */
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #181818; /* Latar belakang gelap */
-    color: #eee; /* Warna teks terang */
+    background-color: #000; /* Latar belakang hitam pekat */
+    color: #f0f0f0; /* Teks abu-abu terang */
     overflow-x: hidden;
 }
 
@@ -15,9 +15,9 @@ body {
 
 /* Header */
 header {
-    background-color: rgba(0, 0, 0, 0.8); /* Header semi-transparan */
+    background-color: rgba(0, 0, 0, 0.9); /* Header lebih gelap */
     padding: 15px 0;
-    box-shadow: 0 1px 5px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 1px 5px rgba(255, 0, 0, 0.1); /* Cahaya merah tipis */
     position: sticky;
     top: 0;
     z-index: 100;
@@ -30,11 +30,11 @@ header .container {
 }
 
 header .logo a {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: bold;
-    color: #ff4d4d; /* Tetap merah sebagai aksen */
+    color: #ff4500; /* Merah oranye menyala */
     text-decoration: none;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 header nav ul {
@@ -56,7 +56,7 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    color: #ff4d4d;
+    color: #ff4500;
 }
 
 header .actions input[type="text"] {
@@ -71,198 +71,207 @@ header .actions input[type="text"] {
 header .actions a {
     text-decoration: none;
     color: #fff;
-    background-color: #ff4d4d;
+    background: linear-gradient(to right, #ff4500, #b30000); /* Gradasi merah menyala ke merah tua */
     padding: 10px 15px;
     border-radius: 5px;
     margin-left: 10px;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease;
 }
 
 header .actions a:hover {
-    background-color: #e64141;
+    background: linear-gradient(to right, #e63e00, #800000);
 }
 
 /* Hero Section */
 .hero {
-    padding: 120px 0;
-    background: linear-gradient(45deg, #222, #181818); /* Gradasi gelap */
+    padding: 150px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('gambar/inferno-bg.jpg'); /* Latar belakang gambar bertema inferno */
+    background-size: cover;
+    background-position: center;
     text-align: center;
     position: relative;
-    overflow: hidden; /* Untuk efek latar belakang */
+    overflow: hidden;
 }
 
 .hero::before {
     content: '';
     position: absolute;
-    top: -50px;
-    left: -50px;
-    width: 200px;
-    height: 200px;
-    background: linear-gradient(to right bottom, #ff4d4d, #b30000);
-    border-radius: 50%;
-    animation: pulseBackground 5s infinite alternate;
-    opacity: 0.6;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)); /* Overlay gradasi gelap */
+}
+
+.hero .hero-content {
+    position: relative; /* Agar konten di atas overlay */
+    z-index: 10;
 }
 
 .hero .hero-content h1 {
-    font-size: 48px;
-    color: #fff;
+    font-size: 52px;
+    color: #ff4500;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    animation: fadeInUp 1s ease-out;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+    animation: fireText 1s ease-out;
 }
 
 .hero .hero-content p {
-    font-size: 18px;
+    font-size: 20px;
     color: #ddd;
     margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     animation: fadeInUp 1.2s ease-out 0.2s forwards;
     opacity: 0;
 }
 
 .hero .hero-content .button {
     display: inline-block;
-    background: linear-gradient(to right, #ff4d4d, #b30000);
+    background: linear-gradient(to right, #ff4500, #b30000);
     color: #fff;
-    padding: 15px 30px;
+    padding: 18px 35px;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: bold;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: pulseButton 1.5s infinite alternate;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    animation: pulseFire 1.5s infinite alternate;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
 }
 
 .hero .hero-content .button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
 }
 
 /* Produk Unggulan */
 .featured-products {
-    padding: 60px 0;
-    background-color: #222;
+    padding: 70px 0;
+    background-color: #111; /* Latar belakang lebih gelap */
 }
 
 .featured-products h2 {
     text-align: center;
-    color: #fff;
-    margin-bottom: 40px;
-    font-size: 32px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    color: #ff4500;
+    margin-bottom: 50px;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .featured-products .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 35px;
 }
 
 .featured-products .product-item {
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    padding: 25px;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    padding: 30px;
     text-align: center;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
+    border: 1px solid #333;
 }
 
 .featured-products .product-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    border-color: #ff4500;
 }
 
 .featured-products .product-item img {
     max-width: 100%;
     height: auto;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
     transition: transform 0.2s ease-in-out;
 }
 
 .featured-products .product-item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .featured-products .product-item h3 {
-    font-size: 22px;
+    font-size: 24px;
     color: #eee;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .featured-products .product-item .price {
-    color: #ff4d4d;
+    color: #ff4500;
     font-weight: bold;
-    font-size: 20px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    font-size: 22px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .featured-products .product-item .quick-view {
-    background-color: #ff4d4d;
+    background: linear-gradient(to right, #ff4500, #b30000);
     color: #fff;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 12px 20px;
+    border-radius: 8px;
     text-decoration: none;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 20px;
     transition: background-color 0.3s ease;
 }
 
 .featured-products .product-item .quick-view:hover {
-    background-color: #e64141;
+    background: linear-gradient(to right, #e63e00, #800000);
 }
 
 /* Kategori Produk */
 .categories {
-    padding: 60px 0;
-    background-color: #181818;
+    padding: 70px 0;
+    background-color: #000;
 }
 
 .categories h2 {
     text-align: center;
-    color: #fff;
-    margin-bottom: 40px;
-    font-size: 32px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    color: #ff4500;
+    margin-bottom: 50px;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .categories .category-list {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: wrap;
 }
 
 .categories .category-item {
-    background-color: #333;
+    background-color: #222;
     color: #eee;
-    padding: 15px 30px;
+    padding: 18px 35px;
     border-radius: 25px;
     text-decoration: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 5px rgba(255, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out, background-color 0.2s ease, color 0.2s ease;
+    border: 1px solid #333;
 }
 
 .categories .category-item:hover {
     transform: scale(1.1);
-    background-color: #ff4d4d;
+    background-color: #ff4500;
     color: #fff;
+    border-color: #ff7f50;
 }
 
 /* Testimoni */
 .testimonials {
-    padding: 70px 0;
-    background-color: #222;
+    padding: 80px 0;
+    background-color: #111;
 }
 
 .testimonials h2 {
     text-align: center;
-    color: #fff;
-    margin-bottom: 40px;
-    font-size: 32px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    color: #ff4500;
+    margin-bottom: 50px;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .testimonials .testimonial-slider {
@@ -276,10 +285,10 @@ header .actions a:hover {
     flex: 0 0 auto;
     width: 80%;
     margin: 0 10%;
-    padding: 30px;
+    padding: 40px;
     border: 1px solid #444;
-    border-radius: 8px;
-    background-color: #333;
+    border-radius: 10px;
+    background-color: #222;
     text-align: center;
     scroll-snap-align: center;
 }
@@ -287,21 +296,23 @@ header .actions a:hover {
 .testimonials .testimonial p {
     font-style: italic;
     color: #ddd;
-    margin-bottom: 15px;
-    font-size: 16px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .testimonials .testimonial span {
     font-weight: bold;
     color: #eee;
-    font-size: 14px;
+    font-size: 16px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
 }
 
 /* Footer */
 footer {
     background-color: #000;
     color: #eee;
-    padding: 50px 0;
+    padding: 60px 0;
     text-align: center;
     border-top: 1px solid #333;
 }
@@ -315,10 +326,10 @@ footer .container {
 }
 
 footer h3 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #ff4d4d;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #ff4500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 footer p,
@@ -327,7 +338,7 @@ footer ul li a {
     color: #ccc;
     text-decoration: none;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     transition: color 0.3s ease;
 }
 
@@ -350,62 +361,71 @@ footer .copyright {
 
 /* Pop-up Produk */
 .product-popup .popup-content {
-    background-color: #333;
+    background-color: #222;
     color: #eee;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
     border: 1px solid #444;
+    border-radius: 10px;
+    padding: 30px;
 }
 
 .product-popup .close-button {
     color: #ddd;
+    font-size: 28px;
 }
 
 .product-popup .close-button:hover {
-    color: #fff;
+    color: #ff4500;
 }
 
 .product-popup .popup-details h3.popup-title {
-    color: #fff;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    color: #ff4500;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 30px;
+    margin-bottom: 20px;
 }
 
 .product-popup .popup-details p.popup-price {
-    color: #ff4d4d;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    color: #ff7f50; /* Sedikit lebih terang */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-/* Animasi Tambahan */
-@keyframes pulseBackground {
+/* Animasi Inferno */
+@keyframes fireText {
     0% {
-        transform: scale(1);
-        opacity: 0.6;
+        opacity: 0.5;
+        transform: translateY(20px);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
     }
     100% {
-        transform: scale(1.2);
-        opacity: 0.8;
+        opacity: 1;
+        transform: translateY(0);
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
     }
 }
 
-@keyframes pulseButton {
+@keyframes pulseFire {
     0% {
         transform: scale(1);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     }
     100% {
         transform: scale(1);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
     }
 }
 
-/* Menu Navigasi Mobile (tetap sama, mungkin perlu disesuaikan warnanya) */
+/* Menu Navigasi Mobile */
 @media (max-width: 768px) {
     header nav {
-        background-color: #222;
-        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+        background-color: #111;
+        box-shadow: 0 2px 5px rgba(255, 0, 0, 0.1);
     }
 
     header nav ul li a {
