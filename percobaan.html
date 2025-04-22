@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
+<style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -24,7 +24,7 @@
         header {
             background: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 15px;
+            padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -35,42 +35,40 @@
         }
         .logo {
             font-family: 'Bebas+Neue', sans-serif;
-            font-size: 2em;
+            font-size: 1.5em; /* Lebih kecil untuk HP */
             font-weight: bold;
             letter-spacing: 1px;
         }
         .search-bar {
             background-color: #333;
             border-radius: 8px;
-            padding: 8px 15px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
             flex-grow: 1;
-            margin: 0 15px;
+            margin: 0 10px; /* Margin lebih kecil untuk HP */
         }
         .search-bar input[type="text"] {
             background: transparent;
             border: none;
             color: #ddd;
-            font-size: 1em;
+            font-size: 0.9em; /* Lebih kecil untuk HP */
             flex-grow: 1;
-            margin-right: 10px;
-        }
-        .search-bar input[type="text"]::placeholder {
-            color: #777;
+            margin-right: 8px;
         }
         .search-bar button {
             background: transparent;
             border: none;
             color: #ddd;
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1em; /* Lebih kecil untuk HP */
         }
         .cart-icon {
             position: relative;
             color: #ddd;
-            font-size: 1.5em;
+            font-size: 1.3em; /* Lebih kecil untuk HP */
             transition: color 0.3s ease, transform 0.2s ease-in-out;
+            margin-left: 10px;
         }
         .cart-icon:hover {
             color: white;
@@ -78,31 +76,31 @@
         }
         .cart-notification {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -6px;
+            right: -6px;
             background-color: #aa0000;
             color: white;
             border-radius: 50%;
-            padding: 5px;
-            font-size: 0.7em;
-            min-width: 18px;
-            height: 18px;
+            padding: 4px;
+            font-size: 0.6em;
+            min-width: 14px;
+            height: 14px;
             text-align: center;
-            line-height: 18px;
+            line-height: 14px;
         }
         .category-bar {
             background-color: #1a1a1a;
-            padding: 10px 15px;
+            padding: 8px 10px;
             overflow-x: auto;
             white-space: nowrap;
             border-bottom: 1px solid #333;
+            font-size: 0.8em; /* Lebih kecil untuk HP */
         }
         .category-bar a {
             color: #ccc;
             text-decoration: none;
-            margin-right: 15px;
-            font-size: 0.9em;
-            padding: 8px 12px;
+            margin-right: 10px;
+            padding: 6px 10px;
             border-radius: 5px;
             transition: color 0.3s ease, background-color 0.3s ease;
         }
@@ -123,17 +121,17 @@
             flex-shrink: 0;
         }
         .product-list {
-            padding: 20px;
+            padding: 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Kolom lebih sempit untuk HP */
+            gap: 10px; /* Gap lebih kecil untuk HP */
             flex-grow: 1;
         }
         .product-card {
             background-color: #222;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Shadow lebih halus untuk HP */
+            padding: 10px;
             text-align: center;
             transition: transform 0.2s ease-in-out;
             cursor: pointer;
@@ -141,51 +139,51 @@
             overflow: hidden;
         }
         .product-card:hover {
-            transform: scale(1.02);
+            transform: scale(1.01); /* Skala hover lebih kecil untuk HP */
         }
         .product-card img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
             border: 1px solid #444;
         }
         .product-title {
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             color: #eee;
-            font-size: 1em;
+            font-size: 0.9em; /* Lebih kecil untuk HP */
         }
         .product-price {
             color: #ffaa80;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1em; /* Lebih kecil untuk HP */
         }
         .add-to-cart-btn {
             background-color: #800000;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.9em;
+            margin-top: 8px;
+            font-size: 0.8em; /* Lebih kecil untuk HP */
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
             width: 100%;
         }
         .add-to-cart-btn:hover {
             background-color: #aa0000;
-            transform: scale(1.02);
+            transform: scale(1.01); /* Skala hover lebih kecil untuk HP */
         }
         .badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 5px;
+            left: 5px;
             background-color: #ffc107;
             color: #222;
-            padding: 5px 8px;
-            border-radius: 5px;
-            font-size: 0.8em;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.7em; /* Lebih kecil untuk HP */
             font-weight: bold;
             z-index: 1;
         }
@@ -206,62 +204,57 @@
         }
         .modal-content {
             background-color: #333;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
+            margin: 30px auto; /* Margin lebih besar di atas dan bawah untuk HP */
+            padding: 15px;
+            border-radius: 8px;
+            width: 90%; /* Lebar modal lebih besar untuk HP */
+            max-width: 400px; /* Max width lebih kecil untuk HP */
             position: relative;
         }
         .close-button {
             color: #aaa;
             float: right;
-            font-size: 28px;
+            font-size: 24px; /* Lebih kecil untuk HP */
             font-weight: bold;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
         }
         #modal-image {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
             border: 1px solid #555;
         }
         #modal-title {
             color: #eee;
-            font-size: 1.5em;
-            margin-bottom: 10px;
+            font-size: 1.2em; /* Lebih kecil untuk HP */
+            margin-bottom: 8px;
         }
         #modal-price {
             color: #ffaa80;
             font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 15px;
+            font-size: 1.1em; /* Lebih kecil untuk HP */
+            margin-bottom: 10px;
         }
         #modal-description {
             color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            line-height: 1.4; /* Line height lebih rapat untuk HP */
+            margin-bottom: 15px;
+            font-size: 0.9em; /* Lebih kecil untuk HP */
         }
         .modal-add-to-cart {
             background-color: #aa0000;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.9em; /* Lebih kecil untuk HP */
             width: 100%;
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
         }
         .modal-add-to-cart:hover {
             background-color: #cc0000;
-            transform: scale(1.02);
+            transform: scale(1.01); /* Skala hover lebih kecil untuk HP */
         }
         #loading-indicator {
             display: none;
@@ -270,18 +263,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #eee;
-            font-size: 1.2em;
+            font-size: 1em; /* Lebih kecil untuk HP */
         }
         .bottom-navigation {
             background-color: rgba(0, 0, 0, 0.8);
             border-top: 1px solid #555;
-            padding: 10px 0;
+            padding: 8px 0;
             display: flex;
             justify-content: space-around;
             position: fixed;
             bottom: 0;
             width: 100%;
             z-index: 100;
+            font-size: 0.7em; /* Lebih kecil untuk HP */
         }
         .bottom-navigation a {
             color: #ccc;
@@ -292,24 +286,25 @@
             transition: color 0.3s ease, transform 0.2s ease-in-out;
             flex-grow: 1;
             justify-content: center;
+            padding: 5px 0; /* Padding lebih kecil untuk HP */
         }
         .bottom-navigation a:hover {
             color: #fff;
-            transform: translateY(-2px);
+            transform: translateY(-1px); /* Efek hover lebih halus untuk HP */
         }
         .bottom-navigation a i {
-            font-size: 1.4em;
-            margin-bottom: 5px;
+            font-size: 1.2em; /* Lebih kecil untuk HP */
+            margin-bottom: 3px;
         }
         .bottom-navigation a span {
-            font-size: 0.8em;
+            font-size: 0.8em; /* Sudah sesuai */
         }
         .footer {
             background-color: #333;
             color: #ddd;
             text-align: center;
-            padding: 15px;
-            font-size: 0.9em;
+            padding: 10px;
+            font-size: 0.8em; /* Lebih kecil untuk HP */
             margin-top: auto;
         }
         .footer a {
@@ -343,6 +338,99 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
+        }
+
+        /* Media query untuk layar dengan lebar maksimum 600px (biasanya perangkat seluler) */
+        @media (max-width: 600px) {
+            header {
+                padding: 8px 10px;
+            }
+            .logo {
+                font-size: 1.3em;
+            }
+            .search-bar {
+                padding: 6px 8px;
+                margin: 0 8px;
+            }
+            .search-bar input[type="text"] {
+                font-size: 0.8em;
+            }
+            .search-bar button {
+                font-size: 1em;
+            }
+            .cart-icon {
+                font-size: 1.2em;
+                margin-left: 8px;
+            }
+            .category-bar {
+                padding: 6px 8px;
+                font-size: 0.7em;
+            }
+            .category-bar a {
+                margin-right: 8px;
+                padding: 5px 8px;
+            }
+            .product-list {
+                padding: 10px;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 8px;
+            }
+            .product-card {
+                padding: 8px;
+            }
+            .product-title {
+                font-size: 0.8em;
+                margin-bottom: 3px;
+            }
+            .product-price {
+                font-size: 0.9em;
+            }
+            .add-to-cart-btn {
+                padding: 6px 10px;
+                font-size: 0.7em;
+                margin-top: 5px;
+            }
+            .badge {
+                top: 3px;
+                left: 3px;
+                padding: 2px 5px;
+                font-size: 0.6em;
+            }
+            .modal-content {
+                margin: 10% auto;
+                padding: 10px;
+            }
+            .close-button {
+                font-size: 20px;
+            }
+            #modal-title {
+                font-size: 1.1em;
+                margin-bottom: 5px;
+            }
+            #modal-price {
+                font-size: 1em;
+                margin-bottom: 10px;
+            }
+            #modal-description {
+                font-size: 0.8em;
+                margin-bottom: 12px;
+            }
+            .modal-add-to-cart {
+                padding: 8px 12px;
+                font-size: 0.8em;
+            }
+            .bottom-navigation {
+                font-size: 0.6em;
+                padding: 5px 0;
+            }
+            .bottom-navigation a i {
+                font-size: 1em;
+                margin-bottom: 2px;
+            }
+            .footer {
+                padding: 8px;
+                font-size: 0.7em;
+            }
         }
     </style>
 </head>
