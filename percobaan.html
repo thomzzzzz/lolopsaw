@@ -555,18 +555,18 @@
             const carouselContainer = document.querySelector('.promo-carousel-container');
             let touchStartX = null;
 
-            // Fungsi untuk mendapatkan keranjang dari localStorage (tetap ada)
+            // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
                 return JSON.parse(localStorage.getItem('keranjang') || '[]');
             }
 
-            // Fungsi untuk menyimpan keranjang ke localStorage (tetap ada)
+            // Fungsi untuk menyimpan keranjang ke localStorage
             function saveCart(cart) {
                 localStorage.setItem('keranjang', JSON.stringify(cart));
                 updateCartCount();
             }
 
-            // Fungsi untuk memperbarui tampilan jumlah item di keranjang (tetap ada)
+            // Fungsi untuk memperbarui tampilan jumlah item di keranjang
             function updateCartCount() {
                 const cart = getCart();
                 const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
@@ -576,7 +576,7 @@
                 cartCountElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
             }
 
-            // Inisialisasi jumlah item keranjang saat halaman dimuat (tetap ada)
+            // Inisialisasi jumlah item keranjang saat halaman dimuat
             updateCartCount();
 
             // Event listener untuk perubahan localStorage (untuk sinkronisasi jumlah keranjang)
@@ -601,12 +601,12 @@
                 productModal.style.display = "block";
             }
 
-            // Fungsi untuk menyembunyikan detail produk (tetap ada)
+            // Fungsi untuk menyembunyikan detail produk
             function hideProductDetails() {
                 productModal.style.display = "none";
             }
 
-            // Fungsi untuk menambahkan ke keranjang (tetap ada)
+            // Fungsi untuk menambahkan ke keranjang
             function tambahKeKeranjang(productId, namaProduk, hargaProduk, gambarProduk) {
                 let cart = getCart();
                 const existingItem = cart.find(item => item.id === productId);
@@ -631,7 +631,7 @@
                 }, 300);
             }
 
-            // Fungsi untuk menambahkan badge (tetap ada)
+            // Fungsi untuk menambahkan badge
             function addBadges(productCard) {
                 if (productCard.dataset.bestSeller === 'true') {
                     const badge = document.createElement('span');
@@ -684,7 +684,6 @@
                         <p class="product-price">${priceDisplay}</p>
                         <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
                     `;
-
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
                     productList.appendChild(productCard);
                 });
@@ -694,7 +693,7 @@
             // Panggil updateProductList di awal untuk menampilkan semua produk
             updateProductList(allProducts);
 
-            // Delegasi event listener untuk menampilkan detail produk (PERUBAHAN DI SINI)
+            // Delegasi event listener untuk menampilkan detail produk
             productList.addEventListener('click', function(event) {
                 const target = event.target.closest('.product-card');
                 if (target) {
@@ -715,7 +714,7 @@
                 }
             });
 
-            // Delegasi event listener untuk tombol tambah ke keranjang (tetap ada)
+            // Delegasi event listener untuk tombol tambah ke keranjang
             productList.addEventListener('click', function(event) {
                 if (event.target.classList.contains('add-to-cart-btn')) {
                     const button = event.target;
