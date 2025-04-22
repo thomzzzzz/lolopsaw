@@ -113,35 +113,25 @@
             color: #fff;
             border-color: #aa0000;
         }
-        .promo-banner {
-            background-color: rgba(255, 0, 0, 0.1);
-            padding: 15px;
-            text-align: center;
+        .promo-carousel-container {
+            overflow: hidden; /* Menyembunyikan gambar yang berada di luar container */
             margin: 10px;
             border-radius: 8px;
             border: 1px solid #aa0000;
-            animation: slideInDownPromo 0.7s ease-out, pulse 1.5s infinite alternate;
+            position: relative; /* Untuk memposisikan kontrol navigasi (jika ada) */
+            height: auto; /* Sesuaikan tinggi container jika perlu atau biarkan auto */
         }
-        .promo-banner h2 {
-            color: #ffddcc;
-            margin-top: 0;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px;
-            font-size: 1.4em;
+
+        .promo-carousel {
+            display: flex; /* Mengatur gambar menjadi satu baris horizontal */
+            transition: transform 0.5s ease-in-out; /* Animasi transisi pergeseran */
         }
-        .promo-banner p {
-            color: #eee;
-            font-size: 0.9em;
-        }
-        .promo-banner a {
-            color: #ffbb99;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-            font-size: 0.9em;
-        }
-        .promo-banner a:hover {
-            color: #fff;
+
+        .promo-carousel img {
+            width: 100%; /* Setiap gambar mengisi lebar container */
+            flex-shrink: 0; /* Mencegah gambar untuk mengecil */
+            display: block; /* Menghilangkan ruang kosong di bawah gambar */
+            border-radius: inherit; /* Mewarisi border-radius dari container */
         }
         .product-list {
             padding: 10px;
@@ -434,10 +424,12 @@
         <a href="#" data-category="Tombak Naga">Tombak Naga</a>
     </div>
 
-    <div class="promo-banner">
-        <h2>🔥 SALE MEMBARA! Diskon Hingga 80% 🔥</h2>
-        <p>Jangan biarkan kesempatan ini hangus!</p>
-        <a href="#">Lihat Semua Penawaran</a>
+    <div class="promo-carousel-container">
+        <div class="promo-carousel">
+            <img src="https://via.placeholder.com/600/ff6666/eee?Text=Promo+1" alt="Promo 1">
+            <img src="https://via.placeholder.com/600/66ff66/eee?Text=Promo+2" alt="Promo 2">
+            <img src="https://via.placeholder.com/600/6666ff/eee?Text=Promo+3" alt="Promo 3">
+        </div>
     </div>
 
     <div class="product-list">
@@ -548,6 +540,10 @@
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
             const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
+            const carousel = document.querySelector('.promo-carousel');
+            const carouselImages = carousel ? carousel.querySelectorAll('img') : [];
+            let carouselCounter = 0;
+            const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
 
             // Fungsi untuk mendapatkan keranjang dari localStorage
             function getCart() {
@@ -749,6 +745,50 @@
                     link.classList.add('active');
                 }
             });
+
+            // --- Carousel Otomatis ---
+            if (carousel && carouselImages.length > 0) {
+                let carouselCounter = 0;
+                const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
+
+                function nextCarouselSlide() {
+                    carouselCounter++;
+                    if (carouselCounter >= carouselImages.length) {
+                        carouselCounter = 0;
+                    }
+                    carousel.style.transform = `translateX(-${carouselCounter * 100}%)`;
+                }
+
+                setInterval(nextCarouselSlide, carouselInterval);
+
+                // Tambahkan event listener untuk touch swipe (opsional untuk mobile)
+                let touchStartX = null;
+                const carouselContainer = document.querySelector('.promo-carousel-container');
+                if (carouselContainer) {
+                    carouselContainer.addEventListener('touchstart', (e) => {
+                        touchStartX = e.touches[0].clientX;
+                    });
+
+                    carouselContainer.addEventListener('touchend', (e) => {
+                        if (touchStartX === null) {
+                            return;
+                        }
+                        const touchEndX = e.changedTouches[0].clientX;
+                        const diffX = touchStartX - touchEndX;
+
+                        if (diffX > 50) {
+                            nextCarouselSlide(); // Swipe ke kiri
+                        } else if (diffX < -50) {
+                            carouselCounter--;
+                            if (carouselCounter < 0) {
+                                carouselCounter = carouselImages.length - 1;
+                            }
+                            carousel.style.transform = `translateX(-${carouselCounter * 100}%)`; // Swipe ke kanan
+                        }
+                        touchStartX = null;
+                    });
+                }
+            }
         });
     </script>
 </body>
