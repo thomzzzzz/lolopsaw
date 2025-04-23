@@ -534,13 +534,13 @@
             const welcomePopup = document.getElementById('welcomePopup');
             const closePopupButton = welcomePopup.querySelector('.close-popup');
             const enterShopButton = document.getElementById('enterShop');
-            const hasVisited = localStorage.getItem('hasVisited');
+            //const hasVisited = localStorage.getItem('hasVisited');
 
             // Cek apakah pengguna sudah pernah mengunjungi website
-            if (!hasVisited) {
+            //if (!hasVisited) {
                 welcomePopup.style.display = 'block';
-                localStorage.setItem('hasVisited', 'true'); // Set flag bahwa pengguna sudah melihat pop-up
-            }
+                //localStorage.setItem('hasVisited', 'true'); // Set flag bahwa pengguna sudah melihat pop-up
+            //}
 
             // Event listener untuk tombol close pop-up
             closePopupButton.addEventListener('click', function() {
