@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Online Anda - Gaya Merah Hitam (Mobile)</title>
+    <title>InfernoShop - Gaya Merah Hitam</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Gaya CSS (sama seperti sebelumnya) */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -17,12 +16,15 @@
             background: linear-gradient(to bottom, #000000, #800000);
             color: #eee;
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat tap di mobile */
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         header {
             background: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 10px 15px;
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -32,170 +34,248 @@
             z-index: 100;
         }
         .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8em;
+            font-family: 'Bebas+Neue', sans-serif;
+            font-size: 2em;
             font-weight: bold;
             letter-spacing: 1px;
-            animation: fadeIn 1s ease-out;
         }
         .search-bar {
-            display: flex;
             background-color: #333;
-            border-radius: 5px;
-            overflow: hidden;
-            border: 1px solid #555;
-            flex-grow: 1;
-            margin-left: 15px;
-        }
-        .search-bar input[type="text"] {
-            padding: 8px;
-            border: none;
-            flex-grow: 1;
-            background-color: transparent;
-            color: #eee;
-        }
-        .search-bar button {
-            background-color: #800000;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-        nav ul li {
-            margin-left: 15px;
-        }
-        nav ul li a {
-            color: #ddd;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
+            border-radius: 8px;
+            padding: 8px 15px;
             display: flex;
             align-items: center;
+            flex-grow: 1;
+            margin: 0 15px;
         }
-        nav ul li a i {
-            margin-right: 5px;
+        .search-bar input[type="text"] {
+            background: transparent;
+            border: none;
+            color: #ddd;
+            font-size: 1em;
+            flex-grow: 1;
+            margin-right: 10px;
         }
-        nav ul li a:hover {
-            color: #fff;
+        .search-bar input[type="text"]::placeholder {
+            color: #777;
+        }
+        .search-bar button {
+            background: transparent;
+            border: none;
+            color: #ddd;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .cart-icon {
+            position: relative;
+            color: #ddd;
+            font-size: 1.5em;
+            transition: color 0.3s ease, transform 0.2s ease-in-out;
+        }
+        .cart-icon:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+        .cart-notification {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #aa0000;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 0.7em;
+            min-width: 18px;
+            height: 18px;
+            text-align: center;
+            line-height: 18px;
         }
         .category-bar {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 8px 15px;
-            border-bottom: 1px solid #555;
+            background-color: #1a1a1a;
+            padding: 10px 15px;
             overflow-x: auto;
             white-space: nowrap;
-            animation: slideInDown 0.5s ease-out;
+            border-bottom: 1px solid #333;
         }
         .category-bar a {
-            display: inline-block;
             color: #ccc;
             text-decoration: none;
             margin-right: 15px;
-            padding: 6px 10px;
-            border-radius: 5px;
-            border: 1px solid #555;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out;
             font-size: 0.9em;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: color 0.3s ease, background-color 0.3s ease;
         }
-        .category-bar a:hover {
-            background-color: #555;
-            color: #fff;
-            transform: scale(1.05);
-        }
-        .category-bar a.active {
-            background-color: #aa0000;
-            color: #fff;
-            border-color: #aa0000;
+        .category-bar a:hover, .category-bar a.active {
+            color: white;
+            background-color: #333;
         }
         .promo-carousel-container {
-            overflow: hidden; /* Menyembunyikan gambar yang berada di luar container */
-            margin: 10px;
-            border-radius: 8px;
-            border: 1px solid #aa0000;
-            position: relative; /* Untuk memposisikan kontrol navigasi (jika ada) */
-            height: auto; /* Sesuaikan tinggi container jika perlu atau biarkan auto */
-        }
-
-        .promo-carousel {
-            display: flex; /* Mengatur gambar menjadi satu baris horizontal */
-            transition: transform 0.5s ease-in-out; /* Animasi transisi pergeseran */
-        }
-
-        .promo-carousel img {
-            width: 100%; /* Setiap gambar mengisi lebar container */
-            flex-shrink: 0; /* Mencegah gambar untuk mengecil */
-            display: block; /* Menghilangkan ruang kosong di bawah gambar */
-            border-radius: inherit; /* Mewarisi border-radius dari container */
-        }
-        .product-list {
-            padding: 10px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            overflow: hidden;
             position: relative;
         }
-        .product-list.filtering {
-            opacity: 0.5;
+        .promo-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .promo-carousel img {
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .product-list {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            flex-grow: 1;
         }
         .product-card {
             background-color: #222;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding: 15px;
             text-align: center;
             transition: transform 0.2s ease-in-out;
-            animation: fadeInUp 0.5s ease-out forwards;
-            opacity: 0;
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
         .product-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         .product-card img {
             max-width: 100%;
             height: auto;
-            border-radius: 5px;
-            margin-bottom: 8px;
+            border-radius: 8px;
+            margin-bottom: 10px;
             border: 1px solid #444;
         }
         .product-title {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #eee;
-            font-size: 0.9em;
+            font-size: 1em;
         }
         .product-price {
             color: #ffaa80;
             font-weight: bold;
-            font-size: 1em;
+            font-size: 1.1em;
         }
-        .product-card button {
+        .add-to-cart-btn {
             background-color: #800000;
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
+            padding: 10px 15px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 8px;
-            font-size: 0.8em;
-            transition: background-color 0.3s ease;
-            display: none; /* Sembunyikan tombol tambah di card */
+            margin-top: 10px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            width: 100%;
         }
-        .product-card button:hover {
+        .add-to-cart-btn:hover {
             background-color: #aa0000;
+            transform: scale(1.02);
+        }
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ffc107;
+            color: #222;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 1;
+        }
+        .badge.promo {
+            background-color: #dc3545;
+            color: white;
+        }
+        .product-modal {
+            display: none;
+            position: fixed;
+            z-index: 101;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+        }
+        .modal-content {
+            background-color: #333;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #modal-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+        }
+        #modal-title {
+            color: #eee;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        #modal-price {
+            color: #ffaa80;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        #modal-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .modal-add-to-cart {
+            background-color: #aa0000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+        .modal-add-to-cart:hover {
+            background-color: #cc0000;
+            transform: scale(1.02);
+        }
+        #loading-indicator {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #eee;
+            font-size: 1.2em;
         }
         .bottom-navigation {
             background-color: rgba(0, 0, 0, 0.8);
             border-top: 1px solid #555;
-            padding: 8px 0;
+            padding: 10px 0;
             display: flex;
             justify-content: space-around;
             position: fixed;
@@ -218,18 +298,19 @@
             transform: translateY(-2px);
         }
         .bottom-navigation a i {
-            font-size: 1.2em;
-            margin-bottom: 3px;
+            font-size: 1.4em;
+            margin-bottom: 5px;
         }
         .bottom-navigation a span {
-            font-size: 0.7em;
+            font-size: 0.8em;
         }
         .footer {
             background-color: #333;
             color: #ddd;
             text-align: center;
-            padding: 10px;
-            font-size: 0.8em;
+            padding: 15px;
+            font-size: 0.9em;
+            margin-top: auto;
         }
         .footer a {
             color: #ffbb99;
@@ -239,177 +320,29 @@
         .footer a:hover {
             color: #fff;
         }
-        .cart-notification {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: #ff4d4d;
-            color: white;
-            border-radius: 50%;
-            padding: 5px 8px;
-            font-size: 0.7em;
-        }
-
-        /* Gaya untuk Badge Best Seller dan Promo */
-        .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #ffc107; /* Warna kuning untuk best seller */
-            color: #222;
-            padding: 5px 8px;
-            border-radius: 5px;
-            font-size: 0.7em;
-            font-weight: bold;
-            z-index: 1; /* Pastikan badge berada di atas gambar */
-        }
-
-        .badge.promo {
-            background-color: #dc3545; /* Warna merah untuk promo */
-            color: white;
-        }
-
-        /* Gaya untuk Pop-up Detail Produk */
-        .product-modal {
-            display: none; /* Sembunyikan secara default */
-            position: fixed; /* Tetap di atas konten lain */
-            z-index: 101; /* Lebih tinggi dari header dan navigasi */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto; /* Aktifkan scroll jika konten terlalu panjang */
-            background-color: rgba(0, 0, 0, 0.8); /* Latar belakang gelap semi-transparan */
-        }
-        .modal-content {
-            background-color: #222;
-            margin: 15% auto; /* Posisi tengah layar */
-            padding: 20px;
-            border: 1px solid #555;
-            width: 80%; /* Lebar modal */
-            border-radius: 8px;
-            position: relative;
-            animation: slideIn 0.4s ease-out;
-            color: #eee;
-        }
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .modal-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #444;
-        }
-        .modal-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2em;
-            color: #ff6666;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-        .modal-price {
-            color: #ffaa80;
-            font-weight: bold;
-            font-size: 1.3em;
-            margin-bottom: 15px;
-        }
-        .modal-description {
-            font-size: 1em;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .modal-add-to-cart {
-            background-color: #800000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease, transform 0.2s ease-in-out; /* Tambah transform */
-        }
-        .modal-add-to-cart:hover {
-            background-color: #aa0000;
-            transform: scale(1.05); /* Efek sedikit membesar saat di-hover */
-        }
-
-        /* Animasi untuk Modal */
-        @keyframes slideIn {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Animasi Ikon Keranjang */
-        @keyframes cartJump {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-        }
-
-        .animate-cart {
-            animation: cartJump 0.3s ease-in-out;
-        }
-
-        /* Animasi Ripple */
         .ripple {
             position: absolute;
             border-radius: 50%;
             transform: scale(0);
             opacity: 0.75;
-            background-color: rgba(255, 255, 255, 0.3); /* Warna ripple */
-            animation: ripple-effect 0.6s linear;
+            animation: ripple 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
-        @keyframes ripple-effect {
+        @keyframes ripple {
             to {
                 transform: scale(2);
                 opacity: 0;
             }
         }
-
-        /* Animasi Slide-In Promo Banner */
-        @keyframes slideInDownPromo {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .animate-cart {
+            animation: cartJump 0.5s ease-in-out;
         }
 
-        /* Keyframe Animations (sudah ada lainnya) */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes pulse {
+        @keyframes cartJump {
             0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-
-        @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Menghilangkan outline fokus */
-        button:focus,
-        a:focus,
-        div:focus {
-            outline: none;
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -418,22 +351,16 @@
         <div class="logo">InfernoShop</div>
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Cari produk...">
-            <button onclick="cariProduk()">Cari</button>
+            <button><i class="fas fa-search"></i></button>
         </div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="store/keranjang.html">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Keranjang</span>
-                        <span id="cart-count" class="cart-notification">0</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <a href="store/keranjang.html" class="cart-icon">
+            <i class="fas fa-shopping-cart animate-cart"></i>
+            <span id="cart-count" class="cart-notification" style="display: none;">0</span>
+        </a>
     </header>
 
     <div class="category-bar">
+        <a href="#" data-filter="semua" class="active">Semua Produk</a>
         <a href="#" data-filter="promo">Promo</a>
         <a href="#" data-filter="best-seller">Best Seller</a>
     </div>
@@ -442,62 +369,58 @@
         <div class="promo-carousel">
             <img src="images/banner1.jpg" alt="Promo Banner 1">
             <img src="images/banner2.jpg" alt="Promo Banner 2">
-            <img src="images/banner3.jpg" alt="Promo Banner 3">
         </div>
     </div>
+
     <div class="product-list">
         <div class="product-card" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="images/pedang1.jpg" data-description="Pedang legendaris yang ditempa dalam kegelapan abadi." data-best-seller="true">
             <img src="images/pedang1.jpg" alt="Pedang Bayangan">
             <h3 class="product-title">Pedang Bayangan</h3>
             <p class="product-price">Rp 250.000</p>
             <button class="add-to-cart-btn" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="images/pedang1.jpg">Tambahkan</button>
+            <span class="badge best-seller">Best Seller</span>
         </div>
         <div class="product-card" data-id="2" data-name="Jubah Kegelapan" data-price="162000" data-image="images/jubah1.jpg" data-description="Jubah yang menyelimuti pemakainya dalam bayangan malam." data-promo="true" data-discount="10%" data-original-price="180000">
             <img src="images/jubah1.jpg" alt="Jubah Kegelapan">
             <h3 class="product-title">Jubah Kegelapan</h3>
             <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 180.000</span> Rp 162.000</p>
             <button class="add-to-cart-btn" data-id="2" data-name="Jubah Kegelapan" data-price="162000" data-image="images/jubah1.jpg">Tambahkan</button>
+            <span class="badge promo">Promo (-10%)</span>
         </div>
         <div class="product-card" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg" data-description="Topeng yang memberikan aura menakutkan dan misterius.">
             <img src="images/topeng1.jpg" alt="Topeng Tengkorak">
             <h3 class="product-title">Topeng Tengkorak</h3>
             <p class="product-price">Rp 90.000</p>
-            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambahkan</button>
+            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambambahkan</button>
         </div>
-        <div class="product-card" data-id="4" data-name="Pedang Bayangan" data-price="260000" data-image="images/pedang2.jpg" data-description="Varian lain dari Pedang Bayangan dengan ukiran yang lebih rumit.">
-            <img src="images/pedang2.jpg" alt="Pedang Bayangan">
-            <h3 class="product-title">Pedang Bayangan</h3>
-            <p class="product-price">Rp 260.000</p>
-            <button class="add-to-cart-btn" data-id="4" data-name="Pedang Bayangan" data-price="260000" data-image="images/pedang2.jpg">Tambahkan</button>
+        <div class="product-card" data-id="4" data-name="Obor Abadi" data-price="125000" data-image="images/obor1.jpg" data-description="Obor yang apinya tak pernah padam, menerangi jalan dalam kegelapan.">
+            <img src="images/obor1.jpg" alt="Obor Abadi">
+            <h3 class="product-title">Obor Abadi</h3>
+            <p class="product-price">Rp 125.000</p>
+            <button class="add-to-cart-btn" data-id="4" data-name="Obor Abadi" data-price="125000" data-image="images/obor1.jpg">Tambahkan</button>
         </div>
         <div class="product-card" data-id="5" data-name="Jubah Kegelapan Edisi Terbatas" data-price="161500" data-image="images/jubah2.jpg" data-description="Jubah Kegelapan edisi terbatas dengan sulaman benang perak." data-best-seller="true" data-promo="true" data-discount="15%" data-original-price="190000">
             <img src="images/jubah2.jpg" alt="Jubah Kegelapan Edisi Terbatas">
             <h3 class="product-title">Jubah Kegelapan Edisi Terbatas</h3>
             <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 190.000</span> Rp 161.500</p>
             <button class="add-to-cart-btn" data-id="5" data-name="Jubah Kegelapan Edisi Terbatas" data-price="161500" data-image="images/jubah2.jpg">Tambahkan</button>
-        </div>
-        <div class="product-card" data-id="6" data-name="Topeng Tengkorak" data-price="95000" data-image="images/topeng2.jpg" data-description="Topeng Tengkorak dengan detail retakan dan efek gelap yang lebih intens.">
-            <img src="images/topeng2.jpg" alt="Topeng Tengkorak">
-            <h3 class="product-title">Topeng Tengkorak</h3>
-            <p class="product-price">Rp 95.000</p>
-            <button class="add-to-cart-btn" data-id="6" data-name="Topeng Tengkorak" data-price="95000" data-image="images/topeng2.jpg">Tambahkan</button>
+            <span class="badge best-seller">Best Seller</span>
+            <span class="badge promo">Promo (-15%)</span>
         </div>
     </div>
 
-    <div id="loading-indicator" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #eee; font-size: 1.2em;">
-        <i class="fas fa-spinner fa-spin"></i> Mencari Produk...
-    </div>
-
-    <div class="product-modal" id="productModal">
+    <div id="productModal" class="product-modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <img id="modal-image" src="" alt="">
             <h2 id="modal-title"></h2>
-            <p id="modal-price" class="modal-price"></p>
+            <p id="modal-price"></p>
             <p id="modal-description"></p>
             <button id="modal-add-to-cart" class="modal-add-to-cart" data-id="" data-name="" data-price="" data-image="">Tambahkan ke Keranjang</button>
         </div>
     </div>
+
+    <div id="loading-indicator">Memuat Produk...</div>
 
     <div class="bottom-navigation">
         <a href="#">
@@ -512,10 +435,6 @@
             <i class="fas fa-shopping-cart"></i>
             <span>Keranjang</span>
             <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
-        </a>
-        <a href="#">
-            <i class="fas fa-user"></i>
-            <span>Akun</span>
         </a>
     </div>
 
@@ -536,8 +455,7 @@
             const modalAddToCartButton = document.getElementById('modal-add-to-cart');
             const cartCountElement = document.getElementById('cart-count');
             const bottomCartCountElement = document.getElementById('bottom-cart-count');
-            const categoryLinks = document.querySelectorAll('.category-bar a[data-category]');
-            const filterLinks = document.querySelectorAll('.category-bar a[data-filter]');
+            const categoryLinks = document.querySelectorAll('.category-bar a[data-filter]');
             const productList = document.querySelector('.product-list');
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
@@ -572,6 +490,13 @@
 
             // Inisialisasi jumlah item keranjang saat halaman dimuat (tetap ada)
             updateCartCount();
+
+            // Event listener untuk perubahan localStorage (untuk sinkronisasi jumlah keranjang)
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'keranjang') {
+                    updateCartCount();
+                }
+            });
 
             // Fungsi untuk menampilkan detail produk (PERUBAHAN DI SINI agar menampilkan harga diskon)
             function showProductDetails(product) {
@@ -678,7 +603,7 @@
                 productList.classList.remove('filtering');
             }
 
-            // Panggil updateProductList di awal untuk menampilkan produk
+            // Panggil updateProductList di awal untuk menampilkan semua produk
             updateProductList(allProducts);
 
             // Delegasi event listener untuk menampilkan detail produk (PERUBAHAN DI SINI)
@@ -730,12 +655,12 @@
                 hideProductDetails();
             });
 
-            filterLinks.forEach(link => {
+            categoryLinks.forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault();
                     const selectedFilter = this.dataset.filter;
 
-                    filterLinks.forEach(l => l.classList.remove('active'));
+                    categoryLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
 
                     productList.classList.add('filtering');
@@ -745,30 +670,8 @@
                             productsToShow = allProducts.filter(product => product.dataset.promo === 'true');
                         } else if (selectedFilter === 'best-seller') {
                             productsToShow = allProducts.filter(product => product.dataset.bestSeller === 'true');
-                        } else {
-                            productsToShow = allProducts; // Jika filter tidak dikenali, tampilkan semua
-                        }
-                        updateProductList(productsToShow);
-                    }, 300);
-                });
-            });
-
-            categoryLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const selectedCategory = this.dataset.category;
-
-                    categoryLinks.forEach(l => l.classList.remove('active'));
-                    filterLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-
-                    productList.classList.add('filtering');
-                    setTimeout(() => {
-                        let productsToShow = [];
-                        if (selectedCategory === 'semua') {
+                        } else if (selectedFilter === 'semua') {
                             productsToShow = allProducts;
-                        } else {
-                            productsToShow = allProducts.filter(product => product.dataset.name.toLowerCase().includes(selectedCategory.toLowerCase()));
                         }
                         updateProductList(productsToShow);
                     }, 300);
