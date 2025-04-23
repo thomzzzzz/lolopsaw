@@ -429,54 +429,6 @@
                 max-width: 120px;
                 margin-bottom: 15px;
             }
-            .whatsapp-comment-form {
-        background-color: #f4f4f4;
-        padding: 20px;
-        border-radius: 8px;
-        margin-top: 20px;
-    }
-
-    .whatsapp-comment-form h3 {
-        color: #333;
-        margin-top: 0;
-        margin-bottom: 15px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-        font-size: 0.9em;
-    }
-
-    .form-group input[type="text"],
-    .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 1em;
-    }
-
-    .whatsapp-button-form {
-        background-color: #25D366;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 1em;
-        transition: background-color 0.3s ease;
-    }
-
-    .whatsapp-button-form:hover {
-        background-color: #128C7E;
-    }
 
             .popup-content h2 {
                 font-size: 1.3em;
@@ -695,18 +647,9 @@
             <span>Keranjang</span>
             <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
         </a>
-    <div class="whatsapp-comment-form">
-    <h3>Ada Pertanyaan? Isi Formulir di Bawah:</h3>
-    <div class="form-group">
-        <label for="nama-wa">Nama:</label>
-        <input type="text" id="nama-wa" name="nama-wa" placeholder="Nama Anda">
-    </div>
-    <div class="form-group">
-        <label for="keterangan-wa">Pertanyaan atau Keterangan:</label>
-        <textarea id="keterangan-wa" name="keterangan-wa" rows="4" placeholder="Pertanyaan atau keterangan Anda"></textarea>
-    </div>
-    <button id="kirim-wa" class="whatsapp-button-form">Kirim via WhatsApp</button>
-</div>
+    <a href="https://wa.me/NOMOR_WHATSAPP_ANDA" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
     <footer class="footer">
         <p>&copy; 2025 InfernoShop - Gaya Merah Hitam</p>
         <p>Dibuat dengan <i class="fas fa-heart" style="color: #ff4d4d;"></i> di Bandung</p>
@@ -731,11 +674,6 @@
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
             const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
             const carousel = document.querySelector('.promo-carousel');
-            const kirimWaButton = document.getElementById('kirim-wa');
-    const namaWaInput = document.getElementById('nama-wa');
-    const keteranganWaTextarea = document.getElementById('keterangan-wa');
-    const nomorWhatsApp = '6283834510927'; // Ganti dengan nomor WhatsApp Anda
-
             const carouselImages = carousel ? carousel.querySelectorAll('img') : [];
             let carouselCounter = 0;
             const carouselInterval = 3000; // Interval waktu antar slide (dalam milidetik)
@@ -771,18 +709,6 @@
                 welcomePopup.style.display = 'none';
             }
         });
-            kirimWaButton.addEventListener('click', function() {
-        const nama = encodeURIComponent(namaWaInput.value);
-        const keterangan = encodeURIComponent(keteranganWaTextarea.value);
-        const pesan = `Nama: ${nama}%0AKeterangan: ${keterangan}`;
-        const urlWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesan}`;
-
-        if (nama.trim() !== '' && keterangan.trim() !== '') {
-            window.open(urlWhatsApp, '_blank');
-        } else {
-            alert('Mohon isi nama dan pertanyaan/keterangan Anda.');
-        }
-    });
 
             // Fungsi untuk memperbarui tampilan jumlah item di keranjang (tetap ada)
             function updateCartCount() {
