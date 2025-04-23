@@ -474,6 +474,29 @@
             line-height: 1.6;
             margin-bottom: 20px;
         }
+        .filter-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        color: white;
+        z-index: 101;
+    }
+
+    .filter-overlay h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .filter-overlay label {
+        margin-bottom: 5px;
+    }
         .modal-add-to-cart {
             background-color: #800000;
             color: white;
@@ -619,6 +642,17 @@
             <img src="images/banner2.jpg" alt="Promo Banner 2">
             <img src="images/banner3.jpg" alt="Promo Banner 3">  
         </div>
+        <button id="filter-button">Filter & Sort</button>
+
+<div id="filter-overlay" class="filter-overlay">
+    <h3>Filter</h3>
+    <label><input type="checkbox"> Kategori A</label><br>
+    <label><input type="checkbox"> Kategori B</label><br>
+    <h3>Urutkan Berdasarkan</h3>
+    <label><input type="radio" name="sort"> Harga Terendah</label><br>
+    <label><input type="radio" name="sort"> Harga Tertinggi</label><br>
+    <button id="close-filter">Terapkan</button>
+</div>
     </div><div class="product-list">
         <div class="product-card" data-id="1" data-name="Pedang Bayangan" data-price="250000" data-image="images/pedang1.jpg" data-description="Pedang legendaris yang ditempa dalam kegelapan abadi." data-best-seller="true">
             <img src="images/pedang1.jpg" alt="Pedang Bayangan">
@@ -713,6 +747,10 @@
             const productList = document.querySelector('.product-list');
             const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
             const cartIcon = document.querySelector('.cart-icon');
+            const filterButton = document.getElementById('filter-button');
+        const filterOverlay = document.getElementById('filter-overlay');
+        const closeFilterButton = document.getElementById('close-filter');
+
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
             const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
@@ -727,7 +765,19 @@
             function getCart() {
                 return JSON.parse(localStorage.getItem('keranjang') || '[]');
             }
+filterButton.addEventListener('click', () => {
+            filterOverlay.style.display = 'flex';
+        });
 
+        closeFilterButton.addEventListener('click', () => {
+            filterOverlay.style.display = 'none';
+        });
+
+        filterOverlay.addEventListener('click', (event) => {
+            if (event.target === filterOverlay) {
+                filterOverlay.style.display = 'none';
+            }
+        });
             // Fungsi untuk menyimpan keranjang ke localStorage (tetap ada)
             function saveCart(cart) {
                 localStorage.setItem('keranjang', JSON.stringify(cart));
