@@ -344,9 +344,93 @@
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
+
+        /* Styling untuk Pop-up Selamat Datang */
+        .welcome-popup {
+            display: none; /* Sembunyikan pop-up secara default */
+            position: fixed; /* Tetap di posisi meskipun di-scroll */
+            z-index: 102; /* Di atas elemen lain */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Latar belakang semi-transparan */
+            overflow: auto; /* Jika konten terlalu panjang */
+        }
+
+        .popup-content {
+            background-color: #333;
+            margin: 15% auto; /* Posisi tengah layar */
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+            text-align: center;
+            color: #eee;
+        }
+
+        .close-popup {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-popup:hover,
+        .close-popup:focus {
+            color: white;
+            text-decoration: none;
+        }
+
+        .popup-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .popup-content h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .popup-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .popup-button {
+            background-color: #aa0000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        .popup-button:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
+    <div id="welcomePopup" class="welcome-popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <img src="images/logo-inferno.png" alt="Logo InfernoShop" class="popup-logo">
+            <h2>Selamat Datang di InfernoShop!</h2>
+            <p>Jelajahi koleksi gaya merah hitam kami yang unik dan penuh semangat.</p>
+            <p>Dapatkan penawaran spesial untuk pelanggan baru!</p>
+            <button id="enterShop" class="popup-button">Mulai Berbelanja</button>
+        </div>
+    </div>
+
     <header>
         <div class="logo">InfernoShop</div>
         <div class="search-bar">
@@ -391,7 +475,7 @@
             <img src="images/topeng1.jpg" alt="Topeng Tengkorak">
             <h3 class="product-title">Topeng Tengkorak</h3>
             <p class="product-price">Rp 90.000</p>
-            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambambahkan</button>
+            <button class="add-to-cart-btn" data-id="3" data-name="Topeng Tengkorak" data-price="90000" data-image="images/topeng1.jpg">Tambahkan</button>
         </div>
         <div class="product-card" data-id="4" data-name="Obor Abadi" data-price="125000" data-image="images/obor1.jpg" data-description="Obor yang apinya tak pernah padam, menerangi jalan dalam kegelapan.">
             <img src="images/obor1.jpg" alt="Obor Abadi">
@@ -446,6 +530,34 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const welcomePopup = document.getElementById('welcomePopup');
+            const closePopupButton = welcomePopup.querySelector('.close-popup');
+            const enterShopButton = document.getElementById('enterShop');
+            const hasVisited = localStorage.getItem('hasVisited');
+
+            // Cek apakah pengguna sudah pernah mengunjungi website
+            if (!hasVisited) {
+                welcomePopup.style.display = 'block';
+                localStorage.setItem('hasVisited', 'true'); // Set flag bahwa pengguna sudah melihat pop-up
+            }
+
+            // Event listener untuk tombol close pop-up
+            closePopupButton.addEventListener('click', function() {
+                welcomePopup.style.display = 'none';
+            });
+
+            // Event listener untuk tombol "Mulai Berbelanja"
+            enterShopButton.addEventListener('click', function() {
+                welcomePopup.style.display = 'none';
+            });
+
+            // Menutup pop-up jika mengklik di luar konten pop-up
+            window.addEventListener('click', function(event) {
+                if (event.target === welcomePopup) {
+                    welcomePopup.style.display = 'none';
+                }
+            });
+
             const productModal = document.getElementById('productModal');
             const closeButton = productModal.querySelector('.close-button');
             const modalImage = document.getElementById('modal-image');
@@ -591,10 +703,10 @@
                     }
 
                     productCard.innerHTML = `
-                        <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
-                        <h3 class="product-title">${productData.dataset.name}</h3>
-                        <p class="product-price">${priceDisplay}</p>
-                        <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
+                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
+                        <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
+<p class\="product\-price"\></span>{priceDisplay}</p>
+                        <button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>
                     `;
 
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
@@ -638,7 +750,6 @@
                     tambahKeKeranjang(productId, name, price, image);
                 }
             });
-
             closeButton.addEventListener('click', hideProductDetails);
             window.addEventListener('click', function(event) {
                 if (event.target === productModal) {
