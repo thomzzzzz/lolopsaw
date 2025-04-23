@@ -339,6 +339,12 @@
             justify-content: center;
         }
 
+        .ewallet-choices div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .ewallet-button {
             background-color: #555;
             color: #eee;
@@ -348,6 +354,8 @@
             cursor: pointer;
             font-size: 0.9em;
             transition: background-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .ewallet-button:hover {
@@ -377,6 +385,21 @@
         .confirm-payment-button:hover {
             background-color: #cc0000;
             transform: scale(1.02);
+        }
+
+        #dana-number,
+        #gopay-number,
+        #ovo-number {
+            width: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: #eee;
+            box-sizing: border-box;
+            font-size: 0.9em;
+            display: none;
         }
     </style>
 </head>
@@ -418,16 +441,25 @@
             <div id="payment-details" style="display: none;">
                 <div id="qris-payment" style="display: none;">
                     <h3>Bayar dengan QRIS</h3>
-                    <img src="../images/qris_example.png" alt="QRIS" style="max-width: 100%; height: auto; margin-top: 10px;">
+                    <img src="../image/qris.jpg" alt="QRIS" style="max-width: 100%; height: auto; margin-top: 10px;">
                     <p style="font-size: 0.9em; color: #ccc; margin-top: 5px;">Scan kode QR di atas dengan aplikasi pembayaran Anda.</p>
                     <button class="confirm-payment-button" data-method="qris">Konfirmasi Pembayaran QRIS</button>
                 </div>
                 <div id="ewallet-payment" style="display: none;">
                     <h3>Pilih E-Wallet</h3>
                     <div class="ewallet-choices">
-                        <button class="ewallet-button" data-ewallet="dana">Dana</button>
-                        <button class="ewallet-button" data-ewallet="gopay">GoPay</button>
-                        <button class="ewallet-button" data-ewallet="ovo">OVO</button>
+                        <div>
+                            <button class="ewallet-button" data-ewallet="dana">Dana</button>
+                            <input type="text" id="dana-number" placeholder="Nomor Dana">
+                        </div>
+                        <div>
+                           <button class="ewallet-button" data-ewallet="dana">Gopay</button>
+                           <input type="text" id="gopay-number" placeholder="Nomor GoPay">
+                        </div>
+                        <div>
+                            <button class="ewallet-button" data-ewallet="ovo">OVO</button>
+                            <input type="text" id="ovo-number" placeholder="Nomor OVO">
+                        </div>
                     </div>
                     <button class="confirm-payment-button" data-method="ewallet" id="confirm-ewallet-payment" disabled>Konfirmasi Pembayaran E-Wallet</button>
                     <p id="selected-ewallet" style="font-size: 0.9em; color: #ffaa80; margin-top: 10px;"></p>
@@ -571,9 +603,13 @@
             const confirmEWalletPaymentBtn = document.getElementById('confirm-ewallet-payment');
             const selectedEWalletText = document.getElementById('selected-ewallet');
             const confirmPaymentButtons = document.querySelectorAll('.confirm-payment-button');
+            const danaNumberInput = document.getElementById('dana-number');
+            const gopayNumberInput = document.getElementById('gopay-number');
+            const ovoNumberInput = document.getElementById('ovo-number');
 
             let selectedPaymentMethod = null;
             let selectedEWallet = null;
+            let ewalletNumber = null;
 
             checkoutButton.addEventListener('click', function() {
                 const cart = getCart();
@@ -592,8 +628,12 @@
                 ewalletPaymentDiv.style.display = 'none';
                 selectedPaymentMethod = null;
                 selectedEWallet = null;
+                ewalletNumber = null;
                 confirmEWalletPaymentBtn.disabled = true;
                 selectedEWalletText.textContent = '';
+                danaNumberInput.style.display = 'none';
+                gopayNumberInput.style.display = 'none';
+                ovoNumberInput.style.display = 'none';
             });
 
             paymentCloseButton.addEventListener('click', function() {
@@ -611,6 +651,9 @@
                 qrisPaymentDiv.style.display = 'block';
                 ewalletPaymentDiv.style.display = 'none';
                 selectedPaymentMethod = 'qris';
+                danaNumberInput.style.display = 'none';
+                gopayNumberInput.style.display = 'none';
+                ovoNumberInput.style.display = 'none';
             });
 
             ewalletOptionBtn.addEventListener('click', function() {
@@ -625,6 +668,9 @@
                     selectedEWallet = event.target.dataset.ewallet;
                     selectedEWalletText.textContent = `Anda memilih: ${selectedEWallet.toUpperCase()}`;
                     confirmEWalletPaymentBtn.disabled = false;
+                    danaNumberInput.style.display = (selectedEWallet === 'dana') ? 'block' : 'none';
+                    gopayNumberInput.style.display = (selectedEWallet === 'gopay') ? 'block' : 'none';
+                    ovoNumberInput.style.display = (selectedEWallet === 'ovo') ? 'block' : 'none';
                 }
             });
 
@@ -634,6 +680,19 @@
                     let paymentInfo = `Pembayaran berhasil!\nMetode Pembayaran: ${method.toUpperCase()}`;
                     if (method === 'ewallet' && selectedEWallet) {
                         paymentInfo += ` (${selectedEWallet.toUpperCase()})`;
+                        if (selectedEWallet === 'dana' && danaNumberInput.value) {
+                            ewalletNumber = danaNumberInput.value;
+                            paymentInfo += `\nNomor Dana: ${ewalletNumber}`;
+                        } else if (selectedEWallet === 'gopay' && gopayNumberInput.value) {
+                            ewalletNumber = gopayNumberInput.value;
+                            paymentInfo += `\nNomor GoPay: ${ewalletNumber}`;
+                        } else if (selectedEWallet === 'ovo' && ovoNumberInput.value) {
+                            ewalletNumber = ovoNumberInput.value;
+                            paymentInfo += `\nNomor OVO: ${ewalletNumber}`;
+                        } else if (method === 'ewallet') {
+                            alert('Harap masukkan nomor E-Wallet Anda.');
+                            return;
+                        }
                     }
                     paymentInfo += `\nTotal Pembayaran: Rp ${getTotalCartAmount().toLocaleString('id-ID')}`;
                     alert(paymentInfo);
