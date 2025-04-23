@@ -793,14 +793,14 @@
         <a href="#" data-filter="semua" class="active">Semua</a>
         <a href="#" data-filter="promo">Promo</a>
         <a href="#" data-filter="best-seller">Best Seller</a>
-        </div>
+    </div>
 
     <div class="promo-carousel-container">
         <div class="promo-carousel">
             <img src="images/promo1.jpg" alt="Promo 1">
             <img src="images/promo2.jpg" alt="Promo 2">
             <img src="images/promo3.jpg" alt="Promo 3">
-            </div>
+        </div>
     </div>
 
     <div id="loading-indicator">Memuat Produk...</div>
@@ -842,7 +842,7 @@
             <p class="product-price"><span style="text-decoration: line-through; color: #aaa; font-size: 0.9em;">Rp 499.900</span> Rp 449.900</p>
             <button class="add-to-cart-btn" data-id="6" data-name="Jacket Blaze" data-price="449900" data-image="images/jacket2.jpg">Tambahkan</button>
         </div>
-        </div>
+    </div>
 
     <div id="productModal" class="product-modal">
         <div class="modal-content">
@@ -892,14 +892,13 @@
             const welcomePopup = document.getElementById('welcomePopup');
             const closePopupButton = welcomePopup.querySelector('.close-popup');
             const enterShopButton = document.getElementById('enterShop');
-           // const hasVisited = localStorage.getItem('hasVisited');
+            const hasVisited = localStorage.getItem('hasVisited');
 
             // Cek apakah pengguna sudah pernah mengunjungi website
-            // if (!hasVisited) {
-            //     welcomePopup.style.display = 'block';
-            //     //localStorage.setItem('hasVisited', 'true'); // Set flag bahwa pengguna sudah melihat pop-up
-        // }
-
+            if (!hasVisited) {
+                welcomePopup.style.display = 'block';
+                localStorage.setItem('hasVisited', 'true'); // Set flag bahwa pengguna sudah melihat pop-up
+            }
             // Event listener untuk tombol close pop-up
             closePopupButton.addEventListener('click', function() {
                 welcomePopup.style.display = 'none';
@@ -1212,3 +1211,4 @@
     </script>
 </body>
 </html>
+            
