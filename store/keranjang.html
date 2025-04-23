@@ -295,25 +295,70 @@
             margin-bottom: 8px;
         }
 
-        .form-group {
+        .payment-options {
+            display: flex;
+            gap: 10px;
             margin-bottom: 15px;
+            justify-content: center;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #555;
-            border-radius: 5px;
+        .payment-option-button {
             background-color: #444;
             color: #eee;
-            box-sizing: border-box;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-option-button:hover {
+            background-color: #555;
+        }
+
+        #payment-details {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #qris-payment,
+        #ewallet-payment {
+            display: none;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .ewallet-choices {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .ewallet-button {
+            background-color: #555;
+            color: #eee;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .ewallet-button:hover {
+            background-color: #666;
+        }
+
+        #selected-ewallet {
+            font-size: 0.9em;
+            color: #ffaa80;
+            margin-top: 10px;
+            text-align: center;
         }
 
         .confirm-payment-button {
@@ -326,6 +371,7 @@
             font-size: 1.1em;
             width: 100%;
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            margin-top: 10px;
         }
 
         .confirm-payment-button:hover {
@@ -365,16 +411,28 @@
             <h2>Rincian Pembayaran</h2>
             <div id="payment-summary">
             </div>
-            <form id="payment-form">
-                <div class="form-group">
-                    <label for="payment-method">Pilih Metode Pembayaran:</label>
-                    <select id="payment-method">
-                        <option value="ewallet">E-Wallet</option>
-                        <option value="qris">QRIS</option>
-                    </select>
+            <div class="payment-options">
+                <button id="qris-option-btn" class="payment-option-button">QRIS</button>
+                <button id="ewallet-option-btn" class="payment-option-button">E-Wallet</button>
+            </div>
+            <div id="payment-details" style="display: none;">
+                <div id="qris-payment" style="display: none;">
+                    <h3>Bayar dengan QRIS</h3>
+                    <img src="../images/qris_example.png" alt="QRIS" style="max-width: 100%; height: auto; margin-top: 10px;">
+                    <p style="font-size: 0.9em; color: #ccc; margin-top: 5px;">Scan kode QR di atas dengan aplikasi pembayaran Anda.</p>
+                    <button class="confirm-payment-button" data-method="qris">Konfirmasi Pembayaran QRIS</button>
                 </div>
-                <button type="submit" class="confirm-payment-button">Konfirmasi Pembayaran</button>
-            </form>
+                <div id="ewallet-payment" style="display: none;">
+                    <h3>Pilih E-Wallet</h3>
+                    <div class="ewallet-choices">
+                        <button class="ewallet-button" data-ewallet="dana">Dana</button>
+                        <button class="ewallet-button" data-ewallet="gopay">GoPay</button>
+                        <button class="ewallet-button" data-ewallet="ovo">OVO</button>
+                    </div>
+                    <button class="confirm-payment-button" data-method="ewallet" id="confirm-ewallet-payment" disabled>Konfirmasi Pembayaran E-Wallet</button>
+                    <p id="selected-ewallet" style="font-size: 0.9em; color: #ffaa80; margin-top: 10px;"></p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -429,12 +487,12 @@
                         const cartItemDiv = document.createElement('div');
                         cartItemDiv.classList.add('cart-item');
                         cartItemDiv.innerHTML = `
-                            <img src="../<span class="math-inline">\{item\.gambar\}"</9\> alt\="</span>{item.nama}">
+                            <img src="../${item.gambar}" alt="${item.nama}">
                             <div class="item-details">
                                 <h4 class="item-name">${item.nama}</h4>
-                                <p class="item-price">Rp <span class="math-inline">\{\(item\.harga \* item\.jumlah\)\.toLocaleString\('id\-ID'\)\}</p\>
-<div class\="quantity\-controls"\>
-<button class\="decrease\-quantity" data\-id\="</span>{item.id}">-</button>
+                                <p class="item-price">Rp ${(item.harga * item.jumlah).toLocaleString('id-ID')}</p>
+                                <div class="quantity-controls">
+                                    <button class="decrease-quantity" data-id="${item.id}">-</button>
                                     <span class="item-quantity">${item.jumlah}</span>
                                     <button class="increase-quantity" data-id="${item.id}">+</button>
                                 </div>
@@ -504,10 +562,20 @@
             const paymentModal = document.getElementById('paymentModal');
             const paymentCloseButton = paymentModal.querySelector('.payment-close-button');
             const paymentSummary = document.getElementById('payment-summary');
-            const paymentForm = document.getElementById('payment-form');
+            const paymentDetails = document.getElementById('payment-details');
+            const qrisOptionBtn = document.getElementById('qris-option-btn');
+            const ewalletOptionBtn = document.getElementById('ewallet-option-btn');
+            const qrisPaymentDiv = document.getElementById('qris-payment');
+            const ewalletPaymentDiv = document.getElementById('ewallet-payment');
+            const ewalletChoices = document.querySelector('.ewallet-choices');
+            const confirmEWalletPaymentBtn = document.getElementById('confirm-ewallet-payment');
+            const selectedEWalletText = document.getElementById('selected-ewallet');
+            const confirmPaymentButtons = document.querySelectorAll('.confirm-payment-button');
+
+            let selectedPaymentMethod = null;
+            let selectedEWallet = null;
 
             checkoutButton.addEventListener('click', function() {
-                // Tampilkan rincian pesanan di pop-up
                 const cart = getCart();
                 let summaryHTML = '<h3>Pesanan Anda:</h3><ul>';
                 let total = 0;
@@ -518,8 +586,14 @@
                 });
                 summaryHTML += `</ul><p><strong>Total: Rp ${total.toLocaleString('id-ID')}</strong></p>`;
                 paymentSummary.innerHTML = summaryHTML;
-
                 paymentModal.style.display = 'block';
+                paymentDetails.style.display = 'none';
+                qrisPaymentDiv.style.display = 'none';
+                ewalletPaymentDiv.style.display = 'none';
+                selectedPaymentMethod = null;
+                selectedEWallet = null;
+                confirmEWalletPaymentBtn.disabled = true;
+                selectedEWalletText.textContent = '';
             });
 
             paymentCloseButton.addEventListener('click', function() {
@@ -532,18 +606,44 @@
                 }
             });
 
-            paymentForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Mencegah form submit default
-                // Di sini Anda bisa menambahkan logika untuk memproses pembayaran
-                const paymentMethod = document.getElementById('payment-method').value;
+            qrisOptionBtn.addEventListener('click', function() {
+                paymentDetails.style.display = 'block';
+                qrisPaymentDiv.style.display = 'block';
+                ewalletPaymentDiv.style.display = 'none';
+                selectedPaymentMethod = 'qris';
+            });
 
-                alert(`Pembayaran berhasil!\nMetode Pembayaran: ${paymentMethod}\nTotal Pembayaran: Rp ${getTotalCartAmount().toLocaleString('id-ID')}`);
+            ewalletOptionBtn.addEventListener('click', function() {
+                paymentDetails.style.display = 'block';
+                ewalletPaymentDiv.style.display = 'block';
+                qrisPaymentDiv.style.display = 'none';
+                selectedPaymentMethod = 'ewallet';
+            });
 
-                // Setelah pembayaran berhasil, Anda mungkin ingin mengosongkan keranjang
-                localStorage.removeItem('keranjang');
-                updateCartDisplay();
-                updateCartCountInIndex();
-                paymentModal.style.display = 'none';
+            ewalletChoices.addEventListener('click', function(event) {
+                if (event.target.classList.contains('ewallet-button')) {
+                    selectedEWallet = event.target.dataset.ewallet;
+                    selectedEWalletText.textContent = `Anda memilih: ${selectedEWallet.toUpperCase()}`;
+                    confirmEWalletPaymentBtn.disabled = false;
+                }
+            });
+
+            confirmPaymentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const method = this.dataset.method;
+                    let paymentInfo = `Pembayaran berhasil!\nMetode Pembayaran: ${method.toUpperCase()}`;
+                    if (method === 'ewallet' && selectedEWallet) {
+                        paymentInfo += ` (${selectedEWallet.toUpperCase()})`;
+                    }
+                    paymentInfo += `\nTotal Pembayaran: Rp ${getTotalCartAmount().toLocaleString('id-ID')}`;
+                    alert(paymentInfo);
+
+                    // Setelah pembayaran berhasil, Anda mungkin ingin mengosongkan keranjang
+                    localStorage.removeItem('keranjang');
+                    updateCartDisplay();
+                    updateCartCountInIndex();
+                    paymentModal.style.display = 'none';
+                });
             });
 
             function getTotalCartAmount() {
