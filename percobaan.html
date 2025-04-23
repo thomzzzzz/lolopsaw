@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ... (CSS Anda sebelumnya) ... */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -703,10 +704,10 @@
                     }
 
                     productCard.innerHTML = `
-                        <img src="<span class="math-inline">\{productData\.dataset\.image\}" alt\="</span>{productData.dataset.name}">
-                        <h3 class="product-title"><span class="math-inline">\{productData\.dataset\.name\}</h3\>
-<p class\="product\-price"\></span>{priceDisplay}</p>
-                        <button class="add-to-cart-btn" data-id="<span class="math-inline">\{productData\.dataset\.id\}" data\-name\="</span>{productData.dataset.name}" data-price="<span class="math-inline">\{productData\.dataset\.price\}" data\-image\="</span>{productData.dataset.image}">Tambahkan</button>
+                        <img src="${productData.dataset.image}" alt="${productData.dataset.name}">
+                        <h3 class="product-title">${productData.dataset.name}</h3>
+                        <p class="product-price">${priceDisplay}</p>
+                        <button class="add-to-cart-btn" data-id="${productData.dataset.id}" data-name="${productData.dataset.name}" data-price="${productData.dataset.price}" data-image="${productData.dataset.image}">Tambahkan</button>
                     `;
 
                     addBadges(productCard); // Tambahkan badge ke card yang baru dibuat
@@ -750,6 +751,7 @@
                     tambahKeKeranjang(productId, name, price, image);
                 }
             });
+
             closeButton.addEventListener('click', hideProductDetails);
             window.addEventListener('click', function(event) {
                 if (event.target === productModal) {
