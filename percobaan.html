@@ -308,6 +308,43 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366; /* Warna hijau WhatsApp */
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            font-size: 2em;
+            z-index: 1000; /* Pastikan di atas elemen lain */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #128C7E; /* Warna hijau lebih gelap saat hover */
+            transform: scale(1.05);
+        }
+
+        .whatsapp-button i {
+            vertical-align: middle;
+        }
+
+        /* Responsif untuk ukuran layar lebih kecil */
+        @media (max-width: 600px) {
+            .whatsapp-button {
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                font-size: 1.7em;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
         .modal-image {
             max-width: 100%;
             height: auto;
@@ -611,7 +648,9 @@
             <span id="bottom-cart-count" class="cart-notification" style="display: none;">0</span>
         </a>
     </div>
-
+<a href="https://wa.me/6283834510927" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
     <footer class="footer">
         <p>&copy; 2025 InfernoShop - Gaya Merah Hitam</p>
         <p>Dibuat dengan <i class="fas fa-heart" style="color: #ff4d4d;"></i> di Bandung</p>
