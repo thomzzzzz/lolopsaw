@@ -510,7 +510,7 @@
                 padding: 8px;
             }
 
-            .product-title {
+        .product-title {
                 font-size: 0.85em;
                 margin-bottom: 4px;
             }
@@ -899,6 +899,7 @@
                 welcomePopup.style.display = 'block';
                 localStorage.setItem('hasVisited', 'true'); // Set flag bahwa pengguna sudah melihat pop-up
             }
+
             // Event listener untuk tombol close pop-up
             closePopupButton.addEventListener('click', function() {
                 welcomePopup.style.display = 'none';
@@ -911,7 +912,7 @@
 
             // Menutup pop-up jika mengklik di luar konten pop-up
             window.addEventListener('click', function(event) {
-                if (event.target === welcomePopup) {
+                if ( event.target === welcomePopup) {
                     welcomePopup.style.display = 'none';
                 }
             });
@@ -1211,4 +1212,3 @@
     </script>
 </body>
 </html>
-            
