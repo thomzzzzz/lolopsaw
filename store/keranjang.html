@@ -387,12 +387,11 @@
             transform: scale(1.02);
         }
 
-        #dana-info,
-        #gopay-info,
-        #ovo-info {
+        .ewallet-info {
             font-size: 0.9em;
             color: #ccc;
             margin-top: 5px;
+            text-align: center;
         }
     </style>
 </head>
@@ -443,15 +442,15 @@
                     <div class="ewallet-choices">
                         <div>
                             <button class="ewallet-button" data-ewallet="dana">Dana</button>
-                            <p id="dana-info" class="ewallet-info">Nomor Dana: 0812-3456-7890</p>
+                            <p class="ewallet-info">Nomor Dana: 0812-3456-7890</p>
                         </div>
                         <div>
                             <button class="ewallet-button" data-ewallet="gopay">GoPay</button>
-                            <p id="gopay-info" class="ewallet-info">Nomor GoPay: 0898-7654-3210</p>
+                            <p class="ewallet-info">Nomor GoPay: 0898-7654-3210</p>
                         </div>
                         <div>
                             <button class="ewallet-button" data-ewallet="ovo">OVO</button>
-                            <p id="ovo-info" class="ewallet-info">Nomor OVO: 0857-1122-3344</p>
+                            <p class="ewallet-info">Nomor OVO: 0857-1122-3344</p>
                         </div>
                     </div>
                     <button class="confirm-payment-button" data-method="ewallet">Konfirmasi Pembayaran E-Wallet</button>
@@ -652,29 +651,26 @@
             confirmPaymentButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const method = this.dataset.method;
-                    let paymentInfo = `Pembayaran berhasil!\nMetode Pembayaran: ${method.toUpperCase()}`;
-                    if (method === 'ewallet' && selectedEWallet) {
-                        paymentInfo += ` (${selectedEWallet.toUpperCase()})`;
-                        const danaInfo = document.getElementById('dana-info').textContent;
-                        const gopayInfo = document.getElementById('gopay-info').textContent;
-                        const ovoInfo = document.getElementById('ovo-info').textContent;
+                    const totalAmount = getTotalCartAmount().toLocaleString('id-ID');
+                    const cart = getCart();
+                    let productList = '';
+                    cart.forEach(item => {
+                        productList += `- ${item.nama} (${item.jumlah} x Rp ${item.harga.toLocaleString('id-ID')})\n`;
+                    });
 
-                        if (selectedEWallet === 'dana') {
-                            paymentInfo += `\n${danaInfo}`;
-                        } else if (selectedEWallet === 'gopay') {
-                            paymentInfo += `\n${gopayInfo}`;
-                        } else if (selectedEWallet === 'ovo') {
-                            paymentInfo += `\n${ovoInfo}`;
-                        }
+                    let whatsappMessage = `Konfirmasi Pembayaran\n\nProduk:\n${productList}\nNominal: Rp ${totalAmount}\n\nNote: Jangan lupa serahkan bukti transfer`;
+                    const whatsappLink = `https://wa.me/NomorWhatsAppAnda?text=${encodeURIComponent(whatsappMessage)}`;
+
+                    if (method === 'qris' || method === 'ewallet') {
+                        window.open(whatsappLink, '_blank');
+                        // Setelah mengirim pesan WhatsApp (atau mencoba), Anda bisa mengosongkan keranjang
+                        localStorage.removeItem('keranjang');
+                        updateCartDisplay();
+                        updateCartCountInIndex();
+                        paymentModal.style.display = 'none';
+                    } else {
+                        alert('Terjadi kesalahan. Metode pembayaran tidak dikenali.');
                     }
-                    paymentInfo += `\nTotal Pembayaran: Rp ${getTotalCartAmount().toLocaleString('id-ID')}`;
-                    alert(paymentInfo);
-
-                    // Setelah pembayaran berhasil, Anda mungkin ingin mengosongkan keranjang
-                    localStorage.removeItem('keranjang');
-                    updateCartDisplay();
-                    updateCartCountInIndex();
-                    paymentModal.style.display = 'none';
                 });
             });
 
