@@ -488,6 +488,27 @@
             background-color: #aa0000;
             transform: scale(1.05); /* Efek sedikit membesar saat di-hover */
         }
+        .cart-icon.drag-feedback {
+        animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes shake {
+        10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+
+        20%, 80% {
+            transform: translate3d(2px, 0, 0);
+        }
+
+        30%, 50%, 70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+
+        40%, 60% {
+            transform: translate3d(4px, 0, 0);
+        }
+    }
 
         /* Animasi untuk Modal */
         @keyframes slideIn {
@@ -690,6 +711,8 @@
             const categoryLinks = document.querySelectorAll('.category-bar a[data-category]');
             const filterLinks = document.querySelectorAll('.category-bar a[data-filter]');
             const productList = document.querySelector('.product-list');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const cartIcon = document.querySelector('.cart-icon');
             const allProducts = Array.from(productList.children); // Simpan semua produk awal
             const searchInput = document.getElementById('searchInput'); // Dapatkan elemen input pencarian
             const loadingIndicator = document.getElementById('loading-indicator'); // Dapatkan elemen loading
@@ -729,6 +752,18 @@
                 welcomePopup.style.display = 'none';
             }
         });
+            addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (cartIcon) {
+                    cartIcon.classList.add('drag-feedback');
+                    setTimeout(() => {
+                        cartIcon.classList.remove('drag-feedback');
+                    }, 300);
+                }
+                // ... logika tambah ke keranjang yang sudah ada ...
+            });
+        });
+
 
             // Fungsi untuk memperbarui tampilan jumlah item di keranjang (tetap ada)
             function updateCartCount() {
